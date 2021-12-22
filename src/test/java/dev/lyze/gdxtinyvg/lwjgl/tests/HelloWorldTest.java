@@ -8,11 +8,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class HelloWorldTest extends LibgdxLwjglUnitTest {
-    @Override
-    public void create() {
-        super.create();
-    }
-
     @Test
     @Tag("lwjgl")
     public void helloTest() {
