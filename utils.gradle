@@ -1,0 +1,19 @@
+ext.getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    try {
+        exec {
+            commandLine 'git', 'rev-list', '--count', 'HEAD'
+            standardOutput = stdout
+        }
+    } catch (error) {
+        println error
+        return "giterror"
+    }
+    return stdout.toString().trim()
+}
+
+task currentVersion() {
+    doLast {
+        new File(project.buildDir.path, "version.txt").text = project.version
+    }
+}
