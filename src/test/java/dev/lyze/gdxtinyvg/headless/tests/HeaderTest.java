@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class HeaderTest extends LibgdxHeadlessUnitTest {
     @Test
     public void SquareHeaderTest() {
-        var tvg = new TinyVGAssetLoader().load("square.tvg");
+        var tvg = new TinyVGAssetLoader().load("twoSquaresWithGradients.tvg");
 
         Assertions.assertEquals(ColorEncoding.RGBA8888, tvg.getHeader().getColorEncoding());
 

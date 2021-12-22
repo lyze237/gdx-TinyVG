@@ -110,7 +110,7 @@ https://tinyvg.tech/download/specification.pdf
 - Commands
   - [x] End of Document
   - [ ] Fill Polygon
-  - [ ] Fill Rectangles
+  - [x] Fill Rectangles
   - [ ] Fill Path
   - [ ] Draw Lines
   - [ ] Draw Line Loop
