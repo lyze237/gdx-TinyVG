@@ -2,21 +2,16 @@ package dev.lyze.gdxtinyvg.enums;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
+import java.io.IOException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.var;
 
-import java.io.IOException;
-
 @AllArgsConstructor
 public enum ColorEncoding {
-    RGBA8888(0),
-    RGB565(1),
-    RGBAF32(2),
-    CUSTOM(3);
+    RGBA8888(0), RGB565(1), RGBAF32(2), CUSTOM(3);
 
-    @Getter
-    private final int value;
+    @Getter private final int value;
 
     public static ColorEncoding valueOf(int value) {
         for (ColorEncoding encoding : values())

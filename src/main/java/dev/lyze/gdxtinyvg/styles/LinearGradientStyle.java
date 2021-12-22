@@ -8,19 +8,16 @@ import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.shapes.UnitPoint;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.io.IOException;
-
 @ToString
 @EqualsAndHashCode(callSuper = false)
 public class LinearGradientStyle extends Style {
-    @Getter
-    private UnitPoint point1, point2;
-    @Getter
-    private int colorIndex1, colorIndex2;
+    @Getter private UnitPoint point1, point2;
+    @Getter private int colorIndex1, colorIndex2;
 
     public LinearGradientStyle(TinyVG tinyVG) {
         super(tinyVG);
@@ -42,7 +39,8 @@ public class LinearGradientStyle extends Style {
     public void start(GradientShapeDrawer drawer, Viewport viewport) {
         drawer.setGradientStyle(StyleType.LINEAR);
         drawer.setGradientColors(getTinyVG().getColorTable()[colorIndex1], getTinyVG().getColorTable()[colorIndex2]);
-        drawer.setPositions(point1.getFloatX(), getTinyVG().getHeader().getHeight() - point1.getFloatY(), point2.getFloatX(), getTinyVG().getHeader().getHeight() - point2.getFloatY(), viewport);
+        drawer.setPositions(point1.getFloatX(), getTinyVG().getHeader().getHeight() - point1.getFloatY(),
+                point2.getFloatX(), getTinyVG().getHeader().getHeight() - point2.getFloatY(), viewport);
 
         drawer.applyShaderValues();
     }

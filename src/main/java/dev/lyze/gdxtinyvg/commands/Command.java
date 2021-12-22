@@ -6,15 +6,12 @@ import dev.lyze.gdxtinyvg.GradientShapeDrawer;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
+import java.io.IOException;
 import lombok.Getter;
 
-import java.io.IOException;
-
 public abstract class Command {
-    @Getter
-    private final CommandType type;
-    @Getter
-    private final TinyVG tinyVG;
+    @Getter private final CommandType type;
+    @Getter private final TinyVG tinyVG;
 
     public Command(CommandType type, TinyVG tinyVG) {
         this.type = type;

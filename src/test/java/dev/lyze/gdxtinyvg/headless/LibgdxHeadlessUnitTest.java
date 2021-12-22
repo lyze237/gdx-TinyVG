@@ -14,7 +14,8 @@ public class LibgdxHeadlessUnitTest {
 
     @BeforeAll
     public static void init() {
-        application = new HeadlessApplication(new ApplicationAdapter() {});
+        application = new HeadlessApplication(new ApplicationAdapter() {
+        });
         Gdx.gl = Gdx.gl20 = Mockito.mock(GL20.class);
     }
 

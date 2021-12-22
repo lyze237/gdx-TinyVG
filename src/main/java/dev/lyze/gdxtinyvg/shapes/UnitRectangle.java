@@ -4,12 +4,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.TinyVGHeader;
 import dev.lyze.gdxtinyvg.enums.Range;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.io.IOException;
 
 @EqualsAndHashCode
 @ToString
@@ -41,6 +40,7 @@ public class UnitRectangle {
     }
 
     public Rectangle convertRectangle(TinyVGHeader header) {
-        return new Rectangle(x.getFloatValue(), header.getHeight() - y.getFloatValue() - height.getFloatValue(), width.getFloatValue(), height.getFloatValue());
+        return new Rectangle(x.getFloatValue(), header.getHeight() - y.getFloatValue() - height.getFloatValue(),
+                width.getFloatValue(), height.getFloatValue());
     }
 }

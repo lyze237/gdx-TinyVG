@@ -1,39 +1,32 @@
 package dev.lyze.gdxtinyvg.enums;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
+import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.Command;
 import dev.lyze.gdxtinyvg.commands.EndOfDocumentCommand;
-import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.OutlineFillRectanglesCommand;
+import java.io.IOException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.io.IOException;
 
 @AllArgsConstructor
 public enum CommandType {
     END_OF_DOCUMENT(0),
 
-    FILL_POLYGON(1),
-    FILL_RECTANGLE(2),
-    FILL_PATH(3),
+    FILL_POLYGON(1), FILL_RECTANGLE(2), FILL_PATH(3),
 
-    DRAW_LINES(4),
-    DRAW_LINE_LOOP(5),
-    DRAW_LINE_STRIP(6),
-    DRAW_LINE_PATH(7),
+    DRAW_LINES(4), DRAW_LINE_LOOP(5), DRAW_LINE_STRIP(6), DRAW_LINE_PATH(7),
 
-    OUTLINE_FILL_POLYGON(8),
-    OUTLINE_FILL_RECTANGLES(9),
-    OUTLINE_FILL_PATH(10);
+    OUTLINE_FILL_POLYGON(8), OUTLINE_FILL_RECTANGLES(9), OUTLINE_FILL_PATH(10);
 
-    @Getter
-    private final int value;
+    @Getter private final int value;
 
     public static CommandType valueOf(int value) {
-        for (CommandType command : values())
-            if (command.value == value)
+        for (CommandType command : values()) {
+            if (command.value == value) {
                 return command;
+            }
+        }
 
         throw new IllegalArgumentException(String.valueOf(value));
     }
@@ -70,7 +63,7 @@ public enum CommandType {
                 throw new IllegalArgumentException("Unknown enum");
         }
 
-        if (command != null) // TODO remove check
+        if (command != null)
             command.read(stream, styleType);
 
         return command;

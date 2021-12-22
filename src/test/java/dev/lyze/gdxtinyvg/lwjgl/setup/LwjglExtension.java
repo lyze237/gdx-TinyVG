@@ -3,19 +3,16 @@ package dev.lyze.gdxtinyvg.lwjgl.setup;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import lombok.Getter;
-import org.junit.jupiter.api.Assertions;
-
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import lombok.Getter;
+import org.junit.jupiter.api.Assertions;
 
 public class LwjglExtension extends BaseLwjglExtension {
     private static final CountDownLatch lock = new CountDownLatch(1);
 
-    @Getter
-    private static LwjglApplication application;
-    @Getter
-    private static ApplicationAdapterWrapper wrapper;
+    @Getter private static LwjglApplication application;
+    @Getter private static ApplicationAdapterWrapper wrapper;
 
     @Override
     void setup() throws InterruptedException {

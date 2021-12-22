@@ -1,19 +1,15 @@
 package dev.lyze.gdxtinyvg.enums;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
+import java.io.IOException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.io.IOException;
-
 @AllArgsConstructor
 public enum Range {
-    DEFAULT(0),
-    REDUCED(1),
-    ENHANCED(2);
+    DEFAULT(0), REDUCED(1), ENHANCED(2);
 
-    @Getter
-    private final int value;
+    @Getter private final int value;
 
     public static Range valueOf(int value) {
         for (Range range : values())

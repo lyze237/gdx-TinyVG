@@ -14,11 +14,9 @@ public class EndOfDocumentCommand extends Command {
 
     @Override
     public void read(LittleEndianInputStream stream, StyleType styleType) {
-
     }
 
     @Override
     public void draw(GradientShapeDrawer drawer, Viewport viewport) {
-
     }
 }

@@ -12,6 +12,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'io.franzbecker.gradle-lombok' version '5.0.0'
+    id 'com.diffplug.spotless' version '6.0.5'
 }
 
 apply from: 'utils.gradle'
@@ -46,7 +47,31 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
 
+spotless {
+    lineEndings 'UNIX'
 
+    format 'misc', {
+        target '*.gradle', '*.md', '.gitignore'
+
+        trimTrailingWhitespace()
+        indentWithSpaces(4)
+        endWithNewline()
+    }
+
+    java {
+        importOrder()
+        removeUnusedImports()
+
+        indentWithSpaces(4)
+
+        eclipse().configFile('eclipse-formatter.xml')
+    }
+
+    groovyGradle {
+        target '*.gradle'
+        greclipse().configFile('eclipse-formatter.xml')
+    }
+}
 
 test {
     useJUnitPlatform()
@@ -57,7 +82,14 @@ test {
         showExceptions = true
         showCauses = true
         displayGranularity = 0
-        events = [ "standardOut", "standardError", "started", "passed", "skipped", "failed" ]
+        events = [
+            "standardOut",
+            "standardError",
+            "started",
+            "passed",
+            "skipped",
+            "failed"
+        ]
         showStandardStreams = true
     }
 

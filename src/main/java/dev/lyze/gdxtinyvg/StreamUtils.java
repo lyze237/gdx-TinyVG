@@ -2,9 +2,8 @@ package dev.lyze.gdxtinyvg;
 
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
-import lombok.var;
-
 import java.io.IOException;
+import lombok.var;
 
 public class StreamUtils {
     public static int readVarUInt(LittleEndianInputStream stream) throws IOException {

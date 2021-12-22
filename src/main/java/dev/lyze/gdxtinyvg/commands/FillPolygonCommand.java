@@ -6,13 +6,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.GradientShapeDrawer;
 import dev.lyze.gdxtinyvg.StreamUtils;
 import dev.lyze.gdxtinyvg.TinyVG;
-import dev.lyze.gdxtinyvg.shapes.Unit;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
+import dev.lyze.gdxtinyvg.shapes.Unit;
 import dev.lyze.gdxtinyvg.styles.Style;
-import lombok.var;
-
 import java.io.IOException;
+import lombok.var;
 
 public class FillPolygonCommand extends Command {
     private Polygon polygon;
@@ -43,6 +42,5 @@ public class FillPolygonCommand extends Command {
 
     @Override
     public void draw(GradientShapeDrawer drawer, Viewport viewport) {
-
     }
 }

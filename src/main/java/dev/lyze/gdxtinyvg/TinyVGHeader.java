@@ -3,32 +3,24 @@ package dev.lyze.gdxtinyvg;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.enums.ColorEncoding;
 import dev.lyze.gdxtinyvg.enums.Range;
+import java.io.IOException;
+import java.util.Arrays;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.var;
 
-import java.io.IOException;
-import java.util.Arrays;
-
 @EqualsAndHashCode
 public class TinyVGHeader {
-    @Getter
-    private int version;
+    @Getter private int version;
 
-    @Getter
-    private int scale;
-    @Getter
-    private ColorEncoding colorEncoding;
-    @Getter
-    private Range coordinateRange;
+    @Getter private int scale;
+    @Getter private ColorEncoding colorEncoding;
+    @Getter private Range coordinateRange;
 
-    @Getter
-    private int width;
-    @Getter
-    private int height;
+    @Getter private int width;
+    @Getter private int height;
 
-    @Getter
-    private int colorTableCount;
+    @Getter private int colorTableCount;
 
     public void read(LittleEndianInputStream stream) throws IOException {
         var magic = StreamUtils.readNBytes(stream, 2);
