@@ -1,0 +1,37 @@
+name: Fix Formatting
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      - name: Fix permissions
+        run: chmod +x gradlew
+
+      - name: Build project
+        run: ./gradlew spotlessApply
+
+      - name: Commit formatting changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "🎨 Applied spotless" -a
+        continue-on-error: true
+      - name: Push formatting changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}

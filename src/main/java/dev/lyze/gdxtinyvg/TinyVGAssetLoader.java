@@ -14,11 +14,10 @@ import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.commands.Command;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
-import lombok.var;
-
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
+import lombok.var;
 
 public class TinyVGAssetLoader extends AsynchronousAssetLoader<TinyVG, TinyVGAssetLoader.TinyVGParameter> {
     private TinyVG tvg;
@@ -95,6 +94,5 @@ public class TinyVGAssetLoader extends AsynchronousAssetLoader<TinyVG, TinyVGAss
     }
 
     public static class TinyVGParameter extends AssetLoaderParameters<TinyVG> {
-
     }
 }

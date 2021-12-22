@@ -10,9 +10,8 @@ import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.shapes.Unit;
 import dev.lyze.gdxtinyvg.shapes.UnitRectangle;
 import dev.lyze.gdxtinyvg.styles.Style;
-import lombok.var;
-
 import java.io.IOException;
+import lombok.var;
 
 public class OutlineFillRectanglesCommand extends Command {
     private float lineWidth;

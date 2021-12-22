@@ -7,7 +7,8 @@ public abstract class BaseLwjglExtension implements BeforeAllCallback, Extension
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        // We need to use a unique key here, across all usages of this particular extension.
+        // We need to use a unique key here, across all usages of this particular
+        // extension.
         String uniqueKey = this.getClass().getName();
         Object value = context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).get(uniqueKey);
         if (value == null) {

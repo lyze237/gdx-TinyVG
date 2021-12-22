@@ -3,10 +3,9 @@ package dev.lyze.gdxtinyvg.shapes;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.Scale;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-
-import java.io.IOException;
 
 @EqualsAndHashCode
 @Getter
@@ -30,8 +29,8 @@ public class Unit {
         return num + Scale.calculate(decimals, scale);
     }
 
-
     public String toString() {
-        return "Unit(FloatValue=" + getFloatValue() + ", value=" + this.getValue() + ", range=" + this.getRange() + ", scale=" + this.getScale() + ")";
+        return "Unit(FloatValue=" + getFloatValue() + ", value=" + this.getValue() + ", range=" + this.getRange()
+                + ", scale=" + this.getScale() + ")";
     }
 }

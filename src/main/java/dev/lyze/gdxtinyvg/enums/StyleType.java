@@ -6,19 +6,15 @@ import dev.lyze.gdxtinyvg.styles.FlatColoredStyle;
 import dev.lyze.gdxtinyvg.styles.LinearGradientStyle;
 import dev.lyze.gdxtinyvg.styles.RadialGradientStyle;
 import dev.lyze.gdxtinyvg.styles.Style;
+import java.io.IOException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.io.IOException;
-
 @AllArgsConstructor
 public enum StyleType {
-    FLAT(0),
-    LINEAR(1),
-    RADIAL(2);
+    FLAT(0), LINEAR(1), RADIAL(2);
 
-    @Getter
-    private final int value;
+    @Getter private final int value;
 
     public static StyleType valueOf(int value) {
         for (StyleType styleType : values())

@@ -2,12 +2,10 @@ package dev.lyze.gdxtinyvg.shapes;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.enums.Range;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.var;
-
-import java.io.IOException;
 
 @EqualsAndHashCode
 @ToString
@@ -16,7 +14,6 @@ public class UnitPoint {
     private Unit x, y;
 
     public UnitPoint() {
-
     }
 
     public UnitPoint(Unit x, Unit y) {

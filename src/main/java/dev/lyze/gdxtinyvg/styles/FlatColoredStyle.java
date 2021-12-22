@@ -7,13 +7,11 @@ import dev.lyze.gdxtinyvg.StreamUtils;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.StyleType;
+import java.io.IOException;
 import lombok.Getter;
 
-import java.io.IOException;
-
 public class FlatColoredStyle extends Style {
-    @Getter
-    private int colorIndex;
+    @Getter private int colorIndex;
 
     public FlatColoredStyle(TinyVG tinyVG) {
         super(tinyVG);

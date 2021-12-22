@@ -7,13 +7,10 @@ import dev.lyze.gdxtinyvg.commands.Command;
 import lombok.Getter;
 
 public class TinyVG {
-    @Getter
-    private final TinyVGHeader header;
-    @Getter
-    private final Color[] colorTable;
+    @Getter private final TinyVGHeader header;
+    @Getter private final Color[] colorTable;
 
-    @Getter
-    private final Array<Command> commands = new Array<>();
+    @Getter private final Array<Command> commands = new Array<>();
 
     public TinyVG(TinyVGHeader header, Color[] colorTable) {
         this.header = header;

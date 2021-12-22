@@ -4,12 +4,11 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import dev.lyze.gdxtinyvg.lwjgl.setup.LwjglExtension;
 import dev.lyze.gdxtinyvg.lwjgl.utils.ReturnableRunnable;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(LwjglExtension.class)
@@ -50,7 +49,8 @@ public class LibgdxLwjglUnitTest extends ApplicationAdapter {
         dispose();
     }
 
-    public <T> T runOnOpenGlContext(ReturnableRunnable<T> runnable, long timeout, TimeUnit timeUnit) throws InterruptedException {
+    public <T> T runOnOpenGlContext(ReturnableRunnable<T> runnable, long timeout, TimeUnit timeUnit)
+            throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
         AtomicReference<T> value = new AtomicReference<>();

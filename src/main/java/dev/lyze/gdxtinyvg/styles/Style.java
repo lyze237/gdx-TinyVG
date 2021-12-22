@@ -5,13 +5,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.GradientShapeDrawer;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.Range;
+import java.io.IOException;
 import lombok.Getter;
 
-import java.io.IOException;
-
 public abstract class Style {
-    @Getter
-    private final TinyVG tinyVG;
+    @Getter private final TinyVG tinyVG;
 
     public Style(TinyVG tinyVG) {
         this.tinyVG = tinyVG;

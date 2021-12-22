@@ -15,12 +15,9 @@ import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
-    @Getter
-    private Color startColor = Color.BLACK.cpy(), endColor = Color.WHITE.cpy();
-    @Getter @Setter
-    private StyleType gradientStyle = StyleType.FLAT;
-    @Getter
-    private final Vector2 startPosition = new Vector2(), endPosition = new Vector2();
+    @Getter private Color startColor = Color.BLACK.cpy(), endColor = Color.WHITE.cpy();
+    @Getter @Setter private StyleType gradientStyle = StyleType.FLAT;
+    @Getter private final Vector2 startPosition = new Vector2(), endPosition = new Vector2();
 
     private final ShaderProgram shader;
 
@@ -28,7 +25,9 @@ public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
         super(batch, region);
 
         ShaderProgram.pedantic = false;
-        shader = new ShaderProgram(Gdx.files.internal("shader/vertex.glsl").readString(), Gdx.files.internal("shader/fragment.glsl").readString());
+        shader = new ShaderProgram(Gdx.files.internal("shader/vertex.glsl").readString(),
+                Gdx.files.internal("shader/fragment.glsl").readString());
+
         if (!shader.isCompiled())
             Gdx.app.error("Gradient Shape Drawer", shader.getLog());
     }
