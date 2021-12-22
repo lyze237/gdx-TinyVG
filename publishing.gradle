@@ -1,0 +1,18 @@
+publishing {
+    publications {
+        gdxTinyVG(MavenPublication) {
+            pom {
+                name = "gdx-TinyVG"
+                description = "Libgdx library to load and render TinyVG files."
+                url = "https://github.com/lyze237/gdx-TinyVG"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+            }
+            from components.java
+        }
+    }
+}
