@@ -14,11 +14,11 @@ public class AssetManagerTest extends LibgdxHeadlessUnitTest {
         var assetManager = new AssetManager();
         assetManager.setLoader(TinyVG.class, new TinyVGAssetLoader());
 
-        assetManager.load("twoSquaresWithGradients.tvg", TinyVG.class);
+        assetManager.load("twoSquares.tvg", TinyVG.class);
 
         assetManager.finishLoading();
 
-        var tvg = assetManager.get("twoSquaresWithGradients.tvg", TinyVG.class);
+        var tvg = assetManager.get("twoSquares.tvg", TinyVG.class);
 
         Assertions.assertNotNull(tvg);
     }

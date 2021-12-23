@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.commands.Command;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import lombok.var;
@@ -60,13 +59,14 @@ public class TinyVGAssetLoader extends AsynchronousAssetLoader<TinyVG, TinyVGAss
 
         Command command;
         do {
-            try {
-                command = readCommand(stream, tinyVg);
-                tinyVg.addCommand(command);
-            } catch (EOFException e) {
+            command = readCommand(stream, tinyVg);
+            if (command == null) {
+                // todo change me once everything is implemented throw new
+                // IllegalArgumentException("Unknown command in file");
                 return tinyVg;
             }
-        } while (command == null || command.getType() != CommandType.END_OF_DOCUMENT);
+            tinyVg.addCommand(command);
+        } while (command.getType() != CommandType.END_OF_DOCUMENT);
 
         return tinyVg;
     }

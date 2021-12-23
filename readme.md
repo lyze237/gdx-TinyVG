@@ -112,7 +112,7 @@ https://tinyvg.tech/download/specification.pdf
   - [ ] Fill Polygon
   - [x] Fill Rectangles
   - [ ] Fill Path
-  - [ ] Draw Lines
+  - [x] Draw Lines
   - [ ] Draw Line Loop
   - [ ] Draw Line Strip
   - [ ] Draw Line Path

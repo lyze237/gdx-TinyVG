@@ -5,25 +5,16 @@ import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.TinyVGHeader;
 import dev.lyze.gdxtinyvg.enums.Range;
 import java.io.IOException;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @EqualsAndHashCode
 @ToString
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class UnitRectangle {
     private Unit x, y;
     private Unit width, height;
-
-    public UnitRectangle(Unit x, Unit y, Unit width, Unit height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
 
     public void read(LittleEndianInputStream stream, Range range, int scale) throws IOException {
         x = new Unit(range, scale);
