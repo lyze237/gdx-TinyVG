@@ -39,8 +39,8 @@ public class LinearGradientStyle extends Style {
     public void start(GradientShapeDrawer drawer, Viewport viewport) {
         drawer.setGradientStyle(StyleType.LINEAR);
         drawer.setGradientColors(getTinyVG().getColorTable()[colorIndex1], getTinyVG().getColorTable()[colorIndex2]);
-        drawer.setPositions(point1.getFloatX(), getTinyVG().getHeader().getHeight() - point1.getFloatY(),
-                point2.getFloatX(), getTinyVG().getHeader().getHeight() - point2.getFloatY(), viewport);
+        drawer.setPositions(point1.convertPointX(), point1.convertPointY(getTinyVG().getHeader()),
+                point2.convertPointX(), point2.convertPointY(getTinyVG().getHeader()), viewport);
 
         drawer.applyShaderValues();
     }

@@ -2,10 +2,7 @@ package dev.lyze.gdxtinyvg.enums;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.TinyVG;
-import dev.lyze.gdxtinyvg.commands.Command;
-import dev.lyze.gdxtinyvg.commands.EndOfDocumentCommand;
-import dev.lyze.gdxtinyvg.commands.FillRectanglesCommand;
-import dev.lyze.gdxtinyvg.commands.OutlineFillRectanglesCommand;
+import dev.lyze.gdxtinyvg.commands.*;
 import java.io.IOException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,6 +44,7 @@ public enum CommandType {
             case FILL_PATH:
                 break;
             case DRAW_LINES:
+                command = new DrawLinesCommand(tinyVG);
                 break;
             case DRAW_LINE_LOOP:
                 break;

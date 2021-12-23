@@ -49,14 +49,13 @@ public class OutlineFillRectanglesCommand extends Command {
 
     @Override
     public void draw(GradientShapeDrawer drawer, Viewport viewport) {
-        drawer.setDefaultLineWidth(lineWidth);
         for (Rectangle rectangle : rectangles) {
             fillStyle.start(drawer, viewport);
             drawer.filledRectangle(rectangle);
             fillStyle.end(drawer, viewport);
 
             lineStyle.start(drawer, viewport);
-            drawer.rectangle(rectangle);
+            drawer.rectangle(rectangle, lineWidth);
             lineStyle.end(drawer, viewport);
         }
     }

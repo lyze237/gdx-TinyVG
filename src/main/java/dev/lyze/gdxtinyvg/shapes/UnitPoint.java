@@ -1,25 +1,19 @@
 package dev.lyze.gdxtinyvg.shapes;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
+import dev.lyze.gdxtinyvg.TinyVGHeader;
 import dev.lyze.gdxtinyvg.enums.Range;
 import java.io.IOException;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @EqualsAndHashCode
 @ToString
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UnitPoint {
     private Unit x, y;
-
-    public UnitPoint() {
-    }
-
-    public UnitPoint(Unit x, Unit y) {
-        this.x = x;
-        this.y = y;
-    }
 
     public void read(LittleEndianInputStream stream, Range range, int scale) throws IOException {
         x = new Unit(range, scale);
@@ -29,11 +23,15 @@ public class UnitPoint {
         y.read(stream);
     }
 
-    public float getFloatX() {
+    public Vector2 convertPoint(TinyVGHeader header) {
+        return new Vector2(x.getFloatValue(), header.getHeight() - y.getFloatValue());
+    }
+
+    public float convertPointX() {
         return x.getFloatValue();
     }
 
-    public float getFloatY() {
-        return y.getFloatValue();
+    public float convertPointY(TinyVGHeader header) {
+        return header.getHeight() - y.getFloatValue();
     }
 }
