@@ -14,6 +14,9 @@ import lombok.Setter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+/**
+ * An extension to the {@link ShapeDrawer} which supports drawing objects with a gradient shader.
+ */
 public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
     @Getter private final Color startColor = Color.BLACK.cpy(), endColor = Color.WHITE.cpy();
     @Getter @Setter private StyleType gradientStyle = StyleType.FLAT;
@@ -32,10 +35,16 @@ public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
             Gdx.app.error("Gradient Shape Drawer", shader.getLog());
     }
 
+    /**
+     * Sets the start position of the gradient.
+     */
     public void setStartPosition(Vector2 start) {
         this.startPosition.set(start);
     }
 
+    /**
+     * Sets the end position of the gradient.
+     */
     public void setEndPosition(Vector2 end) {
         this.endPosition.set(end);
     }
@@ -78,6 +87,9 @@ public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
         getBatch().setShader(shader);
     }
 
+    /**
+     * Updates all uniforms in the shader. Call this method when you update position, color or style.
+     */
     public void applyShaderValues() {
         var width = endPosition.x - startPosition.x;
         var height = endPosition.y - startPosition.y;
@@ -94,6 +106,9 @@ public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
         getBatch().setShader(null);
     }
 
+    /**
+     * Sets the gradients colors.
+     */
     public void setGradientColors(Color startColor, Color endColor) {
         this.startColor.set(startColor);
         this.endColor.set(endColor);

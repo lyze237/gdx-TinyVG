@@ -7,12 +7,44 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.var;
 
+/**
+ * The color encoding defines which format the colors in the color table will
+ * have.
+ */
 @AllArgsConstructor
 public enum ColorEncoding {
-    RGBA8888(0), RGB565(1), RGBAF32(2), CUSTOM(3);
+    /**
+     * Each color is a 4-tuple (red, green, blue, alpha) of bytes with the color
+     * channels encoded in sRGB and the alpha as linear alpha.
+     */
+    RGBA8888(0),
+    /**
+     * Each color is encoded as a 3-tuple (red, green, blue) with 16 bit per color.
+     * While red and blue both use 5 bit, the green channel uses 6 bit. red uses bit
+     * range 0...4, green bits 5...10 and blue bits 11...15.
+     */
+    RGB565(1),
+    /**
+     * Each color is a 4-tuple (red, green ,blue, alpha) of binary32 IEEE 754
+     * floating point value with the color channels encoded in sRGB and the alpha as
+     * linear alpha. A color value of 1.0 is full intensity, while a value of 0.0 is
+     * zero intensity.
+     */
+    RGBAF32(2),
+    /**
+     * The custom color encoding is defined undefined. The information how these
+     * colors are encoded must be implemented via external means.
+     */
+    CUSTOM(3);
 
     @Getter private final int value;
 
+    /**
+     * Converts the stored int index to the enum.
+     * 
+     * @param value The index.
+     * @return The enum according to the index.
+     */
     public static ColorEncoding valueOf(int value) {
         for (ColorEncoding encoding : values())
             if (encoding.value == value)
@@ -21,6 +53,12 @@ public enum ColorEncoding {
         throw new IllegalArgumentException(String.valueOf(value));
     }
 
+    /**
+     * Reads a color from a tvg file stream according to the specified encoding.
+     * 
+     * @param stream The appropriately positioned input stream.
+     * @return The color.
+     */
     public Color read(LittleEndianInputStream stream) throws IOException {
         var r = 0f;
         var g = 0f;

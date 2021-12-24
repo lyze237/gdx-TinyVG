@@ -8,5 +8,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UnitLine {
-    private UnitPoint start, end;
+    /**
+     * Start point of the line.
+     */
+    private UnitPoint start;
+    /**
+     * End point of the line.
+     */
+    private UnitPoint end;
 }

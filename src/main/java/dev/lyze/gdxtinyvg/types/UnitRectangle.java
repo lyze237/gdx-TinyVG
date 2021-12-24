@@ -8,6 +8,20 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UnitRectangle {
-    private Unit x, y;
-    private Unit width, height;
+    /**
+     * Horizontal distance of the left side to the origin.
+     */
+    private Unit x;
+    /**
+     * Vertical distance of the upper side to the origin.
+     */
+    private Unit y;
+    /**
+     * Horizontal extent of the rectangle.
+     */
+    private Unit width;
+    /**
+     * Vertical extent of the rectangle origin.
+     */
+    private Unit height;
 }
