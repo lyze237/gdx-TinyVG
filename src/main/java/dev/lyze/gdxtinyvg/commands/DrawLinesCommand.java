@@ -51,10 +51,10 @@ public class DrawLinesCommand extends Command {
 
             lineStyle.start(drawer, viewport);
 
-            drawer.line(start.getX().convert() * scale.x + position.x * scale.x,
-                    getTinyVG().getHeight() - start.getY().convert() * scale.y + position.y * scale.y,
-                    end.getX().convert() * scale.x + position.x * scale.x,
-                    getTinyVG().getHeight() - end.getY().convert() * scale.y + position.y * scale.y,
+            drawer.line(start.getX().convert() * scale.x + position.x,
+                    getTinyVG().getHeight() - start.getY().convert() * scale.y + position.y,
+                    end.getX().convert() * scale.x + position.x,
+                    getTinyVG().getHeight() - end.getY().convert() * scale.y + position.y,
                     lineWidth * getTinyVG().getLineWidthScale());
 
             lineStyle.end(drawer, viewport);

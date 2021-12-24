@@ -45,9 +45,9 @@ public class FillRectanglesCommand extends Command {
 
             fillStyle.start(drawer, viewport);
 
-            drawer.filledRectangle(rectangle.getX().convert() * scale.x + position.x * scale.x,
+            drawer.filledRectangle(rectangle.getX().convert() * scale.x + position.x,
                     getTinyVG().getHeight() - rectangle.getHeight().convert() * scale.y
-                            - rectangle.getY().convert() * scale.y + position.y * scale.y,
+                            - rectangle.getY().convert() * scale.y + position.y,
                     rectangle.getWidth().convert() * scale.x, rectangle.getHeight().convert() * scale.y);
 
             fillStyle.end(drawer, viewport);
