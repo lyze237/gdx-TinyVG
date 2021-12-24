@@ -40,11 +40,11 @@ public class FillRectanglesCommand extends Command {
             fillStyle.start(drawer, viewport);
 
             var header = getTinyVG().getHeader();
-            var offset = getTinyVG().getPosition();
+            var position = getTinyVG().getPosition();
             var scale = getTinyVG().getScale();
 
-            drawer.filledRectangle(rectangle.getX().convert(),
-                    header.getHeight() - rectangle.getHeight().convert() - rectangle.getY().convert(),
+            drawer.filledRectangle(rectangle.getX().convert() + position.x,
+                    header.getHeight() - rectangle.getHeight().convert() - rectangle.getY().convert() + position.y,
                     rectangle.getWidth().convert(), rectangle.getHeight().convert());
 
             fillStyle.end(drawer, viewport);

@@ -44,18 +44,19 @@ public class OutlineFillRectanglesCommand extends Command {
     public void draw(GradientShapeDrawer drawer, Viewport viewport) {
         for (var rectangle : rectangles) {
             var header = getTinyVG().getHeader();
-            var offset = getTinyVG().getPosition();
+
+            var position = getTinyVG().getPosition();
             var scale = getTinyVG().getScale();
 
             fillStyle.start(drawer, viewport);
-            drawer.filledRectangle(rectangle.getX().convert(),
-                    header.getHeight() - rectangle.getHeight().convert() - rectangle.getY().convert(),
+            drawer.filledRectangle(rectangle.getX().convert() + position.x,
+                    header.getHeight() - rectangle.getHeight().convert() - rectangle.getY().convert() + position.y,
                     rectangle.getWidth().convert(), rectangle.getHeight().convert());
             fillStyle.end(drawer, viewport);
 
             lineStyle.start(drawer, viewport);
-            drawer.rectangle(rectangle.getX().convert(),
-                    header.getHeight() - rectangle.getHeight().convert() - rectangle.getY().convert(),
+            drawer.rectangle(rectangle.getX().convert() + position.x,
+                    header.getHeight() - rectangle.getHeight().convert() - rectangle.getY().convert() + position.y,
                     rectangle.getWidth().convert(), rectangle.getHeight().convert(), lineWidth);
             lineStyle.end(drawer, viewport);
         }

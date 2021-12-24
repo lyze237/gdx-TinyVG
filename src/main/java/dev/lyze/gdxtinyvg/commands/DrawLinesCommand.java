@@ -40,16 +40,17 @@ public class DrawLinesCommand extends Command {
     @Override
     public void draw(GradientShapeDrawer drawer, Viewport viewport) {
         for (var line : lines) {
-            lineStyle.start(drawer, viewport);
+            var position = getTinyVG().getPosition();
+            var scale = getTinyVG().getScale();
 
             var header = getTinyVG().getHeader();
             var start = line.getStart();
             var end = line.getEnd();
-            var offset = getTinyVG().getPosition();
-            var scale = getTinyVG().getScale();
 
-            drawer.line(start.getX().convert(), header.getHeight() - start.getY().convert(), end.getX().convert(),
-                    header.getHeight() - end.getY().convert(), lineWidth);
+            lineStyle.start(drawer, viewport);
+
+            drawer.line(start.getX().convert() + position.x, header.getHeight() - start.getY().convert() + position.y,
+                    end.getX().convert() + position.x, header.getHeight() - end.getY().convert() + position.y, lineWidth);
 
             lineStyle.end(drawer, viewport);
         }

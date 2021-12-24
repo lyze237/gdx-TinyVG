@@ -22,7 +22,7 @@ public class TestFileLoadingTest extends LibgdxLwjglUnitTest {
     @Override
     public void create() {
         tvg = new TinyVGAssetLoader().load("test.tvg");
-        // tvg.getPosition().set(100, -100);
+        tvg.getPosition().set(25, -25);
         // tvg.getScale().set(2, 2);
 
         drawer = new GradientShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
