@@ -10,6 +10,9 @@ import dev.lyze.gdxtinyvg.utils.StreamUtils;
 import java.io.IOException;
 import lombok.Getter;
 
+/**
+ * @see StyleType
+ */
 public class FlatColoredStyle extends Style {
     @Getter private int colorIndex;
 

@@ -12,6 +12,9 @@ import dev.lyze.gdxtinyvg.types.UnitRectangle;
 import java.io.IOException;
 import lombok.var;
 
+/**
+ * Fills and outlines a list of rectangles.
+ */
 public class OutlineFillRectanglesCommand extends Command {
     private float lineWidth;
     private Style fillStyle, lineStyle;

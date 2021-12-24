@@ -13,6 +13,9 @@ import dev.lyze.gdxtinyvg.utils.StreamUtils;
 import java.io.IOException;
 import lombok.var;
 
+/**
+ * Fills a list of rectangles.
+ */
 public class FillRectanglesCommand extends Command {
     private Style fillStyle;
     private UnitRectangle[] rectangles;

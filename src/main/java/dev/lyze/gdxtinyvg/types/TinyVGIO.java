@@ -4,6 +4,9 @@ import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.enums.Range;
 import java.io.IOException;
 
+/**
+ * Utility class to read and write TVG Types.
+ */
 public class TinyVGIO {
     public static class Units {
         public static Unit read(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {

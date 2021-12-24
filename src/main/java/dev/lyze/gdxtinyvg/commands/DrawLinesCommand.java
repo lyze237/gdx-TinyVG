@@ -13,6 +13,9 @@ import dev.lyze.gdxtinyvg.utils.StreamUtils;
 import java.io.IOException;
 import lombok.var;
 
+/**
+ * Draws a set of lines.
+ */
 public class DrawLinesCommand extends Command {
     private Style lineStyle;
     private float lineWidth;

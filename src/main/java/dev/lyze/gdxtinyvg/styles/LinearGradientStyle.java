@@ -15,6 +15,9 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.var;
 
+/**
+ * @see StyleType
+ */
 @ToString
 @EqualsAndHashCode(callSuper = false)
 public class LinearGradientStyle extends Style {

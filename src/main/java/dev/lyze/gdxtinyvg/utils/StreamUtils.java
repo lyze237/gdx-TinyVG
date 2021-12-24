@@ -6,6 +6,14 @@ import java.io.IOException;
 import lombok.var;
 
 public class StreamUtils {
+    /**
+     * This type is used to encode 32 bit unsigned integers while keeping the number of bytes low.
+     * It is encoded as a variable-sized integer that uses 7 bit per byte for integer bits and the 7th bit to encode
+     * that there is "more bits available".
+     *
+     * @param stream The appropriately positioned input stream.
+     * @return The actual int value of the VarUInt.
+     */
     public static int readVarUInt(LittleEndianInputStream stream) throws IOException {
         var count = 0;
         var result = 0;
@@ -24,6 +32,12 @@ public class StreamUtils {
         return result;
     }
 
+    /**
+     * Reads multiple consecutive bytes.
+     * @param stream The appropriately positioned input stream.
+     * @param amount How many bytes to read.
+     * @return A byte array of all the read bytes.
+     */
     public static int[] readNBytes(LittleEndianInputStream stream, int amount) throws IOException {
         var bytes = new int[amount];
 
@@ -31,30 +45,5 @@ public class StreamUtils {
             bytes[i] = stream.readUnsignedByte();
 
         return bytes;
-    }
-
-    public static void printRestOfBytes(LittleEndianInputStream stream) {
-        IntArray arr = new IntArray();
-        while (true) {
-            try {
-                arr.add(stream.readUnsignedByte());
-            } catch (Exception e) {
-                break;
-            }
-        }
-
-        for (int i = 0; i < arr.size; i++) {
-            String s = Integer.toBinaryString(arr.get(i));
-            System.out.print("00000000".substring(s.length()) + s + " ");
-        }
-
-        System.out.println();
-        for (int i = 0; i < arr.size; i++) {
-            String s = Integer.toHexString(arr.get(i));
-            if (s.length() == 1)
-                System.out.print("0" + s + " ");
-            else
-                System.out.print(s + " ");
-        }
     }
 }
