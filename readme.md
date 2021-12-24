@@ -93,6 +93,8 @@ https://tinyvg.tech/download/specification.pdf
 
 - [x] Header
 - [x] Color table
+- [x] Scaling
+- [x] Positioning
 - Types
   - [x] Unit
   - [x] VarUInt

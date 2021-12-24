@@ -40,15 +40,15 @@ public class FillRectanglesCommand extends Command {
     @Override
     public void draw(GradientShapeDrawer drawer, Viewport viewport) {
         for (var rectangle : rectangles) {
-            fillStyle.start(drawer, viewport);
-
-            var header = getTinyVG().getHeader();
             var position = getTinyVG().getPosition();
             var scale = getTinyVG().getScale();
 
-            drawer.filledRectangle(rectangle.getX().convert() + position.x,
-                    header.getHeight() - rectangle.getHeight().convert() - rectangle.getY().convert() + position.y,
-                    rectangle.getWidth().convert(), rectangle.getHeight().convert());
+            fillStyle.start(drawer, viewport);
+
+            drawer.filledRectangle(rectangle.getX().convert() * scale.x + position.x * scale.x,
+                    getTinyVG().getHeight() - rectangle.getHeight().convert() * scale.y
+                            - rectangle.getY().convert() * scale.y + position.y * scale.y,
+                    rectangle.getWidth().convert() * scale.x, rectangle.getHeight().convert() * scale.y);
 
             fillStyle.end(drawer, viewport);
         }

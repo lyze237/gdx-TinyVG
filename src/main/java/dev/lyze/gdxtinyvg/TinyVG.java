@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.commands.Command;
 import lombok.Getter;
+import lombok.Setter;
 
 public class TinyVG {
     /**
@@ -35,6 +36,10 @@ public class TinyVG {
      * Global scale value.
      */
     @Getter private final Vector2 scale = new Vector2(1, 1);
+    /**
+     * Global scale value for all line widths. (Independent from scale)
+     */
+    @Getter @Setter private float lineWidthScale = 1;
 
     public TinyVG(TinyVGHeader header, Color[] colorTable) {
         this.header = header;

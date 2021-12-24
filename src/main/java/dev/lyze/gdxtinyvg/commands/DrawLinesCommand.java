@@ -46,15 +46,16 @@ public class DrawLinesCommand extends Command {
             var position = getTinyVG().getPosition();
             var scale = getTinyVG().getScale();
 
-            var header = getTinyVG().getHeader();
             var start = line.getStart();
             var end = line.getEnd();
 
             lineStyle.start(drawer, viewport);
 
-            drawer.line(start.getX().convert() + position.x, header.getHeight() - start.getY().convert() + position.y,
-                    end.getX().convert() + position.x, header.getHeight() - end.getY().convert() + position.y,
-                    lineWidth);
+            drawer.line(start.getX().convert() * scale.x + position.x * scale.x,
+                    getTinyVG().getHeight() - start.getY().convert() * scale.y + position.y * scale.y,
+                    end.getX().convert() * scale.x + position.x * scale.x,
+                    getTinyVG().getHeight() - end.getY().convert() * scale.y + position.y * scale.y,
+                    lineWidth * getTinyVG().getLineWidthScale());
 
             lineStyle.end(drawer, viewport);
         }

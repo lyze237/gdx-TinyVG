@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.GradientShapeDrawer;
 import dev.lyze.gdxtinyvg.TinyVG;
@@ -22,11 +22,11 @@ public class TestFileLoadingTest extends LibgdxLwjglUnitTest {
     @Override
     public void create() {
         tvg = new TinyVGAssetLoader().load("test.tvg");
-        tvg.getPosition().set(25, -25);
-        // tvg.getScale().set(2, 2);
+        tvg.getPosition().set(10, -10);
+        tvg.getScale().set(2, 2);
 
         drawer = new GradientShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
-        viewport = new FitViewport(tvg.getHeader().getWidth(), tvg.getHeader().getHeight());
+        viewport = new ExtendViewport(tvg.getHeader().getWidth() * 2, tvg.getHeader().getHeight() * 2);
     }
 
     @Test
