@@ -15,7 +15,8 @@ import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /**
- * An extension to the {@link ShapeDrawer} which supports drawing objects with a gradient shader.
+ * An extension to the {@link ShapeDrawer} which supports drawing objects with a
+ * gradient shader.
  */
 public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
     @Getter private final Color startColor = Color.BLACK.cpy(), endColor = Color.WHITE.cpy();
@@ -88,7 +89,8 @@ public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
     }
 
     /**
-     * Updates all uniforms in the shader. Call this method when you update position, color or style.
+     * Updates all uniforms in the shader. Call this method when you update
+     * position, color or style.
      */
     public void applyShaderValues() {
         var width = endPosition.x - startPosition.x;
