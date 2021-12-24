@@ -41,7 +41,7 @@ public enum StyleType {
                 throw new IllegalArgumentException("Unknown enum");
         }
 
-        style.read(stream, tinyVG.getHeader().getCoordinateRange(), tinyVG.getHeader().getScale());
+        style.read(stream, tinyVG.getHeader().getCoordinateRange(), tinyVG.getHeader().getFractionBits());
 
         return style;
     }

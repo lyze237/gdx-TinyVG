@@ -31,7 +31,7 @@ public class FillRectanglesCommand extends Command {
 
         rectangles = new UnitRectangle[rectangleCounts];
         for (int i = 0; i < rectangles.length; i++)
-            rectangles[i] = TinyVGIO.Rectangles.read(stream, header.getCoordinateRange(), header.getScale());
+            rectangles[i] = TinyVGIO.Rectangles.read(stream, header.getCoordinateRange(), header.getFractionBits());
     }
 
     @Override

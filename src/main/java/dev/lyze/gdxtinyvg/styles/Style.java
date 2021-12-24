@@ -15,7 +15,7 @@ public abstract class Style {
         this.tinyVG = tinyVG;
     }
 
-    public abstract void read(LittleEndianInputStream stream, Range range, int scale) throws IOException;
+    public abstract void read(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException;
 
     public abstract void start(GradientShapeDrawer drawer, Viewport viewport);
 

@@ -30,11 +30,11 @@ public class DrawLinesCommand extends Command {
 
         lineStyle = primaryStyleType.read(stream, getTinyVG());
 
-        lineWidth = TinyVGIO.Units.read(stream, header.getCoordinateRange(), header.getScale()).convert();
+        lineWidth = TinyVGIO.Units.read(stream, header.getCoordinateRange(), header.getFractionBits()).convert();
 
         lines = new UnitLine[lineCount];
         for (int i = 0; i < lines.length; i++)
-            lines[i] = TinyVGIO.Lines.read(stream, header.getCoordinateRange(), header.getScale());
+            lines[i] = TinyVGIO.Lines.read(stream, header.getCoordinateRange(), header.getFractionBits());
     }
 
     @Override

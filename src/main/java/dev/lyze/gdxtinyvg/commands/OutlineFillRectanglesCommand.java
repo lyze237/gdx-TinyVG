@@ -33,11 +33,11 @@ public class OutlineFillRectanglesCommand extends Command {
         fillStyle = primaryStyleType.read(stream, getTinyVG());
         lineStyle = secondaryStyleType.read(stream, getTinyVG());
 
-        lineWidth = TinyVGIO.Units.read(stream, header.getCoordinateRange(), header.getScale()).convert();
+        lineWidth = TinyVGIO.Units.read(stream, header.getCoordinateRange(), header.getFractionBits()).convert();
 
         rectangles = new UnitRectangle[rectangleCounts];
         for (int i = 0; i < rectangles.length; i++)
-            rectangles[i] = TinyVGIO.Rectangles.read(stream, header.getCoordinateRange(), header.getScale());
+            rectangles[i] = TinyVGIO.Rectangles.read(stream, header.getCoordinateRange(), header.getFractionBits());
     }
 
     @Override

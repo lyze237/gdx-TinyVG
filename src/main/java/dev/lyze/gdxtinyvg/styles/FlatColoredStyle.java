@@ -18,7 +18,7 @@ public class FlatColoredStyle extends Style {
     }
 
     @Override
-    public void read(LittleEndianInputStream stream, Range range, int scale) throws IOException {
+    public void read(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {
         colorIndex = StreamUtils.readVarUInt(stream);
     }
 
