@@ -6,9 +6,9 @@ import dev.lyze.gdxtinyvg.GradientShapeDrawer;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
-import dev.lyze.gdxtinyvg.types.UnitRectangle;
-import dev.lyze.gdxtinyvg.types.TinyVGIO;
 import dev.lyze.gdxtinyvg.styles.Style;
+import dev.lyze.gdxtinyvg.types.TinyVGIO;
+import dev.lyze.gdxtinyvg.types.UnitRectangle;
 import java.io.IOException;
 import lombok.var;
 
