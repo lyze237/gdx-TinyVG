@@ -45,10 +45,10 @@ public class RadialGradientStyle extends Style {
         var position = getTinyVG().getPosition();
         var scale = getTinyVG().getScale();
 
-        drawer.setPositions(point1.getX().convert() * scale.x + position.x * scale.x,
-                getTinyVG().getHeight() - point1.getY().convert() * scale.y + position.y * scale.y,
-                point2.getX().convert() * scale.x + position.x * scale.x,
-                getTinyVG().getHeight() - point2.getY().convert() * scale.y + position.y * scale.y, viewport);
+        drawer.setPositions(point1.getX().convert() * scale.x + position.x,
+                getTinyVG().getHeight() - point1.getY().convert() * scale.y + position.y,
+                point2.getX().convert() * scale.x + position.x,
+                getTinyVG().getHeight() - point2.getY().convert() * scale.y + position.y, viewport);
 
         drawer.applyShaderValues();
     }

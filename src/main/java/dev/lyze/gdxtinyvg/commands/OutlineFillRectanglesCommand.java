@@ -50,16 +50,16 @@ public class OutlineFillRectanglesCommand extends Command {
             var scale = getTinyVG().getScale();
 
             fillStyle.start(drawer, viewport);
-            drawer.filledRectangle(rectangle.getX().convert() * scale.x + position.x * scale.x,
+            drawer.filledRectangle(rectangle.getX().convert() * scale.x + position.x,
                     getTinyVG().getHeight() - rectangle.getHeight().convert() * scale.y
-                            - rectangle.getY().convert() * scale.y + position.y * scale.y,
+                            - rectangle.getY().convert() * scale.y + position.y,
                     rectangle.getWidth().convert() * scale.x, rectangle.getHeight().convert() * scale.y);
             fillStyle.end(drawer, viewport);
 
             lineStyle.start(drawer, viewport);
-            drawer.rectangle(rectangle.getX().convert() * scale.x + position.x * scale.x,
+            drawer.rectangle(rectangle.getX().convert() * scale.x + position.x,
                     getTinyVG().getHeight() - rectangle.getHeight().convert() * scale.y
-                            - rectangle.getY().convert() * scale.y + position.y * scale.y,
+                            - rectangle.getY().convert() * scale.y + position.y,
                     rectangle.getWidth().convert() * scale.x, rectangle.getHeight().convert() * scale.y,
                     lineWidth * getTinyVG().getLineWidthScale());
             lineStyle.end(drawer, viewport);
