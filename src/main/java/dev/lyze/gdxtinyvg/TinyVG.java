@@ -1,6 +1,7 @@
 package dev.lyze.gdxtinyvg;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.commands.Command;
@@ -11,6 +12,9 @@ public class TinyVG {
     @Getter private final Color[] colorTable;
 
     @Getter private final Array<Command> commands = new Array<>();
+
+    @Getter private final Vector2 position = new Vector2();
+    @Getter private final Vector2 scale = new Vector2(1, 1);
 
     public TinyVG(TinyVGHeader header, Color[] colorTable) {
         this.header = header;
@@ -29,5 +33,9 @@ public class TinyVG {
 
     public void addCommand(Command command) {
         this.commands.add(command);
+    }
+
+    public void setSize(float width, float height) {
+        scale.set(width / header.getWidth(), height / header.getHeight());
     }
 }

@@ -1,4 +1,4 @@
-package dev.lyze.gdxtinyvg;
+package dev.lyze.gdxtinyvg.utils;
 
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.LittleEndianInputStream;

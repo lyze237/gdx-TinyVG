@@ -3,21 +3,20 @@ package dev.lyze.gdxtinyvg.commands;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.GradientShapeDrawer;
-import dev.lyze.gdxtinyvg.StreamUtils;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
-import dev.lyze.gdxtinyvg.shapes.Line;
-import dev.lyze.gdxtinyvg.shapes.Unit;
-import dev.lyze.gdxtinyvg.shapes.UnitLine;
+import dev.lyze.gdxtinyvg.types.UnitLine;
+import dev.lyze.gdxtinyvg.types.TinyVGIO;
 import dev.lyze.gdxtinyvg.styles.Style;
+import dev.lyze.gdxtinyvg.utils.StreamUtils;
 import java.io.IOException;
 import lombok.var;
 
 public class DrawLinesCommand extends Command {
     private Style lineStyle;
     private float lineWidth;
-    private Line[] lines;
+    private UnitLine[] lines;
 
     public DrawLinesCommand(TinyVG tinyVG) {
         super(CommandType.DRAW_LINES, tinyVG);
@@ -31,24 +30,27 @@ public class DrawLinesCommand extends Command {
 
         lineStyle = primaryStyleType.read(stream, getTinyVG());
 
-        var lineWidthUnit = new Unit(header.getCoordinateRange(), header.getScale());
-        lineWidthUnit.read(stream);
-        lineWidth = lineWidthUnit.getFloatValue();
+        lineWidth = TinyVGIO.Units.read(stream, header.getCoordinateRange(), header.getScale()).convert();
 
-        lines = new Line[lineCount];
-        for (int i = 0; i < lines.length; i++) {
-            var line = new UnitLine();
-            line.read(stream, header.getCoordinateRange(), header.getScale());
-
-            lines[i] = line.convertLine(header);
-        }
+        lines = new UnitLine[lineCount];
+        for (int i = 0; i < lines.length; i++)
+            lines[i] = TinyVGIO.Lines.read(stream, header.getCoordinateRange(), header.getScale());
     }
 
     @Override
     public void draw(GradientShapeDrawer drawer, Viewport viewport) {
-        for (Line line : lines) {
+        for (var line : lines) {
             lineStyle.start(drawer, viewport);
-            drawer.line(line.getStart(), line.getEnd(), lineWidth);
+
+            var header = getTinyVG().getHeader();
+            var start = line.getStart();
+            var end = line.getEnd();
+            var offset = getTinyVG().getPosition();
+            var scale = getTinyVG().getScale();
+
+            drawer.line(start.getX().convert(), header.getHeight() - start.getY().convert(), end.getX().convert(),
+                    header.getHeight() - end.getY().convert(), lineWidth);
+
             lineStyle.end(drawer, viewport);
         }
     }

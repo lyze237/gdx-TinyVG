@@ -14,14 +14,14 @@ import dev.lyze.gdxtinyvg.lwjgl.LibgdxLwjglUnitTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-public class EverythingFileLoadingTest extends LibgdxLwjglUnitTest {
+public class TestFileLoadingTest extends LibgdxLwjglUnitTest {
     private TinyVG tvg;
     private GradientShapeDrawer drawer;
     private Viewport viewport;
 
     @Override
     public void create() {
-        tvg = new TinyVGAssetLoader().load("everything-32.tvg");
+        tvg = new TinyVGAssetLoader().load("test.tvg");
         // tvg.getPosition().set(100, -100);
         // tvg.getScale().set(2, 2);
 

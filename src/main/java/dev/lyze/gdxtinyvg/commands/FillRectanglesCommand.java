@@ -1,21 +1,21 @@
 package dev.lyze.gdxtinyvg.commands;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.GradientShapeDrawer;
-import dev.lyze.gdxtinyvg.StreamUtils;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
-import dev.lyze.gdxtinyvg.shapes.UnitRectangle;
+import dev.lyze.gdxtinyvg.types.UnitRectangle;
+import dev.lyze.gdxtinyvg.types.TinyVGIO;
 import dev.lyze.gdxtinyvg.styles.Style;
+import dev.lyze.gdxtinyvg.utils.StreamUtils;
 import java.io.IOException;
 import lombok.var;
 
 public class FillRectanglesCommand extends Command {
     private Style fillStyle;
-    private Rectangle[] rectangles;
+    private UnitRectangle[] rectangles;
 
     public FillRectanglesCommand(TinyVG tinyVG) {
         super(CommandType.OUTLINE_FILL_RECTANGLES, tinyVG);
@@ -29,20 +29,24 @@ public class FillRectanglesCommand extends Command {
 
         fillStyle = primaryStyleType.read(stream, getTinyVG());
 
-        rectangles = new Rectangle[rectangleCounts];
-        for (int i = 0; i < rectangles.length; i++) {
-            var rect = new UnitRectangle();
-            rect.read(stream, header.getCoordinateRange(), header.getScale());
-
-            rectangles[i] = rect.convertRectangle(header);
-        }
+        rectangles = new UnitRectangle[rectangleCounts];
+        for (int i = 0; i < rectangles.length; i++)
+            rectangles[i] = TinyVGIO.Rectangles.read(stream, header.getCoordinateRange(), header.getScale());
     }
 
     @Override
     public void draw(GradientShapeDrawer drawer, Viewport viewport) {
-        for (Rectangle rectangle : rectangles) {
+        for (var rectangle : rectangles) {
             fillStyle.start(drawer, viewport);
-            drawer.filledRectangle(rectangle);
+
+            var header = getTinyVG().getHeader();
+            var offset = getTinyVG().getPosition();
+            var scale = getTinyVG().getScale();
+
+            drawer.filledRectangle(rectangle.getX().convert(),
+                    header.getHeight() - rectangle.getHeight().convert() - rectangle.getY().convert(),
+                    rectangle.getWidth().convert(), rectangle.getHeight().convert());
+
             fillStyle.end(drawer, viewport);
         }
     }
