@@ -22,11 +22,12 @@ public class EverythingFileLoadingTest extends LibgdxLwjglUnitTest {
     @Override
     public void create() {
         tvg = new TinyVGAssetLoader().load("everything-32.tvg");
-        // tvg.getPosition().set(100, -100);
-        // tvg.getScale().set(2, 2);
+        tvg.getPosition().set(0, -(tvg.getHeader().getHeight()) / 2f);
+        tvg.getScale().set(2, 2);
+        tvg.setLineWidthScale(2);
 
         drawer = new GradientShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
-        viewport = new FitViewport(tvg.getHeader().getWidth(), tvg.getHeader().getHeight());
+        viewport = new FitViewport(tvg.getHeader().getWidth() * 2, tvg.getHeader().getHeight());
     }
 
     @Test
