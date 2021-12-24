@@ -43,8 +43,9 @@ public class LinearGradientStyle extends Style {
         var position = getTinyVG().getPosition();
         var scale = getTinyVG().getScale();
 
-        drawer.setPositions(point1.getX().convert() + position.x, header.getHeight() - point1.getY().convert() + position.y,
-                point2.getX().convert() + position.x, header.getHeight() - point2.getY().convert() + position.y, viewport);
+        drawer.setPositions(point1.getX().convert() + position.x,
+                header.getHeight() - point1.getY().convert() + position.y, point2.getX().convert() + position.x,
+                header.getHeight() - point2.getY().convert() + position.y, viewport);
 
         drawer.applyShaderValues();
     }

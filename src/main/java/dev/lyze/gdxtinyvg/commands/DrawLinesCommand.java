@@ -50,7 +50,8 @@ public class DrawLinesCommand extends Command {
             lineStyle.start(drawer, viewport);
 
             drawer.line(start.getX().convert() + position.x, header.getHeight() - start.getY().convert() + position.y,
-                    end.getX().convert() + position.x, header.getHeight() - end.getY().convert() + position.y, lineWidth);
+                    end.getX().convert() + position.x, header.getHeight() - end.getY().convert() + position.y,
+                    lineWidth);
 
             lineStyle.end(drawer, viewport);
         }
