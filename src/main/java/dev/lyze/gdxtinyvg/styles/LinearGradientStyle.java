@@ -26,9 +26,9 @@ public class LinearGradientStyle extends Style {
     }
 
     @Override
-    public void read(LittleEndianInputStream stream, Range range, int scale) throws IOException {
-        point1 = TinyVGIO.Points.read(stream, range, scale);
-        point2 = TinyVGIO.Points.read(stream, range, scale);
+    public void read(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {
+        point1 = TinyVGIO.Points.read(stream, range, fractionBits);
+        point2 = TinyVGIO.Points.read(stream, range, fractionBits);
 
         colorIndex1 = StreamUtils.readVarUInt(stream);
         colorIndex2 = StreamUtils.readVarUInt(stream);

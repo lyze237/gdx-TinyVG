@@ -38,4 +38,12 @@ public class TinyVG {
     public void setSize(float width, float height) {
         scale.set(width / header.getWidth(), height / header.getHeight());
     }
+
+    public float getWidth() {
+        return header.getWidth() * scale.x;
+    }
+
+    public float getHeight() {
+        return header.getHeight() * scale.y;
+    }
 }

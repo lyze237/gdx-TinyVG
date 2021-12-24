@@ -14,7 +14,7 @@ import lombok.var;
 public class TinyVGHeader {
     @Getter private int version;
 
-    @Getter private int scale;
+    @Getter private int fractionBits;
     @Getter private ColorEncoding colorEncoding;
     @Getter private Range coordinateRange;
 
@@ -35,11 +35,11 @@ public class TinyVGHeader {
             throw new IllegalStateException("Bad version: " + version + ", expected 1");
 
         // u4, u2, u2
-        var scaleColorCoordinateRange = stream.readUnsignedByte();
+        var fractionBitsColorCoordinateRange = stream.readUnsignedByte();
 
-        scale = (scaleColorCoordinateRange & 0b0000_1111);
-        colorEncoding = ColorEncoding.valueOf((scaleColorCoordinateRange & 0b0011_0000) >> 4);
-        coordinateRange = Range.valueOf((scaleColorCoordinateRange & 0b1100_0000) >> 6);
+        fractionBits = (fractionBitsColorCoordinateRange & 0b0000_1111);
+        colorEncoding = ColorEncoding.valueOf((fractionBitsColorCoordinateRange & 0b0011_0000) >> 4);
+        coordinateRange = Range.valueOf((fractionBitsColorCoordinateRange & 0b1100_0000) >> 6);
 
         width = coordinateRange.read(stream);
         height = coordinateRange.read(stream);
