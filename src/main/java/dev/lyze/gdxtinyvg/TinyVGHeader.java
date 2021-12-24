@@ -3,6 +3,7 @@ package dev.lyze.gdxtinyvg;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.enums.ColorEncoding;
 import dev.lyze.gdxtinyvg.enums.Range;
+import dev.lyze.gdxtinyvg.utils.StreamUtils;
 import java.io.IOException;
 import java.util.Arrays;
 import lombok.EqualsAndHashCode;

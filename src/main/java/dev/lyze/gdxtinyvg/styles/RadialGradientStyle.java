@@ -3,15 +3,17 @@ package dev.lyze.gdxtinyvg.styles;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.GradientShapeDrawer;
-import dev.lyze.gdxtinyvg.StreamUtils;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.StyleType;
-import dev.lyze.gdxtinyvg.shapes.UnitPoint;
+import dev.lyze.gdxtinyvg.types.UnitPoint;
+import dev.lyze.gdxtinyvg.types.TinyVGIO;
+import dev.lyze.gdxtinyvg.utils.StreamUtils;
 import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.var;
 
 @ToString
 @EqualsAndHashCode(callSuper = false)
@@ -25,11 +27,8 @@ public class RadialGradientStyle extends Style {
 
     @Override
     public void read(LittleEndianInputStream stream, Range range, int scale) throws IOException {
-        point1 = new UnitPoint();
-        point1.read(stream, range, scale);
-
-        point2 = new UnitPoint();
-        point2.read(stream, range, scale);
+        point1 = TinyVGIO.Points.read(stream, range, scale);
+        point2 = TinyVGIO.Points.read(stream, range, scale);
 
         colorIndex1 = StreamUtils.readVarUInt(stream);
         colorIndex2 = StreamUtils.readVarUInt(stream);
@@ -39,8 +38,13 @@ public class RadialGradientStyle extends Style {
     public void start(GradientShapeDrawer drawer, Viewport viewport) {
         drawer.setGradientStyle(StyleType.RADIAL);
         drawer.setGradientColors(getTinyVG().getColorTable()[colorIndex1], getTinyVG().getColorTable()[colorIndex2]);
-        drawer.setPositions(point1.convertPointX(), point1.convertPointY(getTinyVG().getHeader()),
-                point2.convertPointX(), point2.convertPointY(getTinyVG().getHeader()), viewport);
+
+        var header = getTinyVG().getHeader();
+        var offset = getTinyVG().getPosition();
+        var scale = getTinyVG().getScale();
+
+        drawer.setPositions(point1.getX().convert(), header.getHeight() - point1.getY().convert(),
+                point2.getX().convert(), header.getHeight() - point2.getY().convert(), viewport);
 
         drawer.applyShaderValues();
     }
