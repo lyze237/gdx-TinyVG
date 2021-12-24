@@ -1,15 +1,15 @@
 package dev.lyze.gdxtinyvg.utils;
 
-import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import java.io.IOException;
 import lombok.var;
 
 public class StreamUtils {
     /**
-     * This type is used to encode 32 bit unsigned integers while keeping the number of bytes low.
-     * It is encoded as a variable-sized integer that uses 7 bit per byte for integer bits and the 7th bit to encode
-     * that there is "more bits available".
+     * This type is used to encode 32 bit unsigned integers while keeping the number
+     * of bytes low. It is encoded as a variable-sized integer that uses 7 bit per
+     * byte for integer bits and the 7th bit to encode that there is "more bits
+     * available".
      *
      * @param stream The appropriately positioned input stream.
      * @return The actual int value of the VarUInt.
@@ -34,6 +34,7 @@ public class StreamUtils {
 
     /**
      * Reads multiple consecutive bytes.
+     * 
      * @param stream The appropriately positioned input stream.
      * @param amount How many bytes to read.
      * @return A byte array of all the read bytes.
