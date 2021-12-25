@@ -14,15 +14,14 @@ import java.io.IOException;
 import lombok.var;
 
 /**
- * Draws a list of consecutive lines
+ * Fills a polygon with N points
  */
-public class DrawLineStripCommand extends Command {
+public class FillPolygonCommand extends Command {
     private Style lineStyle;
-    private float lineWidth;
     private UnitPoint[] points;
 
-    public DrawLineStripCommand(TinyVG tinyVG) {
-        super(CommandType.DRAW_LINE_LOOP, tinyVG);
+    public FillPolygonCommand(TinyVG tinyVG) {
+        super(CommandType.FILL_POLYGON, tinyVG);
     }
 
     @Override
@@ -32,8 +31,6 @@ public class DrawLineStripCommand extends Command {
         var pointCount = StreamUtils.readVarUInt(stream) + 1;
 
         lineStyle = primaryStyleType.read(stream, getTinyVG());
-
-        lineWidth = TinyVGIO.Units.read(stream, header.getCoordinateRange(), header.getFractionBits()).convert();
 
         points = new UnitPoint[pointCount];
         for (int i = 0; i < points.length; i++)
@@ -53,7 +50,7 @@ public class DrawLineStripCommand extends Command {
             vertices[v + 1] = getTinyVG().getHeight() - points[p].getY().convert() * scale.y + position.y;
         }
 
-        drawer.path(vertices, lineWidth * getTinyVG().getLineWidthScale(), true);
+        drawer.filledPolygon(vertices);
 
         lineStyle.end(drawer, viewport);
     }

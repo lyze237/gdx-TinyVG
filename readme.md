@@ -111,7 +111,7 @@ https://tinyvg.tech/download/specification.pdf
   - [ ] Quadratic Bezier
 - Commands
   - [x] End of Document
-  - [ ] Fill Polygon
+  - [x] Fill Polygon
   - [x] Fill Rectangles
   - [ ] Fill Path
   - [x] Draw Lines

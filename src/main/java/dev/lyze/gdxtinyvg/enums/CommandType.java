@@ -96,6 +96,7 @@ public enum CommandType {
                 command = new EndOfDocumentCommand(tinyVG);
                 break;
             case FILL_POLYGON:
+                command = new FillPolygonCommand(tinyVG);
                 break;
             case FILL_RECTANGLE:
                 command = new FillRectanglesCommand(tinyVG);
