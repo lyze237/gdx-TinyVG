@@ -102,6 +102,7 @@ https://tinyvg.tech/download/specification.pdf
   - [x] Rectangle
   - [ ] Path
   - [ ] Line
+  - [x] Line Loop
   - [ ] Horizontal Line
   - [ ] Vertical Line
   - [ ] Cubic Bezier
