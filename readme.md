@@ -102,7 +102,6 @@ https://tinyvg.tech/download/specification.pdf
   - [x] Rectangle
   - [ ] Path
   - [ ] Line
-  - [x] Line Loop
   - [ ] Horizontal Line
   - [ ] Vertical Line
   - [ ] Cubic Bezier
@@ -116,8 +115,8 @@ https://tinyvg.tech/download/specification.pdf
   - [x] Fill Rectangles
   - [ ] Fill Path
   - [x] Draw Lines
-  - [ ] Draw Line Loop
-  - [ ] Draw Line Strip
+  - [x] Draw Line Loop
+  - [x] Draw Line Strip
   - [ ] Draw Line Path
   - [ ] Outline Fill Polygon
   - [x] Outline Fill Rectangles
