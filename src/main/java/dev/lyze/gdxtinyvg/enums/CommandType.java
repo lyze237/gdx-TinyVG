@@ -106,6 +106,7 @@ public enum CommandType {
                 command = new DrawLinesCommand(tinyVG);
                 break;
             case DRAW_LINE_LOOP:
+                command = new DrawLineLoopCommand(tinyVG);
                 break;
             case DRAW_LINE_STRIP:
                 break;

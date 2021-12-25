@@ -12,6 +12,7 @@ import dev.lyze.gdxtinyvg.enums.StyleType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.var;
+import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /**
@@ -114,6 +115,10 @@ public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
     public void setGradientColors(Color startColor, Color endColor) {
         this.startColor.set(startColor);
         this.endColor.set(endColor);
+    }
+
+    public void polygon(float[] vertices, float lineWidth) {
+        polygon(vertices, lineWidth, isJoinNecessary(lineWidth) ? JoinType.POINTY : JoinType.NONE);
     }
 
     @Override

@@ -15,15 +15,15 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class TestFileLoadingTest extends LibgdxLwjglUnitTest {
-    private TinyVG tvg;
+    private TinyVG tvg, tvgScaled;
     private GradientShapeDrawer drawer;
     private Viewport viewport;
 
     @Override
     public void create() {
         tvg = new TinyVGAssetLoader().load("test.tvg");
-        tvg.getPosition().set(10, -10);
-        tvg.getScale().set(2, 2);
+        tvgScaled = new TinyVGAssetLoader().load("test.tvg");
+        tvgScaled.getScale().set(2, 2);
 
         drawer = new GradientShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
         viewport = new ExtendViewport(tvg.getHeader().getWidth() * 2, tvg.getHeader().getHeight() * 2);
@@ -47,6 +47,7 @@ public class TestFileLoadingTest extends LibgdxLwjglUnitTest {
         drawer.setColor(Color.WHITE);
         drawer.filledRectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         tvg.draw(drawer, viewport);
+        tvgScaled.draw(drawer, viewport);
         drawer.getBatch().end();
     }
 

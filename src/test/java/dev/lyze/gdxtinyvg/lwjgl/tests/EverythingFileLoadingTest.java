@@ -15,19 +15,20 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class EverythingFileLoadingTest extends LibgdxLwjglUnitTest {
-    private TinyVG tvg;
+    private TinyVG tvg, tvgScaled;
     private GradientShapeDrawer drawer;
     private Viewport viewport;
 
     @Override
     public void create() {
         tvg = new TinyVGAssetLoader().load("everything-32.tvg");
-        tvg.getPosition().set(0, -(tvg.getHeader().getHeight()) / 2f);
-        tvg.getScale().set(2, 2);
-        tvg.setLineWidthScale(2);
+        tvgScaled = new TinyVGAssetLoader().load("everything-32.tvg");
+        tvgScaled.getScale().set(2, 2);
+        tvgScaled.getPosition().set(tvg.getWidth(), 0);
+        tvgScaled.setLineWidthScale(2);
 
         drawer = new GradientShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
-        viewport = new FitViewport(tvg.getHeader().getWidth() * 2, tvg.getHeader().getHeight());
+        viewport = new FitViewport(tvg.getWidth() + tvgScaled.getWidth(), tvgScaled.getHeight());
     }
 
     @Test
@@ -48,6 +49,7 @@ public class EverythingFileLoadingTest extends LibgdxLwjglUnitTest {
         drawer.setColor(Color.WHITE);
         drawer.filledRectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         tvg.draw(drawer, viewport);
+        tvgScaled.draw(drawer, viewport);
         drawer.getBatch().end();
     }
 
