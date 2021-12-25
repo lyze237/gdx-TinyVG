@@ -117,8 +117,8 @@ public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
         this.endColor.set(endColor);
     }
 
-    public void polygon(float[] vertices, float lineWidth) {
-        polygon(vertices, lineWidth, isJoinNecessary(lineWidth) ? JoinType.POINTY : JoinType.NONE);
+    public void path(float[] vertices, float lineWidth, boolean open) {
+        path(vertices, lineWidth, isJoinNecessary(lineWidth) ? JoinType.POINTY : JoinType.NONE, open);
     }
 
     @Override

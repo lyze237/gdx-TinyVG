@@ -16,12 +16,12 @@ import lombok.var;
 /**
  * Draws a set of lines.
  */
-public class DrawLineLoopCommand extends Command {
+public class DrawLineStripCommand extends Command {
     private Style lineStyle;
     private float lineWidth;
     private UnitPoint[] points;
 
-    public DrawLineLoopCommand(TinyVG tinyVG) {
+    public DrawLineStripCommand(TinyVG tinyVG) {
         super(CommandType.DRAW_LINE_LOOP, tinyVG);
     }
 
@@ -53,7 +53,7 @@ public class DrawLineLoopCommand extends Command {
             vertices[v + 1] = getTinyVG().getHeight() - points[p].getY().convert() * scale.y + position.y;
         }
 
-        drawer.path(vertices, lineWidth * getTinyVG().getLineWidthScale(), false);
+        drawer.path(vertices, lineWidth * getTinyVG().getLineWidthScale(), true);
 
         lineStyle.end(drawer, viewport);
     }
