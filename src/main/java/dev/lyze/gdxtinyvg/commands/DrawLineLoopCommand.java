@@ -14,7 +14,7 @@ import java.io.IOException;
 import lombok.var;
 
 /**
- * Draws a set of lines.
+ * Draws a polygon.
  */
 public class DrawLineLoopCommand extends Command {
     private Style lineStyle;
