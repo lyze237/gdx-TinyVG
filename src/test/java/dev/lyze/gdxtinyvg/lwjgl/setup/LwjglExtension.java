@@ -28,6 +28,7 @@ public class LwjglExtension extends BaseLwjglExtension {
         config.vSyncEnabled = true;
         config.width = 1280;
         config.height = 720;
+        config.stencil = 2;
 
         application = new LwjglApplication(wrapper, config);
 

@@ -15,15 +15,15 @@ import dev.lyze.gdxtinyvg.lwjgl.LibgdxLwjglUnitTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-public class EverythingFileLoadingTest extends LibgdxLwjglUnitTest {
+public class ShieldFileLoadingTest extends LibgdxLwjglUnitTest {
     private TinyVG tvg, tvgScaled;
     private TinyVGShapeDrawer drawer;
     private Viewport viewport;
 
     @Override
     public void create() {
-        tvg = new TinyVGAssetLoader().load("everything-32.tvg");
-        tvgScaled = new TinyVGAssetLoader().load("everything-32.tvg");
+        tvg = new TinyVGAssetLoader().load("shield.tvg");
+        tvgScaled = new TinyVGAssetLoader().load("shield.tvg");
         tvgScaled.getScale().set(2, 2);
         tvgScaled.getPosition().set(tvg.getWidth(), 0);
         tvgScaled.setLineWidthScale(2);
@@ -44,15 +44,13 @@ public class EverythingFileLoadingTest extends LibgdxLwjglUnitTest {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_STENCIL_BUFFER_BIT);
 
         viewport.apply();
-
         drawer.getBatch().setProjectionMatrix(viewport.getCamera().combined);
 
         drawer.getBatch().begin();
-        drawer.filledRectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight(), Color.WHITE);
-
+        drawer.setColor(Color.WHITE);
+        drawer.filledRectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         tvg.draw(drawer, viewport);
         tvgScaled.draw(drawer, viewport);
-
         drawer.getBatch().end();
     }
 

@@ -24,6 +24,11 @@ public class UnitPoint {
      */
     private Unit y;
 
+    public UnitPoint(UnitPoint point) {
+        x = new Unit(point.x);
+        y = new Unit(point.y);
+    }
+
     /**
      * @return Converts x and y coordinates of the Unit into a Vector2. Instantiates
      *         a new vector.

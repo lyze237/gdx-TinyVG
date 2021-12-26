@@ -4,10 +4,7 @@ import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.enums.FractionBits;
 import dev.lyze.gdxtinyvg.enums.Range;
 import java.io.IOException;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * The unit is the common type for both positions and sizes in the vector
@@ -16,6 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @EqualsAndHashCode
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Unit {
@@ -25,6 +23,12 @@ public class Unit {
 
     public Unit(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {
         this(range.read(stream), range, fractionBits);
+    }
+
+    public Unit(Unit unit) {
+        this.value = unit.value;
+        this.range = unit.range;
+        this.fractionBits = unit.fractionBits;
     }
 
     /**
