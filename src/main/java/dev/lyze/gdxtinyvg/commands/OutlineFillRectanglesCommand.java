@@ -2,9 +2,9 @@ package dev.lyze.gdxtinyvg.commands;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.lyze.gdxtinyvg.GradientShapeDrawer;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.headers.OutlineFillHeader;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.types.UnitRectangle;
@@ -27,24 +27,14 @@ public class OutlineFillRectanglesCommand extends Command {
     }
 
     @Override
-    public void draw(GradientShapeDrawer drawer, Viewport viewport) {
+    public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
         for (var rectangle : header.getData()) {
-            var position = getTinyVG().getPosition();
-            var scale = getTinyVG().getScale();
-
             header.getPrimaryStyle().start(drawer, viewport);
-            drawer.filledRectangle(rectangle.getX().convert() * scale.x + position.x,
-                    getTinyVG().getHeight() - rectangle.getHeight().convert() * scale.y
-                            - rectangle.getY().convert() * scale.y + position.y,
-                    rectangle.getWidth().convert() * scale.x, rectangle.getHeight().convert() * scale.y);
+            drawer.filledRectangle(rectangle, getTinyVG());
             header.getPrimaryStyle().end(drawer, viewport);
 
             header.getSecondaryStyle().start(drawer, viewport);
-            drawer.rectangle(rectangle.getX().convert() * scale.x + position.x,
-                    getTinyVG().getHeight() - rectangle.getHeight().convert() * scale.y
-                            - rectangle.getY().convert() * scale.y + position.y,
-                    rectangle.getWidth().convert() * scale.x, rectangle.getHeight().convert() * scale.y,
-                    header.getLineWidth() * getTinyVG().getLineWidthScale());
+            drawer.rectangle(rectangle, header.getLineWidth(), getTinyVG());
             header.getSecondaryStyle().end(drawer, viewport);
         }
     }

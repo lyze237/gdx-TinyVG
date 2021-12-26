@@ -7,16 +7,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.lyze.gdxtinyvg.GradientShapeDrawer;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.TinyVGAssetLoader;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.lwjgl.LibgdxLwjglUnitTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class TestFileLoadingTest extends LibgdxLwjglUnitTest {
     private TinyVG tvg, tvgScaled;
-    private GradientShapeDrawer drawer;
+    private TinyVGShapeDrawer drawer;
     private Viewport viewport;
 
     @Override
@@ -25,7 +25,7 @@ public class TestFileLoadingTest extends LibgdxLwjglUnitTest {
         tvgScaled = new TinyVGAssetLoader().load("test.tvg");
         tvgScaled.getScale().set(2, 2);
 
-        drawer = new GradientShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
+        drawer = new TinyVGShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
         viewport = new ExtendViewport(tvg.getHeader().getWidth() * 2, tvg.getHeader().getHeight() * 2);
     }
 
