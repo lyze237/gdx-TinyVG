@@ -1,7 +1,9 @@
 package dev.lyze.gdxtinyvg.types;
 
+import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.enums.FractionBits;
 import dev.lyze.gdxtinyvg.enums.Range;
+import java.io.IOException;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,6 +22,10 @@ public class Unit {
     private int value;
     private Range range;
     private int fractionBits;
+
+    public Unit(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {
+        this(range.read(stream), range, fractionBits);
+    }
 
     /**
      * @return Returns the actual float value.

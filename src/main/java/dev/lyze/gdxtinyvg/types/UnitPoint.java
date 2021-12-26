@@ -1,6 +1,9 @@
 package dev.lyze.gdxtinyvg.types;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.LittleEndianInputStream;
+import dev.lyze.gdxtinyvg.enums.Range;
+import java.io.IOException;
 import lombok.*;
 
 /**
@@ -35,5 +38,9 @@ public class UnitPoint {
      */
     public Vector2 convert(Vector2 storage) {
         return storage.set(x.convert(), y.convert());
+    }
+
+    public UnitPoint(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {
+        this(new Unit(stream, range, fractionBits), new Unit(stream, range, fractionBits));
     }
 }

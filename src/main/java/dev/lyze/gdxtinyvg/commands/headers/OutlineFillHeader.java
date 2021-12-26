@@ -6,6 +6,7 @@ import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.styles.Style;
 import dev.lyze.gdxtinyvg.types.TinyVGIO;
+import dev.lyze.gdxtinyvg.types.Unit;
 import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,8 +33,8 @@ public class OutlineFillHeader<TData> extends CommandHeader<TData> {
         primaryStyle = primaryStyleType.read(stream, tinyVG);
         secondaryStyle = secondaryStyleType.read(stream, tinyVG);
 
-        lineWidth = TinyVGIO.Units
-                .read(stream, tinyVG.getHeader().getCoordinateRange(), tinyVG.getHeader().getFractionBits()).convert();
+        lineWidth = new Unit(stream, tinyVG.getHeader().getCoordinateRange(), tinyVG.getHeader().getFractionBits())
+                .convert();
 
         data = new Array<>(rectangleCounts);
 

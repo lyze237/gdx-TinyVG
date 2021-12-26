@@ -1,5 +1,8 @@
 package dev.lyze.gdxtinyvg.types;
 
+import com.badlogic.gdx.utils.LittleEndianInputStream;
+import dev.lyze.gdxtinyvg.enums.Range;
+import java.io.IOException;
 import lombok.*;
 
 @EqualsAndHashCode
@@ -16,4 +19,8 @@ public class UnitLine {
      * End point of the line.
      */
     private UnitPoint end;
+
+    public UnitLine(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {
+        this(new UnitPoint(stream, range, fractionBits), new UnitPoint(stream, range, fractionBits));
+    }
 }
