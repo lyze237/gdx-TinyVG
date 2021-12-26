@@ -118,7 +118,7 @@ https://tinyvg.tech/download/specification.pdf
   - [x] Draw Line Loop
   - [x] Draw Line Strip
   - [ ] Draw Line Path
-  - [ ] Outline Fill Polygon
+  - [x] Outline Fill Polygon
   - [x] Outline Fill Rectangles
   - [ ] Outline Fill Path
 - Styles

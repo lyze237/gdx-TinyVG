@@ -3,9 +3,10 @@ package dev.lyze.gdxtinyvg.enums;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.*;
-import java.io.IOException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.io.IOException;
 
 /**
  * TinyVG files contain a sequence of draw commands that must be executed in the
@@ -115,6 +116,7 @@ public enum CommandType {
             case DRAW_LINE_PATH:
                 break;
             case OUTLINE_FILL_POLYGON:
+                command = new OutlineFillPolygonCommand(tinyVG);
                 break;
             case OUTLINE_FILL_RECTANGLES:
                 command = new OutlineFillRectanglesCommand(tinyVG);
