@@ -1,4 +1,4 @@
-package dev.lyze.gdxtinyvg;
+package dev.lyze.gdxtinyvg.drawers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,7 +12,6 @@ import dev.lyze.gdxtinyvg.enums.StyleType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.var;
-import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /**
@@ -115,10 +114,6 @@ public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
     public void setGradientColors(Color startColor, Color endColor) {
         this.startColor.set(startColor);
         this.endColor.set(endColor);
-    }
-
-    public void path(float[] vertices, float lineWidth, boolean open) {
-        path(vertices, lineWidth, isJoinNecessary(lineWidth) ? JoinType.POINTY : JoinType.NONE, open);
     }
 
     @Override

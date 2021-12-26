@@ -2,8 +2,8 @@ package dev.lyze.gdxtinyvg.styles;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.lyze.gdxtinyvg.GradientShapeDrawer;
 import dev.lyze.gdxtinyvg.TinyVG;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.types.TinyVGIO;
@@ -38,7 +38,7 @@ public class LinearGradientStyle extends Style {
     }
 
     @Override
-    public void start(GradientShapeDrawer drawer, Viewport viewport) {
+    public void start(TinyVGShapeDrawer drawer, Viewport viewport) {
         drawer.setGradientStyle(StyleType.LINEAR);
         drawer.setGradientColors(getTinyVG().getColorTable()[colorIndex1], getTinyVG().getColorTable()[colorIndex2]);
 

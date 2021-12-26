@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.commands.Command;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -46,7 +47,7 @@ public class TinyVG {
         this.colorTable = colorTable;
     }
 
-    public void draw(GradientShapeDrawer drawer, Viewport viewport) {
+    public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
         drawer.setColor(Color.WHITE);
         drawer.beginShader();
         for (Command command : commands) {

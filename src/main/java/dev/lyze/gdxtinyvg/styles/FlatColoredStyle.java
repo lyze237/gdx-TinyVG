@@ -2,8 +2,8 @@ package dev.lyze.gdxtinyvg.styles;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.lyze.gdxtinyvg.GradientShapeDrawer;
 import dev.lyze.gdxtinyvg.TinyVG;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.utils.StreamUtils;
@@ -26,7 +26,7 @@ public class FlatColoredStyle extends Style {
     }
 
     @Override
-    public void start(GradientShapeDrawer drawer, Viewport viewport) {
+    public void start(TinyVGShapeDrawer drawer, Viewport viewport) {
         drawer.setGradientColors(getTinyVG().getColorTable()[colorIndex], getTinyVG().getColorTable()[colorIndex]);
         drawer.setGradientStyle(StyleType.FLAT);
         drawer.applyShaderValues();

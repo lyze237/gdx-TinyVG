@@ -2,14 +2,13 @@ package dev.lyze.gdxtinyvg.commands;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.lyze.gdxtinyvg.GradientShapeDrawer;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.headers.FillHeader;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
 import java.io.IOException;
-import lombok.var;
 
 /**
  * Fills a polygon with N points
@@ -30,19 +29,9 @@ public class FillPolygonCommand extends Command {
     }
 
     @Override
-    public void draw(GradientShapeDrawer drawer, Viewport viewport) {
-        var position = getTinyVG().getPosition();
-        var scale = getTinyVG().getScale();
-
+    public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
         header.getPrimaryStyle().start(drawer, viewport);
-
-        for (int p = 0, v = 0; p < header.getData().size; p++, v += 2) {
-            vertices[v] = header.getData().get(p).getX().convert() * scale.x + position.x;
-            vertices[v + 1] = getTinyVG().getHeight() - header.getData().get(p).getY().convert() * scale.y + position.y;
-        }
-
-        drawer.filledPolygon(vertices);
-
+        drawer.filledPolygon(header.getData(), vertices, getTinyVG());
         header.getPrimaryStyle().end(drawer, viewport);
     }
 }
