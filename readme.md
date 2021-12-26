@@ -30,6 +30,27 @@ Therefore, you are able to manually edit the file and add gradients that way if 
 ```
 3. Set it up in java
 ```java
+public class Lwjgl3Launcher {
+  public static void main(String[] args) {
+    createApplication();
+  }
+
+  private static Lwjgl3Application createApplication() {
+    return new Lwjgl3Application(new Main(), getDefaultConfiguration());
+  }
+
+  private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
+    Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
+    // By default, stencils are disabled, we need those though. So let's enable them here (It's the 6th value. Change that to >= 2).
+    configuration.setBackBufferConfig(8, 8, 8, 8, 16, 2, 0);
+    // ...
+
+    // In a legacy desktop project it's:
+    config.stencils = 2; // >= 2
+    return configuration;
+  }
+}
+
 public class Example extends ApplicationAdapter {
   private TinyVG tvg;
   private GradientShapeDrawer drawer;
@@ -47,7 +68,8 @@ public class Example extends ApplicationAdapter {
   }
 
   public void render() {
-    ScreenUtils.clear(Color.BLACK);
+    Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_STENCIL_BUFFER_BIT); // GL20.GL_STENCIL_BUFFER_BIT is very important
 
     viewport.apply();
 
@@ -113,7 +135,7 @@ https://tinyvg.tech/download/specification.pdf
   - [x] End of Document
   - [x] Fill Polygon
   - [x] Fill Rectangles
-  - [ ] Fill Path
+  - [x] Fill Path
   - [x] Draw Lines
   - [x] Draw Line Loop
   - [x] Draw Line Strip
@@ -174,6 +196,12 @@ implementation "com.github.lyze237:gdx-TinyVG:$gdxTinyVGVersion:sources"
 
 <inherits name="dev.lyze.tinyvg"/>
 ```
+
+## Help
+
+* Fill paths are displayed garbled
+  * Make sure to set `| GL20.GL_STENCIL_BUFFER_BIT` in your clear method. See [example](#example).
+  * Make sure to have `config.stencil` enabled and set to >= 2 in your launcher configuration.
 
 ## How to test
 
