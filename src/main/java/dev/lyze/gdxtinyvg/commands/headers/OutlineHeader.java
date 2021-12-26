@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.types.TinyVGIO;
+import dev.lyze.gdxtinyvg.types.Unit;
 import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,8 +23,8 @@ public class OutlineHeader<TData> extends CommandHeader<TData> {
             throws IOException {
         super.read(stream, primaryStyleType, tinyVG);
 
-        lineWidth = TinyVGIO.Units
-                .read(stream, tinyVG.getHeader().getCoordinateRange(), tinyVG.getHeader().getFractionBits()).convert();
+        lineWidth = new Unit(stream, tinyVG.getHeader().getCoordinateRange(), tinyVG.getHeader().getFractionBits())
+                .convert();
 
         for (int i = 0; i < data.items.length; i++)
             data.add(TinyVGIO.read(getClazz(), stream, tinyVG.getHeader().getCoordinateRange(),

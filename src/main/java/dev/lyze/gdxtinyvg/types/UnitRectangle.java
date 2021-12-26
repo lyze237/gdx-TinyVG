@@ -1,5 +1,8 @@
 package dev.lyze.gdxtinyvg.types;
 
+import com.badlogic.gdx.utils.LittleEndianInputStream;
+import dev.lyze.gdxtinyvg.enums.Range;
+import java.io.IOException;
 import lombok.*;
 
 @EqualsAndHashCode
@@ -24,4 +27,9 @@ public class UnitRectangle {
      * Vertical extent of the rectangle origin.
      */
     private Unit height;
+
+    public UnitRectangle(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {
+        this(new Unit(stream, range, fractionBits), new Unit(stream, range, fractionBits),
+                new Unit(stream, range, fractionBits), new Unit(stream, range, fractionBits));
+    }
 }
