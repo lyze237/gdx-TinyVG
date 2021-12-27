@@ -1,6 +1,21 @@
+task delombokedSourcesJars(type: Jar, dependsOn: classes) {
+    from sourceSets.main.delombokTask {
+        include "**/*.java"
+        filter { String line -> line.replaceAll('^\\s*import lombok\\..*$', '') }
+    }
+    from('src/main/resources') {
+        include '**/*'
+    }
+    archiveClassifier.set("sources")
+}
+
+javadoc {
+    source = sourceSets.main.delombokTask
+    failOnError = false
+}
+
 java {
     withJavadocJar()
-    withSourcesJar()
 }
 
 publishing {
@@ -18,6 +33,7 @@ publishing {
                 }
             }
             from components.java
+            artifact delombokedSourcesJars
         }
     }
 }

@@ -11,7 +11,7 @@ buildscript {
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'io.franzbecker.gradle-lombok' version '5.0.0'
+    id 'io.freefair.lombok' version '6.3.0'
     id 'com.diffplug.spotless' version '6.0.5'
 }
 
@@ -108,26 +108,6 @@ test {
             excludeTags 'lwjgl'
         }
     }
-}
-
-import io.franzbecker.gradle.lombok.task.DelombokTask
-
-task delombok(type: DelombokTask, dependsOn: compileJava) {
-    ext.outputDir = file("$buildDir/delombok")
-    outputs.dir(outputDir)
-    sourceSets.main.java.srcDirs.each {
-        inputs.dir(it)
-        args(it, "-d", outputDir)
-    }
-    doFirst {
-        outputDir.deleteDir()
-    }
-}
-
-javadoc {
-    dependsOn delombok
-    source = delombok.outputDir
-    failOnError = false
 }
 
 compileJava {

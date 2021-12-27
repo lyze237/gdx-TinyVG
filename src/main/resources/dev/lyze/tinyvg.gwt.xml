@@ -3,4 +3,5 @@
 <module>
     <source path="" />
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
+    <inherits name="space.earlygrey.shapedrawer" />
 </module>

@@ -60,7 +60,7 @@ vec4 radialGradient() {
     float len_total = length(u_startPosition - u_endPosition);
     float len_arc = length(u_startPosition - gl_FragCoord.xy);
 
-    float f = clamp(len_arc, 0, len_total) / len_total;
+    float f = clamp(len_arc, 0.0, len_total) / len_total;
 
     return mix(u_startColor, u_endColor, f);
 }
@@ -72,21 +72,14 @@ vec4 linear2gamma(vec4 color) {
 void main() {
     vec4 result;
 
-    switch (u_style)
-    {
-        case 0:
-            result = flatColor();
-            break;
-        case 1:
-            result = linearGradient();
-        break;
-            case 2:
-            result = radialGradient();
-            break;
-        default:
-            result = vec4(1, 0, 1, 1);
-            break;
-    }
+    if (u_style == 0)
+        result = flatColor();
+    else if (u_style == 1)
+        result = linearGradient();
+    else if (u_style == 2)
+        result = radialGradient();
+    else
+        result = vec4(1, 0, 1, 1);
 
     gl_FragColor = linear2gamma(result);
 }

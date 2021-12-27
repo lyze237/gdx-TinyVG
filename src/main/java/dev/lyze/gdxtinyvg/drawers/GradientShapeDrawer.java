@@ -29,8 +29,7 @@ public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
         super(batch, region);
 
         ShaderProgram.pedantic = false; // todo remove
-        shader = new ShaderProgram(Gdx.files.internal("shader/vertex.glsl").readString(),
-                Gdx.files.internal("shader/fragment.glsl").readString());
+        shader = new ShaderProgram(ShaderFile.vertex, ShaderFile.fragment);
 
         if (!shader.isCompiled())
             Gdx.app.error("Gradient Shape Drawer", shader.getLog());
