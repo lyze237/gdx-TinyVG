@@ -1,4 +1,4 @@
-package dev.lyze.gdxtinyvg.types.paths;
+package dev.lyze.gdxtinyvg.commands.paths;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.UnitPathCommandType;
 import dev.lyze.gdxtinyvg.types.Unit;
+import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
 import java.io.IOException;
 import lombok.var;
 
@@ -29,10 +30,10 @@ public class UnitPathVerticalLineCommand extends UnitPathCommand {
     }
 
     @Override
-    public Array<Vector2> calculatePoints(Vector2 start) {
-        var path = new Array<Vector2>();
-        path.add(start.cpy());
-        path.add(start.cpy().set(start.x, y.convert()));
+    public Array<Vector2WithWidth> calculatePoints(Vector2 start, float lastLineWidth) {
+        var path = new Array<Vector2WithWidth>();
+        path.add(new Vector2WithWidth(start.cpy(), calculateLineWidth(lastLineWidth)));
+        path.add(new Vector2WithWidth(start.cpy().set(start.x, y.convert()), calculateLineWidth(lastLineWidth)));
         return path;
     }
 }

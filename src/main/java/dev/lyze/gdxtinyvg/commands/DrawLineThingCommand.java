@@ -4,10 +4,11 @@ import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.headers.OutlineHeader;
-import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
+
 import java.io.IOException;
 
 public abstract class DrawLineThingCommand extends Command {

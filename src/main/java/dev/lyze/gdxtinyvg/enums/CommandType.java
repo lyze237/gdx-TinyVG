@@ -114,6 +114,7 @@ public enum CommandType {
                 command = new DrawLineStripCommand(tinyVG);
                 break;
             case DRAW_LINE_PATH:
+                command = new DrawLinePathCommand(tinyVG);
                 break;
             case OUTLINE_FILL_POLYGON:
                 command = new OutlineFillPolygonCommand(tinyVG);
