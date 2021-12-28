@@ -1,4 +1,4 @@
-package dev.lyze.gdxtinyvg.types.paths;
+package dev.lyze.gdxtinyvg.commands.paths;
 
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
@@ -8,52 +8,48 @@ import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.UnitPathCommandType;
 import dev.lyze.gdxtinyvg.types.Unit;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
+import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
 import java.io.IOException;
 import lombok.var;
 
 /**
- * The cubic bezier instruction draws a Bézier curve with two control points.
+ * The quadratic bezier instruction draws a Bézier curve with a single control
+ * point.
  */
-public class UnitPathCubicBezierCommand extends UnitPathCommand {
+public class UnitPathQuadraticBezierCommand extends UnitPathCommand {
     /**
-     * The first control point.
+     * The control point.
      */
     private UnitPoint control1;
-    /**
-     * The second control point.
-     */
-    private UnitPoint control2;
 
     /**
      * The end point of the Bézier curve.
      */
     private UnitPoint end;
 
-    public UnitPathCubicBezierCommand(Unit lineWidth) {
+    public UnitPathQuadraticBezierCommand(Unit lineWidth) {
         super(UnitPathCommandType.HORIZONTAL_LINE, lineWidth);
     }
 
     @Override
     public void read(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {
         control1 = new UnitPoint(stream, range, fractionBits);
-        control2 = new UnitPoint(stream, range, fractionBits);
         end = new UnitPoint(stream, range, fractionBits);
     }
 
     @Override
-    public Array<Vector2> calculatePoints(Vector2 start) {
+    public Array<Vector2WithWidth> calculatePoints(Vector2 start, float lastLineWidth) {
         var tmp = new Vector2();
         var startVector = start.cpy();
         var endVector = end.convert();
         var control1Vector = control1.convert();
-        var control2Vector = control2.convert();
 
-        var path = new Array<Vector2>();
-        for (int i = 0; i < 100; i++) {
-            var cubic = Bezier.cubic(new Vector2(), i / 100f, startVector, control1Vector, control2Vector, endVector,
-                    tmp);
-            path.add(cubic);
-        }
+        var path = new Array<Vector2WithWidth>();
+        for (int i = 0; i < 100; i++)
+            path.add(new Vector2WithWidth(
+                    Bezier.quadratic(new Vector2(), i / 100f, startVector, control1Vector, endVector, tmp),
+                    calculateLineWidth(lastLineWidth)));
+
         return path;
     }
 }

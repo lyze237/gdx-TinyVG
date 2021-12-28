@@ -1,8 +1,8 @@
 package dev.lyze.gdxtinyvg.enums;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
+import dev.lyze.gdxtinyvg.commands.paths.*;
 import dev.lyze.gdxtinyvg.types.Unit;
-import dev.lyze.gdxtinyvg.types.paths.*;
 import java.io.IOException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -68,7 +68,7 @@ public enum UnitPathCommandType {
      */
     public UnitPathCommand read(LittleEndianInputStream stream, Unit lineWidth, Range range, int fractionBits)
             throws IOException {
-        UnitPathCommand command = null;
+        UnitPathCommand command;
 
         switch (this) {
             case LINE:
@@ -84,10 +84,13 @@ public enum UnitPathCommandType {
                 command = new UnitPathCubicBezierCommand(lineWidth);
                 break;
             case ARC_CIRCLE:
+                command = new UnitPathArcCircleCommand(lineWidth);
                 break;
             case ARC_ELLIPSE:
+                command = new UnitPathArcEllipseCommand(lineWidth);
                 break;
             case CLOSE_PATH:
+                command = new UnitPathCloseCommand(lineWidth);
                 break;
             case QUADRATIC_BEZIER:
                 command = new UnitPathQuadraticBezierCommand(lineWidth);
@@ -96,8 +99,7 @@ public enum UnitPathCommandType {
                 throw new IllegalArgumentException("Unknown enum");
         }
 
-        if (command != null)
-            command.read(stream, range, fractionBits);
+        command.read(stream, range, fractionBits);
 
         return command;
     }

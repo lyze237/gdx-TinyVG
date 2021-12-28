@@ -122,15 +122,15 @@ https://tinyvg.tech/download/specification.pdf
   - [x] VarUInt
   - [x] Point
   - [x] Rectangle
-  - [ ] Path
-  - [ ] Line
-  - [ ] Horizontal Line
-  - [ ] Vertical Line
-  - [ ] Cubic Bezier
-  - [ ] Arc Circle
-  - [ ] Arc Ellipse
-  - [ ] Close Path
-  - [ ] Quadratic Bezier
+  - [x] Path
+  - [x] Line
+  - [x] Horizontal Line
+  - [x] Vertical Line
+  - [x] Cubic Bezier
+  - [x] Arc Circle
+  - [x] Arc Ellipse
+  - [x] Close Path
+  - [x] Quadratic Bezier
 - Commands
   - [x] End of Document
   - [x] Fill Polygon
@@ -139,10 +139,10 @@ https://tinyvg.tech/download/specification.pdf
   - [x] Draw Lines
   - [x] Draw Line Loop
   - [x] Draw Line Strip
-  - [ ] Draw Line Path
+  - [x] Draw Line Path (Help wanted for variable line width)
   - [x] Outline Fill Polygon
   - [x] Outline Fill Rectangles
-  - [ ] Outline Fill Path
+  - [ ] Outline Fill Path (Help wanted for variable line width)
 - Styles
   - [x] Flat
   - [x] Linear Gradient

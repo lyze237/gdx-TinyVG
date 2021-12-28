@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import dev.lyze.gdxtinyvg.TinyVG;
-import dev.lyze.gdxtinyvg.types.Unit;
-import dev.lyze.gdxtinyvg.types.UnitLine;
-import dev.lyze.gdxtinyvg.types.UnitPoint;
-import dev.lyze.gdxtinyvg.types.UnitRectangle;
+import dev.lyze.gdxtinyvg.types.*;
 import lombok.var;
 import space.earlygrey.shapedrawer.JoinType;
 
@@ -41,17 +38,28 @@ public class TinyVGShapeDrawer extends GradientShapeDrawer {
                 isJoinNecessary(lineWidth) ? JoinType.POINTY : JoinType.NONE, open);
     }
 
-    public void pathVector(Array<Vector2> points, float[] storage, float lineWidth, boolean open, TinyVG tinyVG) {
-        path(calculateVectorVertices(points, storage, tinyVG), lineWidthScaled(lineWidth, tinyVG),
-                isJoinNecessary(lineWidth) ? JoinType.POINTY : JoinType.NONE, open);
+    public void path(ParsedPathSegment segment, boolean open, TinyVG tinyVG) {
+        path(calculateVector(segment, tinyVG), lineWidthScaled(segment.getPoints().get(0).getWidth(), tinyVG),
+                isJoinNecessary(segment.getPoints().get(0).getWidth()) ? JoinType.POINTY : JoinType.NONE, open);
+    }
+
+    public void filledPolygon(ParsedPathSegment segment, TinyVG tinyVG) {
+        filledPolygon(calculateVector(segment, tinyVG));
     }
 
     public void filledPolygon(Array<UnitPoint> points, float[] storage, TinyVG tinyVG) {
         filledPolygon(calculateVertices(points, storage, tinyVG));
     }
 
-    public void filledPolygonVector(Array<Vector2> points, float[] storage, TinyVG tinyVG) {
-        filledPolygon(calculateVectorVertices(points, storage, tinyVG));
+    private float[] calculateVector(ParsedPathSegment pathSegment, TinyVG tinyVG) {
+        for (int p = 0, v = 0; p < pathSegment.getPoints().size; p++, v += 2) {
+            var point = pathSegment.getPoints().get(p);
+
+            pathSegment.getVertices()[v] = xAdjusted(point.getPoint().x, tinyVG);
+            pathSegment.getVertices()[v + 1] = yAdjusted(point.getPoint().y, tinyVG);
+        }
+
+        return pathSegment.getVertices();
     }
 
     private float[] calculateVectorVertices(Array<Vector2> points, float[] storage, TinyVG tinyVG) {

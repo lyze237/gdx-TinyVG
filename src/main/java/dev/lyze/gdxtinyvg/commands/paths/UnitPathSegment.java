@@ -1,10 +1,10 @@
-package dev.lyze.gdxtinyvg.types.paths;
+package dev.lyze.gdxtinyvg.commands.paths;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
+import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
 import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,13 +29,16 @@ public class UnitPathSegment {
         return this;
     }
 
-    public Array<Vector2> calculatePoints() {
+    public Array<Vector2WithWidth> calculatePoints(float lineWidth) {
         var point = start.convert();
 
-        var path = new Array<Vector2>();
+        var path = new Array<Vector2WithWidth>();
         for (UnitPathCommand command : commands) {
-            path.addAll(command.calculatePoints(point));
-            point = path.get(path.size - 1);
+            path.addAll(command.calculatePoints(point, lineWidth));
+
+            Vector2WithWidth lastPoint = path.get(path.size - 1);
+            point = lastPoint.getPoint();
+            lineWidth = lastPoint.getWidth();
         }
 
         return path;
