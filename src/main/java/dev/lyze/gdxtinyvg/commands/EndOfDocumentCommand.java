@@ -3,9 +3,9 @@ package dev.lyze.gdxtinyvg.commands;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
-import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 
 /**
  * If this command is read, the TinyVG file has ended. This command must have

@@ -3,11 +3,11 @@ package dev.lyze.gdxtinyvg.commands;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import java.io.IOException;
 import lombok.Getter;
-import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 
 public abstract class Command {
     @Getter private final CommandType type;

@@ -7,9 +7,8 @@ import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.UnitPathCommandType;
 import dev.lyze.gdxtinyvg.types.Unit;
 import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
-import lombok.var;
-
 import java.io.IOException;
+import lombok.var;
 
 /**
  * The horizontal line instruction draws a straight horizontal line to a given x

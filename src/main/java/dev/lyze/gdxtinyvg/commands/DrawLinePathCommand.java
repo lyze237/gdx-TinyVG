@@ -5,12 +5,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.headers.PathHeader;
 import dev.lyze.gdxtinyvg.commands.paths.UnitPathCloseCommand;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
-import lombok.var;
-import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
-
 import java.io.IOException;
+import lombok.var;
 
 public class DrawLinePathCommand extends Command {
     private PathHeader header;
