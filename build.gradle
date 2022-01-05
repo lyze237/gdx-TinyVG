@@ -60,7 +60,6 @@ spotless {
 
     java {
         importOrder()
-        removeUnusedImports()
 
         indentWithSpaces(4)
 
