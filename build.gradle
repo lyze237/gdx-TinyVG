@@ -17,7 +17,7 @@ plugins {
 
 apply from: 'utils.gradle'
 group 'lyze.dev'
-version '0.0.' + getGitHash()
+version '1.0.' + getGitHash()
 apply from: 'publishing.gradle'
 
 sourceCompatibility = 8
