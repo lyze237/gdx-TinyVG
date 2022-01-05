@@ -9,10 +9,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.TinyVGAssetLoader;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.lwjgl.LibgdxLwjglUnitTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 
 public class GradientSquaresFileLoadingTest extends LibgdxLwjglUnitTest {
     private TinyVG tvg;

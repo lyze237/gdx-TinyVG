@@ -10,10 +10,9 @@ import dev.lyze.gdxtinyvg.types.ParsedPathSegment;
 import dev.lyze.gdxtinyvg.types.Unit;
 import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
 import dev.lyze.gdxtinyvg.utils.StreamUtils;
+import java.io.IOException;
 import lombok.Getter;
 import lombok.var;
-
-import java.io.IOException;
 
 @Getter
 public class PathHeader {

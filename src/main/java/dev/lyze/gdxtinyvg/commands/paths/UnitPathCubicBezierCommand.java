@@ -9,9 +9,8 @@ import dev.lyze.gdxtinyvg.enums.UnitPathCommandType;
 import dev.lyze.gdxtinyvg.types.Unit;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
 import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
-import lombok.var;
-
 import java.io.IOException;
+import lombok.var;
 
 /**
  * The cubic bezier instruction draws a Bézier curve with two control points.

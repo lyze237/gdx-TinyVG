@@ -5,9 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.commands.Command;
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import lombok.Getter;
 import lombok.Setter;
-import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 
 public class TinyVG {
     /**
