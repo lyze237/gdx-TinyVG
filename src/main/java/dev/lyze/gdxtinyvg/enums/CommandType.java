@@ -89,7 +89,7 @@ public enum CommandType {
      * @return The appropriately setup command.
      */
     public Command read(LittleEndianInputStream stream, StyleType styleType, TinyVG tinyVG) throws IOException {
-        Command command = null;
+        Command command;
 
         switch (this) {
             case END_OF_DOCUMENT:
@@ -123,13 +123,13 @@ public enum CommandType {
                 command = new OutlineFillRectanglesCommand(tinyVG);
                 break;
             case OUTLINE_FILL_PATH:
+                command = new OutlineFillPathCommand(tinyVG);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown enum");
         }
 
-        if (command != null)
-            command.read(stream, styleType);
+        command.read(stream, styleType);
 
         return command;
     }
