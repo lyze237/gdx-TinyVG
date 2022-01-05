@@ -25,7 +25,7 @@ Therefore, you are able to manually edit the file and add gradients that way if 
 1. Download the sdk from https://tinyvg.tech
 2. Convert your SVG into a TVG
 ```shell
-./svg2tvg file.svg -o file.tvg # converts the file into an editable text tvg
+./svg2tvg file.svg -o file.tvgt # converts the file into an editable text tvg
 ./tvg-text file.tvgt -o file.tvg # converts the text tvg into a binary tvg
 ```
 3. Set it up in java
