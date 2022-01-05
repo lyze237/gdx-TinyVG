@@ -22,8 +22,8 @@ public class EverythingFileLoadingTest extends LibgdxLwjglUnitTest {
 
     @Override
     public void create() {
-        tvg = new TinyVGAssetLoader().load("a.tvg");
-        tvgScaled = new TinyVGAssetLoader().load("a.tvg");
+        tvg = new TinyVGAssetLoader().load("everything-32.tvg");
+        tvgScaled = new TinyVGAssetLoader().load("everything-32.tvg");
         tvgScaled.getScale().set(2, 2);
         tvgScaled.getPosition().set(tvg.getWidth(), 0);
         tvgScaled.setLineWidthScale(2);

@@ -139,10 +139,10 @@ https://tinyvg.tech/download/specification.pdf
   - [x] Draw Lines
   - [x] Draw Line Loop
   - [x] Draw Line Strip
-  - [x] Draw Line Path (Help wanted for variable line width)
+  - [x] [Partially] Draw Line Path (Help wanted for variable line width)
   - [x] Outline Fill Polygon
   - [x] Outline Fill Rectangles
-  - [ ] Outline Fill Path (Help wanted for variable line width)
+  - [x] [Partially] Outline Fill Path (Help wanted for variable line width)
 - Styles
   - [x] Flat
   - [x] Linear Gradient
