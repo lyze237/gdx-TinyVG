@@ -53,18 +53,18 @@ public class Lwjgl3Launcher {
 
 public class Example extends ApplicationAdapter {
   private TinyVG tvg;
-  private GradientShapeDrawer drawer;
+  private TinyVGShapeDrawer drawer;
   private Viewport viewport = new XXXViewport(xxx, xxx);
 
   public void create() {
     var assetLoader = new TinyVGAssetLoader();
     tvg = assetLoader.load("file.tvg"); // only works with the binary file format
 
-    // GradientShapeDrawer requires a 1x1 white pixel file,
+    // TinyVGShapeDrawer requires a 1x1 white pixel file,
     // so create one in your favourite program or
     // download one from the test examples in the repo.
     // https://github.com/lyze237/gdx-TinyVG/blob/main/src/test/resources/pixel.png
-    drawer = new GradientShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
+    drawer = new TinyVGShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
   }
 
   public void render() {
@@ -91,7 +91,7 @@ Alternatively you can load it via an AssetManager
 ```java
 public class Example extends ApplicationAdapter {
   private TinyVG tvg;
-  private GradientShapeDrawer drawer;
+  private TinyVGShapeDrawer drawer;
   private Viewport viewport = new XXXViewport(xxx, xxx);
 
   public void create() {
