@@ -16,9 +16,8 @@ import dev.lyze.gdxtinyvg.types.ParsedPathSegment;
 import dev.lyze.gdxtinyvg.types.Unit;
 import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
 import dev.lyze.gdxtinyvg.utils.StreamUtils;
-import lombok.var;
-
 import java.io.IOException;
+import lombok.var;
 
 public class OutlineFillPathCommand extends Command {
     private Style primaryStyle, secondaryStyle;
