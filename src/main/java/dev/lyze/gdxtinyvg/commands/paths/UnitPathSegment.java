@@ -35,13 +35,13 @@ public class UnitPathSegment {
 
         var path = new Array<Vector2WithWidth>();
         for (UnitPathCommand command : commands) {
-            path.addAll(command.calculatePoints(point, lineWidth));
+            command.calculatePoints(point, lineWidth, path);
 
             // fail save when a segment is only (close -)
             if (path.size == 0)
                 continue;
 
-            Vector2WithWidth lastPoint = path.get(path.size - 1);
+            var lastPoint = path.get(path.size - 1);
             point = lastPoint.getPoint();
             lineWidth = lastPoint.getWidth();
         }
