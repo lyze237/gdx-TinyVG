@@ -15,7 +15,7 @@ import dev.lyze.gdxtinyvg.lwjgl.LibgdxLwjglUnitTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-public class EverythingFileLoadingTest extends LibgdxLwjglUnitTest {
+public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
     private TinyVG tvg, tvgScaled;
     private TinyVGShapeDrawer drawer;
     private Viewport viewport;
@@ -44,16 +44,49 @@ public class EverythingFileLoadingTest extends LibgdxLwjglUnitTest {
         setupTvg("shield.tvg");
     }
 
-    private void setupTvg(String file) {
-        tvg = new TinyVGAssetLoader().load(file);
-        tvgScaled = new TinyVGAssetLoader().load(file);
-        tvgScaled.getScale().set(2, 2);
-        tvgScaled.getPosition().set(tvg.getWidth(), 0);
-        tvgScaled.setLineWidthScale(2);
+    @Test
+    @Tag("lwjgl")
+    public void flowchart() {
+        setupTvg("flowchart.tvg");
+    }
 
-        viewport.setWorldSize(tvg.getWidth() + tvgScaled.getWidth(), tvgScaled.getHeight());
-        viewport.getCamera().position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f,
-                viewport.getCamera().position.z);
+    @Test
+    @Tag("lwjgl")
+    public void tiger() {
+        setupTvg("tiger.tvg");
+    }
+
+    @Test
+    @Tag("lwjgl")
+    public void comic() {
+        setupTvg("comic.tvg");
+    }
+
+    @Test
+    @Tag("lwjgl")
+    public void chart() {
+        setupTvg("chart.tvg");
+    }
+
+    @Test
+    @Tag("lwjgl")
+    public void appIcon() {
+        setupTvg("app-icon.tvg");
+    }
+
+    private void setupTvg(String file) {
+        Gdx.app.postRunnable(() -> {
+            tvg = new TinyVGAssetLoader().load(file);
+            tvgScaled = new TinyVGAssetLoader().load(file);
+            tvgScaled.getScale().set(2, 2);
+            tvgScaled.getPosition().set(tvg.getWidth(), 0);
+            tvgScaled.setLineWidthScale(2);
+
+            viewport.setWorldSize(tvg.getWidth() + tvgScaled.getWidth(), tvgScaled.getHeight());
+            viewport.getCamera().position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f,
+                    viewport.getCamera().position.z);
+            viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        });
     }
 
     @Override
