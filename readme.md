@@ -98,6 +98,14 @@ public class Example extends ApplicationAdapter {
 }
 ```
 
+## Setters
+
+The TinyVG class comes with a couple setters to adjust render options:
+
+* `setPosition()` => Changes the origin (bottom left corner) of the sprite.
+* `setScale()` => Changes the scale.
+* `setLineWidthScale()` => Changes the scale for all line widths independent of `setScale()`.
+* `.setCurvePoints()` => The amount of points per path curve (Bezier, Arc) is used to calculate the curve.
 
 # Specification implementation status
 

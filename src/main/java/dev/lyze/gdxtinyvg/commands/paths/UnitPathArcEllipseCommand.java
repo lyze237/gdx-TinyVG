@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
+import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.UnitPathCommandType;
 import dev.lyze.gdxtinyvg.types.Unit;
@@ -41,12 +42,15 @@ public class UnitPathArcEllipseCommand extends UnitPathCommand {
      */
     private Vector2 target;
 
-    public UnitPathArcEllipseCommand(Unit lineWidth) {
-        super(UnitPathCommandType.ARC_ELLIPSE, lineWidth);
+    public UnitPathArcEllipseCommand(Unit lineWidth, TinyVG tinyVG) {
+        super(UnitPathCommandType.ARC_ELLIPSE, lineWidth, tinyVG);
     }
 
     @Override
-    public void read(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {
+    public void read(LittleEndianInputStream stream) throws IOException {
+        var range = getTinyVG().getHeader().getCoordinateRange();
+        var fractionBits = getTinyVG().getHeader().getFractionBits();
+
         var largeArcSweepPaddingByte = stream.readUnsignedByte();
 
         largeArc = (largeArcSweepPaddingByte & 0b0000_0001) == 1;
@@ -121,11 +125,12 @@ public class UnitPathArcEllipseCommand extends UnitPathCommand {
 
         var pos = p0.cpy().sub(center);
 
-        for (int i = 0; i < 100; i++) {
-            var stepMat = rotationMat(i * (turnLeft ? -arc : arc) / 100);
+        for (int i = 0; i < getTinyVG().getCurvePoints(); i++) {
+            var stepMat = rotationMat(i * (turnLeft ? -arc : arc) / getTinyVG().getCurvePoints());
             var point = applyMat(stepMat, pos).add(center);
 
-            helper.add(new Vector2WithWidth(point, MathUtils.lerp(startWidth, endWidth, i / 100f)));
+            helper.add(new Vector2WithWidth(point,
+                    MathUtils.lerp(startWidth, endWidth, (float) i / getTinyVG().getCurvePoints())));
         }
 
         helper.add(new Vector2WithWidth(p1, endWidth));

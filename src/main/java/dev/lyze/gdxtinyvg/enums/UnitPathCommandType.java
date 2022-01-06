@@ -1,6 +1,7 @@
 package dev.lyze.gdxtinyvg.enums;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
+import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.paths.*;
 import dev.lyze.gdxtinyvg.types.Unit;
 import java.io.IOException;
@@ -66,40 +67,39 @@ public enum UnitPathCommandType {
      * @param stream The appropriately positioned input stream.
      * @return The appropriately setup command.
      */
-    public UnitPathCommand read(LittleEndianInputStream stream, Unit lineWidth, Range range, int fractionBits)
-            throws IOException {
+    public UnitPathCommand read(LittleEndianInputStream stream, Unit lineWidth, TinyVG tinyVG) throws IOException {
         UnitPathCommand command;
 
         switch (this) {
             case LINE:
-                command = new UnitPathLineCommand(lineWidth);
+                command = new UnitPathLineCommand(lineWidth, tinyVG);
                 break;
             case HORIZONTAL_LINE:
-                command = new UnitPathHorizontalLineCommand(lineWidth);
+                command = new UnitPathHorizontalLineCommand(lineWidth, tinyVG);
                 break;
             case VERTICAL_LINE:
-                command = new UnitPathVerticalLineCommand(lineWidth);
+                command = new UnitPathVerticalLineCommand(lineWidth, tinyVG);
                 break;
             case CUBIC_BEZIER:
-                command = new UnitPathCubicBezierCommand(lineWidth);
+                command = new UnitPathCubicBezierCommand(lineWidth, tinyVG);
                 break;
             case ARC_CIRCLE:
-                command = new UnitPathArcCircleCommand(lineWidth);
+                command = new UnitPathArcCircleCommand(lineWidth, tinyVG);
                 break;
             case ARC_ELLIPSE:
-                command = new UnitPathArcEllipseCommand(lineWidth);
+                command = new UnitPathArcEllipseCommand(lineWidth, tinyVG);
                 break;
             case CLOSE_PATH:
-                command = new UnitPathCloseCommand(lineWidth);
+                command = new UnitPathCloseCommand(lineWidth, tinyVG);
                 break;
             case QUADRATIC_BEZIER:
-                command = new UnitPathQuadraticBezierCommand(lineWidth);
+                command = new UnitPathQuadraticBezierCommand(lineWidth, tinyVG);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown enum");
         }
 
-        command.read(stream, range, fractionBits);
+        command.read(stream);
 
         return command;
     }

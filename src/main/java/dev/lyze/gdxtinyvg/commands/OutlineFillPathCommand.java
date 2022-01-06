@@ -46,8 +46,7 @@ public class OutlineFillPathCommand extends Command {
             sourceSegments[i] = new UnitPathSegment(StreamUtils.readVarUInt(stream) + 1);
 
         for (UnitPathSegment segment : sourceSegments)
-            segment.read(stream, getTinyVG().getHeader().getCoordinateRange(),
-                    getTinyVG().getHeader().getFractionBits());
+            segment.read(stream, getTinyVG());
 
         segments = new ParsedPathSegment[sourceSegments.length];
 

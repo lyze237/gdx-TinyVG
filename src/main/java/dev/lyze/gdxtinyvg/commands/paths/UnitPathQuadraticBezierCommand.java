@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
+import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.UnitPathCommandType;
 import dev.lyze.gdxtinyvg.types.Unit;
@@ -27,12 +28,15 @@ public class UnitPathQuadraticBezierCommand extends UnitPathCommand {
      */
     private UnitPoint end;
 
-    public UnitPathQuadraticBezierCommand(Unit lineWidth) {
-        super(UnitPathCommandType.HORIZONTAL_LINE, lineWidth);
+    public UnitPathQuadraticBezierCommand(Unit lineWidth, TinyVG tinyVG) {
+        super(UnitPathCommandType.HORIZONTAL_LINE, lineWidth, tinyVG);
     }
 
     @Override
-    public void read(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {
+    public void read(LittleEndianInputStream stream) throws IOException {
+        var range = getTinyVG().getHeader().getCoordinateRange();
+        var fractionBits = getTinyVG().getHeader().getFractionBits();
+
         control1 = new UnitPoint(stream, range, fractionBits);
         end = new UnitPoint(stream, range, fractionBits);
     }
@@ -45,10 +49,9 @@ public class UnitPathQuadraticBezierCommand extends UnitPathCommand {
         var control1Vector = control1.convert();
 
         var path = new Array<Vector2WithWidth>();
-        for (int i = 0; i < 100; i++)
-            path.add(new Vector2WithWidth(
-                    Bezier.quadratic(new Vector2(), i / 100f, startVector, control1Vector, endVector, tmp),
-                    calculateLineWidth(lastLineWidth)));
+        for (int i = 0; i < getTinyVG().getCurvePoints(); i++)
+            path.add(new Vector2WithWidth(Bezier.quadratic(new Vector2(), (float) i / getTinyVG().getCurvePoints(),
+                    startVector, control1Vector, endVector, tmp), calculateLineWidth(lastLineWidth)));
 
         return path;
     }
