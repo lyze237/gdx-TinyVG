@@ -14,21 +14,12 @@ TinyVG tries to be simpler. Fewer features, but powerful enough to cover 90% of 
 
 # Convert SVG into TVG
 
-There's a converter on the [homepage ("TinyVG SDK")](https://tinyvg.tech/), but it sadly doesn't work with advanced features like gradients.
+Convert your SVG into a TVG her: https://svgtotvg.herokuapp.com/
 
-Luckily the file format is relatively simple, and after you convert a svg you get a text representation of the TinyVG file format.
-
-Therefore, you are able to manually edit the file and add gradients that way if you want that.
+Some things are not supported.
 
 # Example
 
-1. Download the sdk from https://tinyvg.tech
-2. Convert your SVG into a TVG
-```shell
-./svg2tvg file.svg -o file.tvgt # converts the file into an editable text tvg
-./tvg-text file.tvgt -o file.tvg # converts the text tvg into a binary tvg
-```
-3. Set it up in java
 ```java
 public class Lwjgl3Launcher {
   public static void main(String[] args) {
@@ -108,47 +99,17 @@ public class Example extends ApplicationAdapter {
 ```
 
 
-
 # Specification implementation status
 
 https://tinyvg.tech/download/specification.pdf
 
-- [x] Header
-- [x] Color table
-- [x] Scaling
-- [x] Positioning
-- Types
-  - [x] Unit
-  - [x] VarUInt
-  - [x] Point
-  - [x] Rectangle
-  - [x] Path
-  - [x] Line
-  - [x] Horizontal Line
-  - [x] Vertical Line
-  - [x] Cubic Bezier
-  - [x] Arc Circle
-  - [x] Arc Ellipse
-  - [x] Close Path
-  - [x] Quadratic Bezier
-- Commands
-  - [x] End of Document
-  - [x] Fill Polygon
-  - [x] Fill Rectangles
-  - [x] Fill Path
-  - [x] Draw Lines
-  - [x] Draw Line Loop
-  - [x] Draw Line Strip
-  - [x] [Partially] Draw Line Path (Help wanted for variable line width)
-  - [x] Outline Fill Polygon
-  - [x] Outline Fill Rectangles
-  - [x] [Partially] Outline Fill Path (Help wanted for variable line width)
-- Styles
-  - [x] Flat
-  - [x] Linear Gradient
-  - [x] Radial Gradient
+Everything is implemented according to the specification.pdf except:
+* [Partially] Draw Line Path (No variable line width, help wanted)
+* [Partially] Outline Fill Path (No variable line width, help wanted)
 
 # Installation
+
+0. Add [ShapeDrawer](https://github.com/earlygrey/shapedrawer) as dependency (See their readme for instructions).
 
 1. Open or create `gradle.properties` in the root folder of your project, add the following line:
 
