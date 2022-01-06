@@ -40,7 +40,7 @@ public class PathHeader {
             sourceSegments[i] = new UnitPathSegment(StreamUtils.readVarUInt(stream) + 1);
 
         for (UnitPathSegment segment : sourceSegments)
-            segment.read(stream, tinyVG.getHeader().getCoordinateRange(), tinyVG.getHeader().getFractionBits());
+            segment.read(stream, getTinyVG());
 
         segments = new ParsedPathSegment[sourceSegments.length];
 

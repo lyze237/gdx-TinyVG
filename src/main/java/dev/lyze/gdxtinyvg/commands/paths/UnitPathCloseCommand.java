@@ -3,6 +3,7 @@ package dev.lyze.gdxtinyvg.commands.paths;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
+import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.UnitPathCommandType;
 import dev.lyze.gdxtinyvg.types.Unit;
@@ -14,12 +15,12 @@ import java.io.IOException;
  * instruction doesn't have additional data encoded.
  */
 public class UnitPathCloseCommand extends UnitPathCommand {
-    public UnitPathCloseCommand(Unit lineWidth) {
-        super(UnitPathCommandType.CLOSE_PATH, lineWidth);
+    public UnitPathCloseCommand(Unit lineWidth, TinyVG tinyVG) {
+        super(UnitPathCommandType.CLOSE_PATH, lineWidth, tinyVG);
     }
 
     @Override
-    public void read(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException {
+    public void read(LittleEndianInputStream stream) throws IOException {
     }
 
     @Override

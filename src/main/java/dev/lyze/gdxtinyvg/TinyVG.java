@@ -44,6 +44,11 @@ public class TinyVG {
      */
     @Getter @Setter private float lineWidthScale = 1;
 
+    /**
+     * Amount of points every curve generates.
+     */
+    @Getter @Setter private int curvePoints = 10;
+
     public TinyVG(TinyVGHeader header, Color[] colorTable) {
         this.header = header;
         this.colorTable = colorTable;
