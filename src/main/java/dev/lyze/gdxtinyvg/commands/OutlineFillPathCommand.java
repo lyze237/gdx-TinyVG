@@ -68,10 +68,10 @@ public class OutlineFillPathCommand extends Command {
 
     @Override
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
-
         primaryStyle.start(drawer, viewport);
 
         Gdx.gl.glEnable(GL20.GL_STENCIL_TEST);
+        Gdx.gl.glClear(GL20.GL_STENCIL_BUFFER_BIT);
         Gdx.gl.glColorMask(false, false, false, false);
         Gdx.gl.glStencilFunc(GL20.GL_ALWAYS, 0, -1);
         Gdx.gl.glStencilOp(GL20.GL_KEEP, GL20.GL_KEEP, GL20.GL_INCR);
@@ -88,16 +88,12 @@ public class OutlineFillPathCommand extends Command {
         for (ParsedPathSegment segment : segments)
             drawer.filledPolygon(segment.getVertices());
 
-        drawer.getBatch().flush();
-        Gdx.gl.glDisable(GL20.GL_STENCIL_TEST);
         primaryStyle.end(drawer, viewport);
+        Gdx.gl.glDisable(GL20.GL_STENCIL_TEST);
 
         secondaryStyle.start(drawer, viewport);
-
         for (var segment : segments)
             drawer.path(segment, !(segment.getLastCommand() instanceof UnitPathCloseCommand), getTinyVG());
-
         secondaryStyle.end(drawer, viewport);
-
     }
 }

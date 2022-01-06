@@ -1,5 +1,7 @@
 package dev.lyze.gdxtinyvg;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -50,10 +52,8 @@ public class TinyVG {
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
         drawer.setColor(Color.WHITE);
         drawer.beginShader();
-        for (Command command : commands) {
-            if (command != null)
-                command.draw(drawer, viewport);
-        }
+        for (Command command : commands)
+            command.draw(drawer, viewport);
         drawer.endShader();
     }
 
