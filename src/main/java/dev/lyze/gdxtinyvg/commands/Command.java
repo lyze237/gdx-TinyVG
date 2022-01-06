@@ -21,4 +21,8 @@ public abstract class Command {
     public abstract void read(LittleEndianInputStream stream, StyleType primaryStyleType) throws IOException;
 
     public abstract void draw(TinyVGShapeDrawer drawer, Viewport viewport);
+
+    public void onCurveSegmentsChanged() {
+
+    }
 }

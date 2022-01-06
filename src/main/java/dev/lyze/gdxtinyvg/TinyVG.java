@@ -47,7 +47,7 @@ public class TinyVG {
     /**
      * Amount of points every curve generates.
      */
-    @Getter @Setter private int curvePoints = 10;
+    @Getter private int curvePoints = 10;
 
     public TinyVG(TinyVGHeader header, Color[] colorTable) {
         this.header = header;
@@ -85,5 +85,12 @@ public class TinyVG {
      */
     public float getHeight() {
         return header.getHeight() * scale.y;
+    }
+
+    public void setCurvePoints(int curvePoints) {
+        this.curvePoints = curvePoints;
+
+        for (Command command : commands)
+            command.onCurveSegmentsChanged();
     }
 }

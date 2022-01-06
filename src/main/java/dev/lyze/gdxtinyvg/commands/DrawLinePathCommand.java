@@ -34,4 +34,9 @@ public class DrawLinePathCommand extends Command {
 
         header.getPrimaryStyle().end(drawer, viewport);
     }
+
+    @Override
+    public void onCurveSegmentsChanged() {
+        header.recalculateSegments();
+    }
 }
