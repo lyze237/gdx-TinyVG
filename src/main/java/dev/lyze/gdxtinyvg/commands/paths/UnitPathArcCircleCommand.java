@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.TinyVG;
-import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.UnitPathCommandType;
 import dev.lyze.gdxtinyvg.types.Unit;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
@@ -54,9 +53,7 @@ public class UnitPathArcCircleCommand extends UnitPathCommand {
     }
 
     @Override
-    public Array<Vector2WithWidth> calculatePoints(Vector2 start, float lastLineWidth) {
-        var path = new Array<Vector2WithWidth>();
-
+    public Array<Vector2WithWidth> calculatePoints(Vector2 start, float lastLineWidth, Array<Vector2WithWidth> path) {
         renderCircle(path, start, target, radius, largeArc, sweep, lastLineWidth, calculateLineWidth(lastLineWidth));
 
         return path;

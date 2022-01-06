@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.TinyVG;
-import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.UnitPathCommandType;
 import dev.lyze.gdxtinyvg.types.Unit;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
@@ -46,10 +45,9 @@ public class UnitPathCubicBezierCommand extends UnitPathCommand {
     }
 
     @Override
-    public Array<Vector2WithWidth> calculatePoints(Vector2 start, float lastLineWidth) {
+    public Array<Vector2WithWidth> calculatePoints(Vector2 start, float lastLineWidth, Array<Vector2WithWidth> path) {
         var tmp = new Vector2();
 
-        var path = new Array<Vector2WithWidth>();
         for (int i = 0; i < getTinyVG().getCurvePoints(); i++) {
             var cubic = Bezier.cubic(new Vector2(), (float) i / getTinyVG().getCurvePoints(), start, control1, control2,
                     end, tmp);

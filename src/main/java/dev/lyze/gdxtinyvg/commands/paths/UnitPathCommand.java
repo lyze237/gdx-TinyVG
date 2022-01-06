@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.TinyVG;
-import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.enums.UnitPathCommandType;
 import dev.lyze.gdxtinyvg.types.Unit;
 import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
@@ -25,7 +24,8 @@ public abstract class UnitPathCommand {
 
     public abstract void read(LittleEndianInputStream stream) throws IOException;
 
-    public abstract Array<Vector2WithWidth> calculatePoints(Vector2 start, float lastLineWidth);
+    public abstract Array<Vector2WithWidth> calculatePoints(Vector2 start, float lastLineWidth,
+            Array<Vector2WithWidth> path);
 
     protected float calculateLineWidth(float lastLineWidth) {
         return lineWidth == null ? lastLineWidth : lineWidth.convert();
