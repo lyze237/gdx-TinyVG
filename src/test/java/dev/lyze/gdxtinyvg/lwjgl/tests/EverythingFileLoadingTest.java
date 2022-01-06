@@ -22,26 +22,47 @@ public class EverythingFileLoadingTest extends LibgdxLwjglUnitTest {
 
     @Override
     public void create() {
-        tvg = new TinyVGAssetLoader().load("everything-32.tvg");
-        tvgScaled = new TinyVGAssetLoader().load("everything-32.tvg");
-        tvgScaled.getScale().set(2, 2);
-        tvgScaled.getPosition().set(tvg.getWidth(), 0);
-        tvgScaled.setLineWidthScale(2);
-
         drawer = new TinyVGShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
-        viewport = new FitViewport(tvg.getWidth() + tvgScaled.getWidth(), tvgScaled.getHeight());
+        viewport = new FitViewport(100, 100);
     }
 
     @Test
     @Tag("lwjgl")
-    public void test() {
+    public void everything32() {
+        setupTvg("everything-32.tvg");
+    }
 
+    @Test
+    @Tag("lwjgl")
+    public void pirate() {
+        setupTvg("pirate.tvg");
+    }
+
+    @Test
+    @Tag("lwjgl")
+    public void shield() {
+        setupTvg("shield.tvg");
+    }
+
+    private void setupTvg(String file) {
+        tvg = new TinyVGAssetLoader().load(file);
+        tvgScaled = new TinyVGAssetLoader().load(file);
+        tvgScaled.getScale().set(2, 2);
+        tvgScaled.getPosition().set(tvg.getWidth(), 0);
+        tvgScaled.setLineWidthScale(2);
+
+        viewport.setWorldSize(tvg.getWidth() + tvgScaled.getWidth(), tvgScaled.getHeight());
+        viewport.getCamera().position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f,
+                viewport.getCamera().position.z);
     }
 
     @Override
     public void render() {
         Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_STENCIL_BUFFER_BIT);
+
+        if (tvg == null)
+            return;
 
         viewport.apply();
 
@@ -58,6 +79,6 @@ public class EverythingFileLoadingTest extends LibgdxLwjglUnitTest {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
+        viewport.update(width, height);
     }
 }
