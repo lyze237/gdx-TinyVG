@@ -1,5 +1,6 @@
 package dev.lyze.gdxtinyvg.commands.headers;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.TinyVG;
@@ -49,8 +50,12 @@ public class PathHeader {
             var distinctPath = new Array<Vector2WithWidth>(path.size);
 
             for (var point : path) {
-                if (distinctPath.size > 0 && distinctPath.get(distinctPath.size - 1).equals(point))
-                    continue;
+                if (distinctPath.size > 0) {
+                    Vector2 previousPoint = distinctPath.get(distinctPath.size - 1).getPoint();
+                    if ((int) previousPoint.x == (int) point.getPoint().x
+                            && (int) previousPoint.y == (int) point.getPoint().y)
+                        continue;
+                }
 
                 distinctPath.add(point);
             }
