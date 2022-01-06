@@ -102,7 +102,7 @@ public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
         drawer.getBatch().setProjectionMatrix(viewport.getCamera().combined);
 
         drawer.getBatch().begin();
-        drawer.filledRectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight(), Color.WHITE);
+        drawer.filledRectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight(), Color.TEAL);
 
         tvg.draw(drawer, viewport);
         tvgScaled.draw(drawer, viewport);

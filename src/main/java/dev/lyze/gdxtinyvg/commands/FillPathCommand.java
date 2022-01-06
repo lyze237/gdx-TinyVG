@@ -30,6 +30,7 @@ public class FillPathCommand extends Command {
         header.getPrimaryStyle().start(drawer, viewport);
 
         Gdx.gl.glEnable(GL20.GL_STENCIL_TEST);
+        Gdx.gl.glClear(GL20.GL_STENCIL_BUFFER_BIT);
         Gdx.gl.glColorMask(false, false, false, false);
         Gdx.gl.glStencilFunc(GL20.GL_ALWAYS, 0, -1);
         Gdx.gl.glStencilOp(GL20.GL_KEEP, GL20.GL_KEEP, GL20.GL_INCR);
@@ -46,8 +47,7 @@ public class FillPathCommand extends Command {
         for (ParsedPathSegment segment : header.getSegments())
             drawer.filledPolygon(segment.getVertices());
 
-        drawer.getBatch().flush();
-        Gdx.gl.glDisable(GL20.GL_STENCIL_TEST);
         header.getPrimaryStyle().end(drawer, viewport);
+        Gdx.gl.glDisable(GL20.GL_STENCIL_TEST);
     }
 }
