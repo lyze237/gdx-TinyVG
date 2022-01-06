@@ -36,6 +36,10 @@ public class UnitPathSegment {
         for (UnitPathCommand command : commands) {
             path.addAll(command.calculatePoints(point, lineWidth));
 
+            // fail save when a segment is only (close -)
+            if (path.size == 0)
+                continue;
+
             Vector2WithWidth lastPoint = path.get(path.size - 1);
             point = lastPoint.getPoint();
             lineWidth = lastPoint.getWidth();
