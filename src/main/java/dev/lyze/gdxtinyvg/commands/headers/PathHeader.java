@@ -12,6 +12,7 @@ import dev.lyze.gdxtinyvg.types.Unit;
 import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
 import dev.lyze.gdxtinyvg.utils.StreamUtils;
 import java.io.IOException;
+import java.util.Arrays;
 import lombok.Getter;
 import lombok.var;
 
@@ -43,6 +44,14 @@ public class PathHeader {
         for (UnitPathSegment segment : sourceSegments)
             segment.read(stream, getTinyVG());
 
+        recalculateSegments(sourceSegments);
+    }
+
+    public void recalculateSegments() {
+        recalculateSegments(Arrays.stream(segments).map(ParsedPathSegment::getSource).toArray(UnitPathSegment[]::new));
+    }
+
+    public void recalculateSegments(UnitPathSegment[] sourceSegments) {
         segments = new ParsedPathSegment[sourceSegments.length];
 
         for (int i = 0; i < sourceSegments.length; i++) {

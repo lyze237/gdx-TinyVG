@@ -18,6 +18,7 @@ import dev.lyze.gdxtinyvg.types.Unit;
 import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
 import dev.lyze.gdxtinyvg.utils.StreamUtils;
 import java.io.IOException;
+import java.util.Arrays;
 import lombok.var;
 
 public class OutlineFillPathCommand extends Command {
@@ -99,5 +100,30 @@ public class OutlineFillPathCommand extends Command {
         for (var segment : segments)
             drawer.path(segment, !(segment.getLastCommand() instanceof UnitPathCloseCommand), getTinyVG());
         secondaryStyle.end(drawer, viewport);
+    }
+
+    @Override
+    public void onCurveSegmentsChanged() {
+        var sourceSegments = Arrays.stream(segments).map(ParsedPathSegment::getSource).toArray(UnitPathSegment[]::new);
+
+        segments = new ParsedPathSegment[sourceSegments.length];
+
+        for (int i = 0; i < sourceSegments.length; i++) {
+            var path = sourceSegments[i].calculatePoints(startLineWidth);
+            var distinctPath = new Array<Vector2WithWidth>(path.size);
+
+            for (var point : path) {
+                if (distinctPath.size > 0) {
+                    Vector2 previousPoint = distinctPath.get(distinctPath.size - 1).getPoint();
+                    if ((int) previousPoint.x == (int) point.getPoint().x
+                            && (int) previousPoint.y == (int) point.getPoint().y)
+                        continue;
+                }
+
+                distinctPath.add(point);
+            }
+
+            segments[i] = new ParsedPathSegment(sourceSegments[i], distinctPath);
+        }
     }
 }
