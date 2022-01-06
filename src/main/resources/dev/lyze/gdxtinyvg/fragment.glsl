@@ -18,6 +18,18 @@ uniform int u_style;
 
 uniform sampler2D u_texture;
 
+vec4 linear2gamma(vec4 color) {
+    return vec4(pow(color.rgb, vec3(1.0 / gamma)), color.a);
+}
+
+vec4 gamma2linear(vec4 color) {
+    return vec4(pow(color.rgb, vec3(gamma)), color.a);
+}
+
+vec4 gammaMix(vec4 startColor, vec4 endColor, float v) {
+    return gamma2linear(mix(linear2gamma(startColor), linear2gamma(endColor), v));
+}
+
 vec2 getProjectedPointOnLine(vec2 v1, vec2 v2, vec2 p)
 {
     // get dot product of e1, e2
@@ -53,7 +65,7 @@ vec4 linearGradient() {
     float len_grad = length(direction);
     float pos_grad = length(getProjectedPointOnLine(vec2(0, 0), direction, delta_pt));
 
-    return mix(u_startColor, u_endColor, pos_grad / len_grad);
+    return gammaMix(u_startColor, u_endColor, pos_grad / len_grad);
 }
 
 vec4 radialGradient() {
@@ -62,24 +74,16 @@ vec4 radialGradient() {
 
     float f = clamp(len_arc, 0.0, len_total) / len_total;
 
-    return mix(u_startColor, u_endColor, f);
-}
-
-vec4 linear2gamma(vec4 color) {
-    return vec4(pow(color.rgb, vec3(1.0 / gamma)), color.a);
+    return gammaMix(u_startColor, u_endColor, f);
 }
 
 void main() {
-    vec4 result;
-
     if (u_style == 0)
-        result = flatColor();
+        gl_FragColor = flatColor();
     else if (u_style == 1)
-        result = linearGradient();
+        gl_FragColor = linearGradient();
     else if (u_style == 2)
-        result = radialGradient();
+        gl_FragColor = radialGradient();
     else
-        result = vec4(1, 0, 1, 1);
-
-    gl_FragColor = linear2gamma(result);
+        gl_FragColor = vec4(1, 0, 1, 1);
 }
