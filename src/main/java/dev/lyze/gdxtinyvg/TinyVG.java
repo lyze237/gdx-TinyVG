@@ -60,7 +60,8 @@ public class TinyVG {
     }
 
     /**
-     * Draws the tvg to the screen based on the viewport
+     * Draws the tvg to the screen based on the viewport (Used to calculate position
+     * as tvg is y down instead of up.
      */
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
         drawer.setColor(Color.WHITE);
