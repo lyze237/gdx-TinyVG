@@ -56,7 +56,7 @@ public class Example extends ApplicationAdapter {
     // download one from the test examples in the repo.
     // https://github.com/lyze237/gdx-TinyVG/blob/main/src/test/resources/pixel.png
     drawer = new TinyVGShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
-    
+
     // You're also able to create a texture region directly out of a tvg file:
     var tvgRegion = TinyVGIO.toTextureRegion(tvg, drawer);
   }
