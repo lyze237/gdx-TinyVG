@@ -56,6 +56,9 @@ public class Example extends ApplicationAdapter {
     // download one from the test examples in the repo.
     // https://github.com/lyze237/gdx-TinyVG/blob/main/src/test/resources/pixel.png
     drawer = new TinyVGShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
+    
+    // You're also able to create a texture region directly out of a tvg file:
+    var tvgRegion = TinyVGIO.toTextureRegion(tvg, drawer);
   }
 
   public void render() {
@@ -94,6 +97,24 @@ public class Example extends ApplicationAdapter {
     assetManager.finishLoading();
 
     var tvg = assetManager.get("square.tvg", TinyVG.class);
+  }
+}
+```
+Or directly create a texture region out of it:
+```java
+public class Example extends ApplicationAdapter {
+  public void create() {
+    var drawer = new TinyVGShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
+
+    var assMan = new AssetManager();
+    assMan.setLoader(TinyVG.class, new TinyVGAssetLoader());
+    assMan.setLoader(TinyVGTextureAssetLoader.Result.class, new TinyVGTextureAssetLoader());
+
+    assMan.load(file, TinyVGTextureAssetLoader.Result.class, new TinyVGTextureAssetLoader.Parameters(drawer));
+
+    assMan.finishLoading();
+
+    tvg = assMan.get(file, TinyVGTextureAssetLoader.Result.class).getTextureRegion();
   }
 }
 ```
