@@ -1,9 +1,6 @@
 package dev.lyze.gdxtinyvg;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.commands.Command;
@@ -34,11 +31,13 @@ public class TinyVG {
     /**
      * Global position offset value.
      */
-    @Getter private final Vector2 position = new Vector2();
+    @Getter private float positionX;
+    @Getter private float positionY;
     /**
      * Global scale value.
      */
-    @Getter private final Vector2 scale = new Vector2(1, 1);
+    @Getter private float scaleX = 1;
+    @Getter private float scaleY = 1;
     /**
      * Global scale value for all line widths. (Independent from scale)
      */
@@ -49,16 +48,29 @@ public class TinyVG {
      */
     @Getter private int curvePoints = 10;
 
+    /**
+     * Next time render gets called and the tvg is dirty, it recalculates all point
+     * positions in paths.
+     */
+    @Getter private boolean dirty;
+
     public TinyVG(TinyVGHeader header, Color[] colorTable) {
         this.header = header;
         this.colorTable = colorTable;
     }
 
+    /**
+     * Draws the tvg to the screen based on the viewport
+     */
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
         drawer.setColor(Color.WHITE);
         drawer.beginShader();
-        for (Command command : commands)
+        for (Command command : commands) {
+            if (dirty)
+                command.onPropertiesChanged();
             command.draw(drawer, viewport);
+        }
+        dirty = false;
         drawer.endShader();
     }
 
@@ -67,30 +79,87 @@ public class TinyVG {
     }
 
     /**
-     * Sets the scale of the TVG based on a specified width and height.
+     * Sets the size of the TVG based on a specified width and height and triggers
+     * an update to recalculate commands.
      */
     public void setSize(float width, float height) {
-        scale.set(width / header.getWidth(), height / header.getHeight());
+        scaleX = width / header.getWidth();
+        scaleY = height / header.getHeight();
+
+        dirty = true;
+    }
+
+    /**
+     * Sets the scale of the TVG based on the specified float value and triggers an
+     * update to recalculate commands.
+     */
+    public void setScale(float scale) {
+        setScale(scale, scale);
+    }
+
+    /**
+     * Sets the scale of the TVG based on the specified float value and triggers an
+     * update to recalculate commands.
+     */
+    public void setScale(float scaleX, float scaleY) {
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+
+        dirty = true;
+    }
+
+    /**
+     * Sets the position of the TVG based on the specified x and y value and
+     * triggers an update to recalculate commands.
+     */
+    public void setPosition(float x, float y) {
+        this.positionX = x;
+        this.positionY = y;
+
+        dirty = true;
+    }
+
+    /**
+     * Sets the x position of the TVG based on the specified value and triggers an
+     * update to recalculate commands.
+     */
+    public void setX(float x) {
+        positionX = x;
+
+        dirty = true;
+    }
+
+    /**
+     * Sets the y position of the TVG based on the specified value and triggers an
+     * update to recalculate commands.
+     */
+    public void setY(float y) {
+        positionY = y;
+
+        dirty = true;
+    }
+
+    /**
+     * Sets the amount of curve points used to generate curves and triggers an
+     * update to recalculate commands.
+     */
+    public void setCurvePoints(int curvePoints) {
+        this.curvePoints = curvePoints;
+
+        dirty = true;
     }
 
     /**
      * @return Returns the actual width of the tvg including scale.
      */
     public float getWidth() {
-        return header.getWidth() * scale.x;
+        return header.getWidth() * scaleX;
     }
 
     /**
      * @return Returns the actual height of the tvg including scale.
      */
     public float getHeight() {
-        return header.getHeight() * scale.y;
-    }
-
-    public void setCurvePoints(int curvePoints) {
-        this.curvePoints = curvePoints;
-
-        for (Command command : commands)
-            command.onCurveSegmentsChanged();
+        return header.getHeight() * scaleY;
     }
 }

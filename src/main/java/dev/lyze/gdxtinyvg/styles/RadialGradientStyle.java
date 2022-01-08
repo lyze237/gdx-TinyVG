@@ -41,13 +41,16 @@ public class RadialGradientStyle extends Style {
         drawer.setGradientStyle(StyleType.RADIAL);
         drawer.setGradientColors(getTinyVG().getColorTable()[colorIndex1], getTinyVG().getColorTable()[colorIndex2]);
 
-        var position = getTinyVG().getPosition();
-        var scale = getTinyVG().getScale();
+        var positionX = getTinyVG().getPositionX();
+        var positionY = getTinyVG().getPositionY();
 
-        drawer.setPositions(point1.getX().convert() * scale.x + position.x,
-                getTinyVG().getHeight() - point1.getY().convert() * scale.y + position.y,
-                point2.getX().convert() * scale.x + position.x,
-                getTinyVG().getHeight() - point2.getY().convert() * scale.y + position.y, viewport);
+        var scaleX = getTinyVG().getScaleX();
+        var scaleY = getTinyVG().getScaleY();
+
+        drawer.setPositions(point1.getX().convert() * scaleX + positionX,
+                getTinyVG().getHeight() - point1.getY().convert() * scaleY + positionY,
+                point2.getX().convert() * scaleX + positionX,
+                getTinyVG().getHeight() - point2.getY().convert() * scaleY + positionY, viewport);
 
         drawer.applyShaderValues();
     }

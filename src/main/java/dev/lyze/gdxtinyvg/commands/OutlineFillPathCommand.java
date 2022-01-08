@@ -7,9 +7,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
+import dev.lyze.gdxtinyvg.commands.headers.OutlineFillPathHeader;
 import dev.lyze.gdxtinyvg.commands.paths.UnitPathCloseCommand;
 import dev.lyze.gdxtinyvg.commands.paths.UnitPathSegment;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
+import dev.lyze.gdxtinyvg.drawers.chaches.TinyVGDrawerCache;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.styles.Style;
@@ -22,10 +24,7 @@ import java.util.Arrays;
 import lombok.var;
 
 public class OutlineFillPathCommand extends Command {
-    private Style primaryStyle, secondaryStyle;
-    private float startLineWidth;
-
-    private ParsedPathSegment[] segments;
+    private OutlineFillPathHeader header;
 
     public OutlineFillPathCommand(TinyVG tinyVG) {
         super(CommandType.FILL_PATH, tinyVG);
@@ -33,47 +32,13 @@ public class OutlineFillPathCommand extends Command {
 
     @Override
     public void read(LittleEndianInputStream stream, StyleType primaryStyleType) throws IOException {
-        var countSecondaryStyleByte = stream.readUnsignedByte();
-        var count = (countSecondaryStyleByte & 0b0011_1111) + 1;
-        var secondaryStyleType = StyleType.valueOf((countSecondaryStyleByte & 0b1100_0000) >> 6);
-
-        primaryStyle = primaryStyleType.read(stream, getTinyVG());
-        secondaryStyle = secondaryStyleType.read(stream, getTinyVG());
-
-        startLineWidth = new Unit(stream, getTinyVG().getHeader().getCoordinateRange(),
-                getTinyVG().getHeader().getFractionBits()).convert();
-
-        var sourceSegments = new UnitPathSegment[count];
-        for (int i = 0; i < sourceSegments.length; i++)
-            sourceSegments[i] = new UnitPathSegment(StreamUtils.readVarUInt(stream) + 1);
-
-        for (UnitPathSegment segment : sourceSegments)
-            segment.read(stream, getTinyVG());
-
-        segments = new ParsedPathSegment[sourceSegments.length];
-
-        for (int i = 0; i < sourceSegments.length; i++) {
-            var path = sourceSegments[i].calculatePoints(startLineWidth);
-            var distinctPath = new Array<Vector2WithWidth>(path.size);
-
-            for (var point : path) {
-                if (distinctPath.size > 0) {
-                    Vector2 previousPoint = distinctPath.get(distinctPath.size - 1).getPoint();
-                    if ((int) previousPoint.x == (int) point.getPoint().x
-                            && (int) previousPoint.y == (int) point.getPoint().y)
-                        continue;
-                }
-
-                distinctPath.add(point);
-            }
-
-            segments[i] = new ParsedPathSegment(sourceSegments[i], distinctPath);
-        }
+        header = new OutlineFillPathHeader(getTinyVG());
+        header.read(stream, primaryStyleType);
     }
 
     @Override
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
-        primaryStyle.start(drawer, viewport);
+        header.getPrimaryStyle().start(drawer, viewport);
 
         Gdx.gl.glEnable(GL20.GL_STENCIL_TEST);
         Gdx.gl.glClear(GL20.GL_STENCIL_BUFFER_BIT);
@@ -81,8 +46,8 @@ public class OutlineFillPathCommand extends Command {
         Gdx.gl.glStencilFunc(GL20.GL_ALWAYS, 0, -1);
         Gdx.gl.glStencilOp(GL20.GL_KEEP, GL20.GL_KEEP, GL20.GL_INCR);
 
-        for (ParsedPathSegment parsedPathSegment : segments)
-            drawer.filledPolygon(parsedPathSegment, getTinyVG());
+        for (ParsedPathSegment segment : header.getSegments())
+            segment.getCache().filledPolygon(drawer);
 
         drawer.getBatch().flush();
 
@@ -90,40 +55,21 @@ public class OutlineFillPathCommand extends Command {
         Gdx.gl.glStencilFunc(GL20.GL_EQUAL, 1, -1); // was GL_NOTEQUAL, 2, -1
         Gdx.gl.glStencilOp(GL20.GL_KEEP, GL20.GL_KEEP, GL20.GL_KEEP);
 
-        for (ParsedPathSegment segment : segments)
-            drawer.filledPolygon(segment.getVertices());
+        for (ParsedPathSegment segment : header.getSegments())
+            segment.getCache().filledPolygon(drawer);
 
-        primaryStyle.end(drawer, viewport);
+        header.getPrimaryStyle().end(drawer, viewport);
         Gdx.gl.glDisable(GL20.GL_STENCIL_TEST);
 
-        secondaryStyle.start(drawer, viewport);
-        for (var segment : segments)
-            drawer.path(segment, !(segment.getLastCommand() instanceof UnitPathCloseCommand), getTinyVG());
-        secondaryStyle.end(drawer, viewport);
+        header.getSecondaryStyle().start(drawer, viewport);
+        for (var segment : header.getSegments())
+            segment.getCache().path(drawer, segment.getPoints().get(0).getWidth(),
+                    !(segment.getLastCommand() instanceof UnitPathCloseCommand));
+        header.getSecondaryStyle().end(drawer, viewport);
     }
 
     @Override
-    public void onCurveSegmentsChanged() {
-        var sourceSegments = Arrays.stream(segments).map(ParsedPathSegment::getSource).toArray(UnitPathSegment[]::new);
-
-        segments = new ParsedPathSegment[sourceSegments.length];
-
-        for (int i = 0; i < sourceSegments.length; i++) {
-            var path = sourceSegments[i].calculatePoints(startLineWidth);
-            var distinctPath = new Array<Vector2WithWidth>(path.size);
-
-            for (var point : path) {
-                if (distinctPath.size > 0) {
-                    Vector2 previousPoint = distinctPath.get(distinctPath.size - 1).getPoint();
-                    if ((int) previousPoint.x == (int) point.getPoint().x
-                            && (int) previousPoint.y == (int) point.getPoint().y)
-                        continue;
-                }
-
-                distinctPath.add(point);
-            }
-
-            segments[i] = new ParsedPathSegment(sourceSegments[i], distinctPath);
-        }
+    public void onPropertiesChanged() {
+        header.recalculateSegments();
     }
 }

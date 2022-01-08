@@ -3,6 +3,7 @@ package dev.lyze.gdxtinyvg.commands;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
+import dev.lyze.gdxtinyvg.commands.headers.OutlinePathHeader;
 import dev.lyze.gdxtinyvg.commands.headers.PathHeader;
 import dev.lyze.gdxtinyvg.commands.paths.UnitPathCloseCommand;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
@@ -20,23 +21,23 @@ public class DrawLinePathCommand extends Command {
 
     @Override
     public void read(LittleEndianInputStream stream, StyleType primaryStyleType) throws IOException {
-        header = new PathHeader(getTinyVG());
-        header.read(stream, primaryStyleType, true);
+        header = new OutlinePathHeader(getTinyVG());
+        header.read(stream, primaryStyleType);
     }
 
     @Override
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
         header.getPrimaryStyle().start(drawer, viewport);
 
-        for (var segment : header.getSegments()) {
-            drawer.path(segment, !(segment.getLastCommand() instanceof UnitPathCloseCommand), getTinyVG());
-        }
+        for (var segment : header.getSegments())
+            segment.getCache().path(drawer, segment.getPoints().get(0).getWidth(),
+                    !(segment.getLastCommand() instanceof UnitPathCloseCommand));
 
         header.getPrimaryStyle().end(drawer, viewport);
     }
 
     @Override
-    public void onCurveSegmentsChanged() {
+    public void onPropertiesChanged() {
         header.recalculateSegments();
     }
 }
