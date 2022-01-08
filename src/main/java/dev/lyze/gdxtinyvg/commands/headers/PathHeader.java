@@ -17,23 +17,22 @@ import lombok.Getter;
 import lombok.var;
 
 @Getter
-public class PathHeader {
-    private final TinyVG tinyVG;
-    private Style primaryStyle;
-    private float startLineWidth;
-    private ParsedPathSegment[] segments;
+public abstract class PathHeader {
+    protected final TinyVG tinyVG;
+    protected Style primaryStyle;
+    protected float startLineWidth;
+    protected ParsedPathSegment[] segments;
 
     public PathHeader(TinyVG tinyVG) {
         this.tinyVG = tinyVG;
     }
 
-    public void read(LittleEndianInputStream stream, StyleType primaryStyleType, boolean readLineWidth)
-            throws IOException {
+    public void read(LittleEndianInputStream stream, StyleType primaryStyleType) throws IOException {
         var count = StreamUtils.readVarUInt(stream) + 1;
 
         primaryStyle = primaryStyleType.read(stream, tinyVG);
 
-        if (readLineWidth)
+        if (!shouldCalculateTriangles())
             startLineWidth = new Unit(stream, tinyVG.getHeader().getCoordinateRange(),
                     tinyVG.getHeader().getFractionBits()).convert();
 
@@ -69,7 +68,9 @@ public class PathHeader {
                 distinctPath.add(point);
             }
 
-            segments[i] = new ParsedPathSegment(sourceSegments[i], distinctPath);
+            segments[i] = new ParsedPathSegment(sourceSegments[i], distinctPath, tinyVG, shouldCalculateTriangles());
         }
     }
+
+    protected abstract boolean shouldCalculateTriangles();
 }

@@ -22,7 +22,7 @@ public abstract class Command {
 
     public abstract void draw(TinyVGShapeDrawer drawer, Viewport viewport);
 
-    public void onCurveSegmentsChanged() {
+    public void onPropertiesChanged() {
 
     }
 }

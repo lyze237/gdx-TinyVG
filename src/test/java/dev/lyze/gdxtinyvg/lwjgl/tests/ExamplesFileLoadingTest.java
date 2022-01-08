@@ -78,8 +78,8 @@ public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
         Gdx.app.postRunnable(() -> {
             tvg = new TinyVGAssetLoader().load(file);
             tvgScaled = new TinyVGAssetLoader().load(file);
-            tvgScaled.getScale().set(2, 2);
-            tvgScaled.getPosition().set(tvg.getWidth(), 0);
+            tvgScaled.setScale(2);
+            tvgScaled.setPosition(tvg.getWidth(), 0);
             tvgScaled.setLineWidthScale(2);
 
             viewport.setWorldSize(tvg.getWidth() + tvgScaled.getWidth(), tvgScaled.getHeight());
