@@ -33,9 +33,8 @@ public class FillPolygonCommand extends Command {
 
     @Override
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
-        header.getPrimaryStyle().start(drawer, viewport);
+        drawer.setStyle(header.getPrimaryStyle(), viewport);
         cache.filledPolygon(drawer);
-        header.getPrimaryStyle().end(drawer, viewport);
     }
 
     @Override

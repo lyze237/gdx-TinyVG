@@ -27,13 +27,11 @@ public class DrawLinePathCommand extends Command {
 
     @Override
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
-        header.getPrimaryStyle().start(drawer, viewport);
+        drawer.setStyle(header.getPrimaryStyle(), viewport);
 
         for (var segment : header.getSegments())
             segment.getCache().path(drawer, segment.getPoints().get(0).getWidth(),
                     !(segment.getLastCommand() instanceof UnitPathCloseCommand));
-
-        header.getPrimaryStyle().end(drawer, viewport);
     }
 
     @Override

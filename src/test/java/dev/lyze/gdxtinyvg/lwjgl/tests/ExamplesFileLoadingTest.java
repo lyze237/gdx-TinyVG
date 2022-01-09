@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
@@ -20,10 +21,15 @@ public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
     private TinyVGShapeDrawer drawer;
     private Viewport viewport;
 
+    private GLProfiler profiler;
+
     @Override
     public void create() {
         drawer = new TinyVGShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
         viewport = new FitViewport(100, 100);
+
+        profiler = new GLProfiler(Gdx.graphics);
+        profiler.enable();
     }
 
     @Test
@@ -104,7 +110,9 @@ public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
         drawer.getBatch().begin();
         drawer.filledRectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight(), Color.TEAL);
 
+        profiler.reset();
         tvg.draw(drawer, viewport);
+        System.out.println(profiler.getDrawCalls());
         tvgScaled.draw(drawer, viewport);
 
         drawer.getBatch().end();

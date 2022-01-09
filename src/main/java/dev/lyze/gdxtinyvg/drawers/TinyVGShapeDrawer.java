@@ -10,9 +10,7 @@ import dev.lyze.gdxtinyvg.types.*;
 import lombok.var;
 import space.earlygrey.shapedrawer.JoinType;
 
-public class TinyVGShapeDrawer extends GradientShapeDrawer {
-    private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
-
+public class TinyVGShapeDrawer extends GradientStyleShapeDrawer {
     public TinyVGShapeDrawer(Batch batch, TextureRegion region) {
         super(batch, region);
     }
@@ -42,39 +40,8 @@ public class TinyVGShapeDrawer extends GradientShapeDrawer {
                 TinyVGShapeDrawerHelper.lineWidthScaled(lineWidth, tinyVG));
     }
 
-    public void path(Array<UnitPoint> points, float[] storage, float lineWidth, boolean open, TinyVG tinyVG) {
-        path(calculateVertices(points, storage, tinyVG), TinyVGShapeDrawerHelper.lineWidthScaled(lineWidth, tinyVG),
-                isJoinNecessary(lineWidth) ? JoinType.POINTY : JoinType.NONE, open);
-    }
-
     public void path(float[] points, float lineWidth, boolean open, TinyVG tinyVG) {
         path(points, TinyVGShapeDrawerHelper.lineWidthScaled(lineWidth, tinyVG),
                 isJoinNecessary(lineWidth) ? JoinType.POINTY : JoinType.NONE, open);
-    }
-
-    public void filledPolygon(Array<UnitPoint> points, float[] storage, TinyVG tinyVG) {
-        filledPolygon(calculateVertices(points, storage, tinyVG));
-    }
-
-    private float[] calculateVectorVertices(Array<Vector2> points, float[] storage, TinyVG tinyVG) {
-        for (int p = 0, v = 0; p < points.size; p++, v += 2) {
-            var point = points.get(p);
-
-            storage[v] = TinyVGShapeDrawerHelper.xAdjusted(point.x, tinyVG);
-            storage[v + 1] = TinyVGShapeDrawerHelper.yAdjusted(point.y, tinyVG);
-        }
-
-        return storage;
-    }
-
-    private float[] calculateVertices(Array<UnitPoint> points, float[] storage, TinyVG tinyVG) {
-        for (int p = 0, v = 0; p < points.size; p++, v += 2) {
-            var point = points.get(p);
-
-            storage[v] = TinyVGShapeDrawerHelper.xAdjusted(point.getX().convert(), tinyVG);
-            storage[v + 1] = TinyVGShapeDrawerHelper.yAdjusted(point.getY().convert(), tinyVG);
-        }
-
-        return storage;
     }
 }
