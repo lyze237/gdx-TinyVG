@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.headers.FillHeader;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
+import dev.lyze.gdxtinyvg.drawers.chaches.TinyVGDrawerCache;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
@@ -14,24 +15,32 @@ import java.io.IOException;
  * Fills a polygon with N points
  */
 public class FillPolygonCommand extends Command {
+    private final TinyVGDrawerCache cache;
     private FillHeader<UnitPoint> header;
-    private float[] vertices;
 
     public FillPolygonCommand(TinyVG tinyVG) {
         super(CommandType.FILL_POLYGON, tinyVG);
+
+        cache = new TinyVGDrawerCache(getTinyVG());
     }
 
     @Override
     public void read(LittleEndianInputStream stream, StyleType primaryStyleType) throws IOException {
         header = new FillHeader<>(UnitPoint.class).read(stream, primaryStyleType, getTinyVG());
 
-        vertices = new float[header.getData().size * 2];
+        onPropertiesChanged();
     }
 
     @Override
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
         header.getPrimaryStyle().start(drawer, viewport);
-        drawer.filledPolygon(header.getData(), vertices, getTinyVG());
+        cache.filledPolygon(drawer);
         header.getPrimaryStyle().end(drawer, viewport);
+    }
+
+    @Override
+    public void onPropertiesChanged() {
+        cache.calculateVertices(header.getData());
+        cache.calculateTriangles();
     }
 }
