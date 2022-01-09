@@ -10,6 +10,7 @@ import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
 import java.io.IOException;
+import sun.security.krb5.internal.crypto.RsaMd5CksumType;
 
 /**
  * Fills a polygon and draws an outline at the same time.
@@ -33,13 +34,11 @@ public class OutlineFillPolygonCommand extends Command {
 
     @Override
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
-        header.getPrimaryStyle().start(drawer, viewport);
+        drawer.setStyle(header.getPrimaryStyle(), viewport);
         cache.filledPolygon(drawer);
-        header.getPrimaryStyle().end(drawer, viewport);
 
-        header.getSecondaryStyle().start(drawer, viewport);
+        drawer.setStyle(header.getSecondaryStyle(), viewport);
         cache.path(drawer, header.getLineWidth(), false);
-        header.getSecondaryStyle().end(drawer, viewport);
     }
 
     @Override

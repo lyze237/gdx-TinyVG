@@ -29,13 +29,11 @@ public class OutlineFillRectanglesCommand extends Command {
     @Override
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
         for (var rectangle : header.getData()) {
-            header.getPrimaryStyle().start(drawer, viewport);
+            drawer.setStyle(header.getPrimaryStyle(), viewport);
             drawer.filledRectangle(rectangle, getTinyVG());
-            header.getPrimaryStyle().end(drawer, viewport);
 
-            header.getSecondaryStyle().start(drawer, viewport);
+            drawer.setStyle(header.getSecondaryStyle(), viewport);
             drawer.rectangle(rectangle, header.getLineWidth(), getTinyVG());
-            header.getSecondaryStyle().end(drawer, viewport);
         }
     }
 }

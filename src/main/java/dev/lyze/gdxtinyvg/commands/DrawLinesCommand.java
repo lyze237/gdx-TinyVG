@@ -28,10 +28,8 @@ public class DrawLinesCommand extends Command {
 
     @Override
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
-        for (var line : header.getData()) {
-            header.getPrimaryStyle().start(drawer, viewport);
+        drawer.setStyle(header.getPrimaryStyle(), viewport);
+        for (var line : header.getData())
             drawer.line(line, header.getLineWidth(), getTinyVG());
-            header.getPrimaryStyle().end(drawer, viewport);
-        }
     }
 }

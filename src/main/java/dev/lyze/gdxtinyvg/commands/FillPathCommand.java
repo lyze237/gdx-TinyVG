@@ -29,7 +29,7 @@ public class FillPathCommand extends Command {
 
     @Override
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
-        header.getPrimaryStyle().start(drawer, viewport);
+        drawer.setStyle(header.getPrimaryStyle(), viewport);
 
         Gdx.gl.glEnable(GL20.GL_STENCIL_TEST);
         Gdx.gl.glClear(GL20.GL_STENCIL_BUFFER_BIT);
@@ -49,7 +49,7 @@ public class FillPathCommand extends Command {
         for (var segment : header.getSegments())
             segment.getCache().filledPolygon(drawer);
 
-        header.getPrimaryStyle().end(drawer, viewport);
+        drawer.getBatch().flush();
         Gdx.gl.glDisable(GL20.GL_STENCIL_TEST);
     }
 

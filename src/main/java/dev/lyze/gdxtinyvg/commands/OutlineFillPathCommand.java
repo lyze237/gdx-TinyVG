@@ -2,25 +2,16 @@ package dev.lyze.gdxtinyvg.commands;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.headers.OutlineFillPathHeader;
 import dev.lyze.gdxtinyvg.commands.paths.UnitPathCloseCommand;
-import dev.lyze.gdxtinyvg.commands.paths.UnitPathSegment;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
-import dev.lyze.gdxtinyvg.drawers.chaches.TinyVGDrawerCache;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
-import dev.lyze.gdxtinyvg.styles.Style;
 import dev.lyze.gdxtinyvg.types.ParsedPathSegment;
-import dev.lyze.gdxtinyvg.types.Unit;
-import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
-import dev.lyze.gdxtinyvg.utils.StreamUtils;
 import java.io.IOException;
-import java.util.Arrays;
 import lombok.var;
 
 public class OutlineFillPathCommand extends Command {
@@ -38,7 +29,7 @@ public class OutlineFillPathCommand extends Command {
 
     @Override
     public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
-        header.getPrimaryStyle().start(drawer, viewport);
+        drawer.setStyle(header.getPrimaryStyle(), viewport);
 
         Gdx.gl.glEnable(GL20.GL_STENCIL_TEST);
         Gdx.gl.glClear(GL20.GL_STENCIL_BUFFER_BIT);
@@ -58,14 +49,14 @@ public class OutlineFillPathCommand extends Command {
         for (ParsedPathSegment segment : header.getSegments())
             segment.getCache().filledPolygon(drawer);
 
-        header.getPrimaryStyle().end(drawer, viewport);
+        drawer.setStyle(header.getSecondaryStyle(), viewport, true);
         Gdx.gl.glDisable(GL20.GL_STENCIL_TEST);
 
-        header.getSecondaryStyle().start(drawer, viewport);
         for (var segment : header.getSegments())
             segment.getCache().path(drawer, segment.getPoints().get(0).getWidth(),
                     !(segment.getLastCommand() instanceof UnitPathCloseCommand));
-        header.getSecondaryStyle().end(drawer, viewport);
+
+        drawer.flushNextStyleSwitch();
     }
 
     @Override
