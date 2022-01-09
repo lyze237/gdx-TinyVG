@@ -46,7 +46,7 @@ public class TinyVG {
     /**
      * Amount of points every curve generates.
      */
-    @Getter private int curvePoints = 10;
+    @Getter private int curvePoints = 24;
 
     /**
      * Next time render gets called and the tvg is dirty, it recalculates all point
