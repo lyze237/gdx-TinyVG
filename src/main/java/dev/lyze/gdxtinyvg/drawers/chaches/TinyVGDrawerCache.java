@@ -1,11 +1,14 @@
 package dev.lyze.gdxtinyvg.drawers.chaches;
 
 import com.badlogic.gdx.math.EarClippingTriangulator;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ShortArray;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawerHelper;
 import dev.lyze.gdxtinyvg.types.ParsedPathSegment;
+import dev.lyze.gdxtinyvg.types.UnitPoint;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -30,6 +33,12 @@ public class TinyVGDrawerCache {
         return this;
     }
 
+    public TinyVGDrawerCache calculateVertices(Array<UnitPoint> points) {
+        calculateVector(points);
+
+        return this;
+    }
+
     public TinyVGDrawerCache calculateTriangles() {
         triangles = triangulator.computeTriangles(vertices, 0, vertices.length);
 
@@ -47,6 +56,16 @@ public class TinyVGDrawerCache {
 
             vertices[v] = TinyVGShapeDrawerHelper.xAdjusted(point.getPoint().x, tinyVG);
             vertices[v + 1] = TinyVGShapeDrawerHelper.yAdjusted(point.getPoint().y, tinyVG);
+        }
+    }
+
+    protected void calculateVector(Array<UnitPoint> points) {
+        vertices = new float[points.size * 2];
+        for (int p = 0, v = 0; p < points.size; p++, v += 2) {
+            var point = points.get(p);
+
+            vertices[v] = TinyVGShapeDrawerHelper.xAdjusted(point.getX().convert(), tinyVG);
+            vertices[v + 1] = TinyVGShapeDrawerHelper.yAdjusted(point.getY().convert(), tinyVG);
         }
     }
 }
