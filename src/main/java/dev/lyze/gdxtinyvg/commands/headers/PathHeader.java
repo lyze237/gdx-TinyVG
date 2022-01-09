@@ -58,12 +58,8 @@ public abstract class PathHeader {
             var distinctPath = new Array<Vector2WithWidth>(path.size);
 
             for (var point : path) {
-                if (distinctPath.size > 0) {
-                    Vector2 previousPoint = distinctPath.get(distinctPath.size - 1).getPoint();
-                    if ((int) previousPoint.x == (int) point.getPoint().x
-                            && (int) previousPoint.y == (int) point.getPoint().y)
-                        continue;
-                }
+                if (distinctPath.size > 0 && distinctPath.get(distinctPath.size - 1).equals(point))
+                    continue;
 
                 distinctPath.add(point);
             }
