@@ -59,8 +59,8 @@ public class TinyVGIO {
      * texture size. Each pass requires twice the width and height of the last!
      */
     @SuppressWarnings("GDXJavaFlushInsideLoop")
-    public static TextureRegion toTextureRegion(TinyVG tvg, TinyVGShapeDrawer drawer, int superSamplingPasses) {
-        if (superSamplingPasses < 1)
+    public static TextureRegion toTextureRegion(TinyVG tvg, TinyVGShapeDrawer drawer, int supersamplingPasses) {
+        if (supersamplingPasses < 1)
             return toTextureRegion(tvg, drawer);
 
         var batch = drawer.getBatch();
@@ -72,10 +72,10 @@ public class TinyVGIO {
         float initialScaleY = tvg.getScaleY();
         Texture resizedTexture = null;
 
-        for (int i = 0; i < superSamplingPasses; i++) {
+        for (int i = 0; i < supersamplingPasses; i++) {
             Texture bigTexture;
             if (resizedTexture == null) {
-                var scaleAmount = (float) Math.pow(2, superSamplingPasses);
+                var scaleAmount = (float) Math.pow(2, supersamplingPasses);
                 tvg.setScale(initialScaleX * scaleAmount, initialScaleY * scaleAmount);
                 bigTexture = toTextureRegion(tvg, drawer).getTexture();
             } else {
@@ -103,7 +103,7 @@ public class TinyVGIO {
             batch.begin();
 
         var resizedRegion = new TextureRegion(resizedTexture);
-        resizedRegion.flip(false, superSamplingPasses % 2 == 0);
+        resizedRegion.flip(false, supersamplingPasses % 2 == 0);
         return resizedRegion;
     }
 }
