@@ -25,7 +25,7 @@ public class TinyVGIO {
         int fboWidth = MathUtils.roundPositive(Math.abs(tvg.getWidth()));
         int fboHeight = MathUtils.roundPositive(Math.abs(tvg.getHeight()));
 
-        var fbo = new FrameBuffer(Pixmap.Format.RGBA8888, fboWidth, fboHeight, false, true);
+        var fbo = new FrameBuffer(Pixmap.Format.RGBA8888, fboWidth, fboHeight, false);
         var viewport = new FitViewport(tvg.getWidth(), tvg.getHeight());
         viewport.update(fboWidth, fboHeight, true);
 
