@@ -25,7 +25,7 @@ public class TinyVGIO {
         int fboWidth = MathUtils.roundPositive(Math.abs(tvg.getWidth()));
         int fboHeight = MathUtils.roundPositive(Math.abs(tvg.getHeight()));
 
-        var fbo = new FrameBuffer(Pixmap.Format.RGBA8888, fboWidth, fboHeight, false);
+        var fbo = new FrameBuffer(Pixmap.Format.RGBA8888, fboWidth, fboHeight, false, true);
         var viewport = new FitViewport(tvg.getWidth(), tvg.getHeight());
         viewport.update(fboWidth, fboHeight, true);
 
@@ -84,7 +84,7 @@ public class TinyVGIO {
             int width = bigTexture.getWidth();
             int height = bigTexture.getHeight();
 
-            var fbo = new FrameBuffer(Pixmap.Format.RGBA8888, width / 2, height / 2, false, resizedTexture == null);
+            var fbo = new FrameBuffer(Pixmap.Format.RGBA8888, width / 2, height / 2, false);
             var viewport = new FitViewport(fbo.getWidth(), fbo.getHeight());
             viewport.update(fbo.getWidth(), fbo.getHeight(), true);
             batch.setProjectionMatrix(viewport.getCamera().combined);
