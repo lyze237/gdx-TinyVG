@@ -29,7 +29,7 @@ public class LwjglExtension extends BaseLwjglExtension {
         });
 
         var config = new Lwjgl3ApplicationConfiguration();
-        config.setBackBufferConfig(8, 8, 8, 8, 16,  2, 0);
+        config.setBackBufferConfig(8, 8, 8, 8, 16, 2, 0);
 
         new Thread(() -> application = new Lwjgl3Application(wrapper, config)).start();
 
