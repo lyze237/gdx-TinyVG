@@ -38,7 +38,7 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
 
     testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-    testImplementation "com.badlogicgames.gdx:gdx-backend-lwjgl2:$gdxVersion"
+    testImplementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
     testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
