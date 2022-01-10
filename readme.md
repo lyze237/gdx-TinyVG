@@ -14,7 +14,7 @@ TinyVG tries to be simpler. Fewer features, but powerful enough to cover 90% of 
 
 # Convert SVG into TVG
 
-Convert your SVG into a TVG her: https://svgtotvg.herokuapp.com/
+Convert your SVG into a TVG here: https://svgtotvg.herokuapp.com/
 
 Some things are not supported.
 
