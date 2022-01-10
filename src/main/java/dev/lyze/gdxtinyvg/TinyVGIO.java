@@ -22,8 +22,8 @@ public class TinyVGIO {
         if (drawing)
             batch.end();
 
-        int fboWidth = MathUtils.roundPositive(Math.abs(tvg.getWidth()));
-        int fboHeight = MathUtils.roundPositive(Math.abs(tvg.getHeight()));
+        var fboWidth = MathUtils.roundPositive(Math.abs(tvg.getWidth()));
+        var fboHeight = MathUtils.roundPositive(Math.abs(tvg.getHeight()));
 
         var fbo = new FrameBuffer(Pixmap.Format.RGBA8888, fboWidth, fboHeight, false, true);
         var viewport = new FitViewport(tvg.getWidth(), tvg.getHeight());
@@ -42,6 +42,7 @@ public class TinyVGIO {
         var region = new TextureRegion(fbo.getColorBufferTexture());
         boolean flipX = tvg.getWidth() < 0;
         boolean flipY = tvg.getHeight() < 0;
+
         region.flip(flipX, !flipY);
 
         if (drawing)
@@ -68,8 +69,10 @@ public class TinyVGIO {
         if (drawing)
             batch.end();
 
-        float initialScaleX = tvg.getScaleX();
-        float initialScaleY = tvg.getScaleY();
+        var initialScaleX = tvg.getScaleX();
+        var initialScaleY = tvg.getScaleY();
+        var initialScaleLineWidth = tvg.getLineWidthScale();
+
         Texture resizedTexture = null;
 
         for (int i = 0; i < supersamplingPasses; i++) {
@@ -77,26 +80,30 @@ public class TinyVGIO {
             if (resizedTexture == null) {
                 var scaleAmount = (float) Math.pow(2, supersamplingPasses);
                 tvg.setScale(initialScaleX * scaleAmount, initialScaleY * scaleAmount);
+                tvg.setLineWidthScale(initialScaleLineWidth * scaleAmount);
+
                 bigTexture = toTextureRegion(tvg, drawer).getTexture();
             } else {
                 bigTexture = resizedTexture;
             }
-            int width = bigTexture.getWidth();
-            int height = bigTexture.getHeight();
+            var width = bigTexture.getWidth();
+            var height = bigTexture.getHeight();
 
             var fbo = new FrameBuffer(Pixmap.Format.RGBA8888, width / 2, height / 2, false);
+
             var viewport = new FitViewport(fbo.getWidth(), fbo.getHeight());
             viewport.update(fbo.getWidth(), fbo.getHeight(), true);
             batch.setProjectionMatrix(viewport.getCamera().combined);
 
             fbo.begin();
+
             batch.begin();
             batch.draw(bigTexture, 0, 0, fbo.getWidth(), fbo.getHeight());
             batch.end();
+
             fbo.end();
 
             resizedTexture = fbo.getColorBufferTexture();
-
         }
 
         if (drawing)
@@ -104,6 +111,7 @@ public class TinyVGIO {
 
         var resizedRegion = new TextureRegion(resizedTexture);
         resizedRegion.flip(false, supersamplingPasses % 2 == 0);
+
         return resizedRegion;
     }
 }

@@ -31,19 +31,31 @@ public class FrameBufferTest extends LibgdxLwjglUnitTest {
     @Test
     @Tag("lwjgl")
     public void everything32() {
-        setupTvg("everything-32.tvg");
+        setupTvg("everything-32.tvg", 1);
     }
 
-    private void setupTvg(String file) {
+    @Test
+    @Tag("lwjgl")
+    public void everything32SuperSampled() {
+        setupTvg("everything-32.tvg", 4);
+    }
+
+    @Test
+    @Tag("lwjgl")
+    public void everything32SuperSampledA() {
+        setupTvg("everything-32.tvg", 4);
+    }
+
+    private void setupTvg(String file, int samples) {
         Gdx.app.postRunnable(() -> {
             tvg = new TinyVGAssetLoader().load(file);
 
-            viewport.setWorldSize(tvg.getWidth(), tvg.getHeight());
+            tvgRegion = TinyVGIO.toTextureRegion(tvg, drawer, samples);
+
+            viewport.setWorldSize(tvgRegion.getRegionWidth(), tvgRegion.getRegionHeight());
             viewport.getCamera().position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f,
                     viewport.getCamera().position.z);
             viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-            tvgRegion = TinyVGIO.toTextureRegion(tvg, drawer);
         });
     }
 
@@ -62,7 +74,6 @@ public class FrameBufferTest extends LibgdxLwjglUnitTest {
         drawer.getBatch().begin();
         drawer.filledRectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight(), Color.TEAL);
 
-        tvg.draw(drawer, viewport);
         drawer.getBatch().draw(tvgRegion, 0, 0);
 
         drawer.getBatch().end();
