@@ -35,6 +35,9 @@ public class Unit {
      * @return Returns the actual float value.
      */
     public float convert() {
+        if (fractionBits == 0)
+            return value;
+
         int num = value >> fractionBits;
         int decimals = value << -fractionBits >>> -fractionBits;
         return num + FractionBits.calculate(decimals, fractionBits);
