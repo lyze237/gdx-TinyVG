@@ -3,7 +3,6 @@ package dev.lyze.gdxtinyvg.commands.paths;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import dev.lyze.gdxtinyvg.TinyVG;
-import dev.lyze.gdxtinyvg.enums.Range;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
 import dev.lyze.gdxtinyvg.types.Vector2WithWidth;
 import java.io.IOException;

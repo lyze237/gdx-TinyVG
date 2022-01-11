@@ -10,7 +10,6 @@ import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
 import java.io.IOException;
-import sun.security.krb5.internal.crypto.RsaMd5CksumType;
 
 /**
  * Fills a polygon and draws an outline at the same time.

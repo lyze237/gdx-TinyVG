@@ -8,7 +8,6 @@ import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.headers.FillPathHeader;
 import dev.lyze.gdxtinyvg.commands.headers.PathHeader;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
-import dev.lyze.gdxtinyvg.drawers.chaches.TinyVGDrawerCache;
 import dev.lyze.gdxtinyvg.enums.CommandType;
 import dev.lyze.gdxtinyvg.enums.StyleType;
 import java.io.IOException;

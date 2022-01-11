@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.TinyVGAssetLoader;
-import dev.lyze.gdxtinyvg.TinyVGIO;
 import dev.lyze.gdxtinyvg.TinyVGTextureAssetLoader;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.lwjgl.LibgdxLwjglUnitTest;
