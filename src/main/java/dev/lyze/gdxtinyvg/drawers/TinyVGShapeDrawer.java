@@ -4,11 +4,16 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.types.*;
+import dev.lyze.gdxtinyvg.utils.WhitePixelUtils;
 import space.earlygrey.shapedrawer.JoinType;
 
 public class TinyVGShapeDrawer extends GradientStyleShapeDrawer {
     public TinyVGShapeDrawer(Batch batch, TextureRegion region) {
         super(batch, region);
+    }
+
+    public TinyVGShapeDrawer(Batch batch) {
+        super(batch, WhitePixelUtils.createWhitePixelTexture());
     }
 
     public void filledRectangle(UnitRectangle rectangle, TinyVG tinyVG) {

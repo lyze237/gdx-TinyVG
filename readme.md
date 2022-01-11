@@ -52,10 +52,11 @@ public class Example extends ApplicationAdapter {
     tvg = assetLoader.load("file.tvg"); // only works with the binary file format
 
     // TinyVGShapeDrawer requires a 1x1 white pixel file,
-    // so create one in your favourite program or
-    // download one from the test examples in the repo.
+    // so either create one in your favourite art program or
+    // use the other constructor which creates one for you.
     // https://github.com/lyze237/gdx-TinyVG/blob/main/src/test/resources/pixel.png
     drawer = new TinyVGShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
+    drawer = new TinyVGShapeDrawer(new SpriteBatch());
 
     // You're also able to create a texture region directly out of a tvg file:
     var tvgRegion = TinyVGIO.toTextureRegion(tvg, drawer);
