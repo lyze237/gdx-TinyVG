@@ -12,7 +12,6 @@ import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.var;
 
 @EqualsAndHashCode(callSuper = false)
 @ToString
@@ -37,20 +36,12 @@ public abstract class GradientStyle extends Style {
     }
 
     @Override
-    public void start(GradientShapeDrawer drawer, Viewport viewport) {
+    public void start(GradientShapeDrawer drawer) {
         drawer.setGradientStyle(type);
         drawer.setGradientColors(getTinyVG().getColorTable()[colorIndex1], getTinyVG().getColorTable()[colorIndex2]);
 
-        var positionX = getTinyVG().getPositionX();
-        var positionY = getTinyVG().getPositionY();
-
-        var scaleX = getTinyVG().getScaleX();
-        var scaleY = getTinyVG().getScaleY();
-
-        drawer.setPositions(point1.getX().convert() * scaleX + positionX,
-                getTinyVG().getHeight() - point1.getY().convert() * scaleY + positionY,
-                point2.getX().convert() * scaleX + positionX,
-                getTinyVG().getHeight() - point2.getY().convert() * scaleY + positionY, viewport);
+        drawer.setPositions(point1.getX().convert(), point1.getY().convert(), point2.getX().convert(),
+                point2.getY().convert());
 
         drawer.applyShaderValues();
     }

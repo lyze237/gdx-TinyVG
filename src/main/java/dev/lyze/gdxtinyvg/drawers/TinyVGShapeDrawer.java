@@ -12,32 +12,29 @@ public class TinyVGShapeDrawer extends GradientStyleShapeDrawer {
     }
 
     public void filledRectangle(UnitRectangle rectangle, TinyVG tinyVG) {
-        filledRectangle(TinyVGShapeDrawerHelper.xAdjusted(rectangle.getX(), tinyVG),
-                TinyVGShapeDrawerHelper.yAdjusted(rectangle.getY(), tinyVG)
-                        - TinyVGShapeDrawerHelper.scaleUnitY(rectangle.getHeight(), tinyVG),
-                TinyVGShapeDrawerHelper.scaleUnitX(rectangle.getWidth(), tinyVG),
-                TinyVGShapeDrawerHelper.scaleUnitY(rectangle.getHeight(), tinyVG));
+        filledRectangle(rectangle.getX().convert(), adjustY(rectangle.getY(), tinyVG) - rectangle.getHeight().convert(),
+                rectangle.getWidth().convert(), rectangle.getHeight().convert());
     }
 
     public void rectangle(UnitRectangle rectangle, float lineWidth, TinyVG tinyVG) {
-        rectangle(TinyVGShapeDrawerHelper.xAdjusted(rectangle.getX(), tinyVG),
-                TinyVGShapeDrawerHelper.yAdjusted(rectangle.getY(), tinyVG)
-                        - TinyVGShapeDrawerHelper.scaleUnitY(rectangle.getHeight(), tinyVG),
-                TinyVGShapeDrawerHelper.scaleUnitX(rectangle.getWidth(), tinyVG),
-                TinyVGShapeDrawerHelper.scaleUnitY(rectangle.getHeight(), tinyVG),
-                TinyVGShapeDrawerHelper.lineWidthScaled(lineWidth, tinyVG));
+        rectangle(rectangle.getX().convert(), adjustY(rectangle.getY(), tinyVG) - rectangle.getHeight().convert(),
+                rectangle.getWidth().convert(), rectangle.getHeight().convert(), lineWidth);
     }
 
     public void line(UnitLine line, float lineWidth, TinyVG tinyVG) {
-        line(TinyVGShapeDrawerHelper.xAdjusted(line.getStart().getX(), tinyVG),
-                TinyVGShapeDrawerHelper.yAdjusted(line.getStart().getY(), tinyVG),
-                TinyVGShapeDrawerHelper.xAdjusted(line.getEnd().getX(), tinyVG),
-                TinyVGShapeDrawerHelper.yAdjusted(line.getEnd().getY(), tinyVG),
-                TinyVGShapeDrawerHelper.lineWidthScaled(lineWidth, tinyVG));
+        line(line.getStart().getX().convert(), adjustY(line.getStart().getY(), tinyVG), line.getEnd().getX().convert(),
+                adjustY(line.getEnd().getY(), tinyVG), lineWidth);
     }
 
-    public void path(float[] points, float lineWidth, boolean open, TinyVG tinyVG) {
-        path(points, TinyVGShapeDrawerHelper.lineWidthScaled(lineWidth, tinyVG),
-                isJoinNecessary(lineWidth) ? JoinType.POINTY : JoinType.NONE, open);
+    public void path(float[] points, float lineWidth, boolean open) {
+        path(points, lineWidth, isJoinNecessary(lineWidth) ? JoinType.POINTY : JoinType.NONE, open);
+    }
+
+    public static float adjustY(Unit y, TinyVG tinyVG) {
+        return adjustY(y.convert(), tinyVG);
+    }
+
+    public static float adjustY(float y, TinyVG tinyVG) {
+        return tinyVG.getHeight() - y;
     }
 }

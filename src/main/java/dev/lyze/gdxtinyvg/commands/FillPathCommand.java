@@ -3,7 +3,6 @@ package dev.lyze.gdxtinyvg.commands;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.headers.FillPathHeader;
 import dev.lyze.gdxtinyvg.commands.headers.PathHeader;
@@ -27,8 +26,8 @@ public class FillPathCommand extends Command {
     }
 
     @Override
-    public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
-        drawer.setStyle(header.getPrimaryStyle(), viewport);
+    public void draw(TinyVGShapeDrawer drawer) {
+        drawer.setStyle(header.getPrimaryStyle());
 
         Gdx.gl.glEnable(GL20.GL_STENCIL_TEST);
         Gdx.gl.glClear(GL20.GL_STENCIL_BUFFER_BIT);

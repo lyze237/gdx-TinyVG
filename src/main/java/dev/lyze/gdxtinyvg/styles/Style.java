@@ -17,9 +17,9 @@ public abstract class Style {
 
     public abstract void read(LittleEndianInputStream stream, Range range, int fractionBits) throws IOException;
 
-    public abstract void start(GradientShapeDrawer drawer, Viewport viewport);
+    public abstract void start(GradientShapeDrawer drawer);
 
-    public void end(GradientShapeDrawer drawer, Viewport viewport) {
+    public void end(GradientShapeDrawer drawer) {
         drawer.getBatch().flush();
     }
 }

@@ -30,7 +30,7 @@ public class FlatColoredStyle extends Style {
     }
 
     @Override
-    public void start(GradientShapeDrawer drawer, Viewport viewport) {
+    public void start(GradientShapeDrawer drawer) {
         drawer.setGradientColors(getTinyVG().getColorTable()[colorIndex], getTinyVG().getColorTable()[colorIndex]);
         drawer.setGradientStyle(StyleType.FLAT);
         drawer.applyShaderValues();

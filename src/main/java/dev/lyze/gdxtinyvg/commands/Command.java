@@ -1,7 +1,6 @@
 package dev.lyze.gdxtinyvg.commands;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.enums.CommandType;
@@ -20,7 +19,7 @@ public abstract class Command {
 
     public abstract void read(LittleEndianInputStream stream, StyleType primaryStyleType) throws IOException;
 
-    public abstract void draw(TinyVGShapeDrawer drawer, Viewport viewport);
+    public abstract void draw(TinyVGShapeDrawer drawer);
 
     public void onPropertiesChanged() {
 

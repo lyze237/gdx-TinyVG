@@ -26,7 +26,6 @@ public class TinyVGTextureAssetLoader
     public Result load(AssetManager assetManager, String fileName, FileHandle file, Parameters parameter) {
         var tvg = assetManager.get(fileName, TinyVG.class);
         tvg.setScale(parameter.scaleX, parameter.scaleY);
-        tvg.setLineWidthScale(parameter.lineWidth);
         tvg.setCurvePoints(parameter.curvePoints);
 
         return new Result(tvg, TinyVGIO.toTextureRegion(tvg, parameter.getShapeDrawer()));
@@ -45,18 +44,16 @@ public class TinyVGTextureAssetLoader
     public static class Parameters extends AssetLoaderParameters<Result> {
         private TinyVGShapeDrawer shapeDrawer;
         private float scaleX, scaleY;
-        private float lineWidth;
         private int curvePoints;
 
         public Parameters(TinyVGShapeDrawer shapeDrawer) {
             this(shapeDrawer, 1, 1, 1);
         }
 
-        public Parameters(TinyVGShapeDrawer shapeDrawer, float scaleX, float scaleY, float lineScale) {
+        public Parameters(TinyVGShapeDrawer shapeDrawer, float scaleX, float scaleY) {
             this.shapeDrawer = shapeDrawer;
             this.scaleX = scaleX;
             this.scaleY = scaleY;
-            this.lineWidth = lineScale;
         }
     }
 

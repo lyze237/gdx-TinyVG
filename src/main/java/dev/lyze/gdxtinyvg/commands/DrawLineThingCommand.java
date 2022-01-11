@@ -31,8 +31,8 @@ public abstract class DrawLineThingCommand extends Command {
     }
 
     @Override
-    public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
-        drawer.setStyle(header.getPrimaryStyle(), viewport);
+    public void draw(TinyVGShapeDrawer drawer) {
+        drawer.setStyle(header.getPrimaryStyle());
         cache.path(drawer, header.getLineWidth(), open);
     }
 

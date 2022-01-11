@@ -5,7 +5,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ShortArray;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
-import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawerHelper;
 import dev.lyze.gdxtinyvg.types.ParsedPathSegment;
 import dev.lyze.gdxtinyvg.types.UnitPoint;
 import lombok.var;
@@ -45,7 +44,7 @@ public class TinyVGDrawerCache {
     }
 
     public void path(TinyVGShapeDrawer shapeDrawer, float lineWidth, boolean open) {
-        shapeDrawer.path(vertices, lineWidth, open, tinyVG);
+        shapeDrawer.path(vertices, lineWidth, open);
     }
 
     protected void calculateVector(ParsedPathSegment segment) {
@@ -53,8 +52,8 @@ public class TinyVGDrawerCache {
         for (int p = 0, v = 0; p < segment.getPoints().size; p++, v += 2) {
             var point = segment.getPoints().get(p);
 
-            vertices[v] = TinyVGShapeDrawerHelper.xAdjusted(point.getPoint().x, tinyVG);
-            vertices[v + 1] = TinyVGShapeDrawerHelper.yAdjusted(point.getPoint().y, tinyVG);
+            vertices[v] = point.getPoint().x;
+            vertices[v + 1] = TinyVGShapeDrawer.adjustY(point.getPoint().y, tinyVG);
         }
     }
 
@@ -63,8 +62,8 @@ public class TinyVGDrawerCache {
         for (int p = 0, v = 0; p < points.size; p++, v += 2) {
             var point = points.get(p);
 
-            vertices[v] = TinyVGShapeDrawerHelper.xAdjusted(point.getX().convert(), tinyVG);
-            vertices[v + 1] = TinyVGShapeDrawerHelper.yAdjusted(point.getY().convert(), tinyVG);
+            vertices[v] = point.getX().convert();
+            vertices[v + 1] = TinyVGShapeDrawer.adjustY(point.getY().convert(), tinyVG);
         }
     }
 }
