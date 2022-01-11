@@ -27,7 +27,7 @@ public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
 
     @Override
     public void create() {
-        drawer = new TinyVGShapeDrawer(new SpriteBatch(), new TextureRegion(new Texture("pixel.png")));
+        drawer = new TinyVGShapeDrawer(new SpriteBatch());
         viewport = new FitViewport(100, 100);
 
         profiler = new GLProfiler(Gdx.graphics);
