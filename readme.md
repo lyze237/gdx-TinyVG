@@ -12,6 +12,8 @@ SVG is a horribly complex format and an overkill for most projects. The specific
 
 TinyVG tries to be simpler. Fewer features, but powerful enough to cover 90% of use cases. ~ https://tinyvg.tech
 
+![example](example.gif)
+
 # Convert SVG into TVG
 
 Convert your SVG into a TVG here: https://svgtotvg.herokuapp.com/

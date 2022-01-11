@@ -3,6 +3,7 @@ package dev.lyze.gdxtinyvg;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import dev.lyze.gdxtinyvg.commands.Command;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
@@ -32,21 +33,26 @@ public class TinyVG {
     /**
      * Global position offset value.
      */
-    @Getter @Setter private float positionX;
-    @Getter @Setter private float positionY;
+    @Getter @Setter private float positionX, positionY;
 
     /**
      * Global scale value.
      */
-    @Getter @Setter private float scaleX = 1;
-    @Getter @Setter private float scaleY = 1;
+    @Getter @Setter private float scaleX = 1, scaleY = 1;
 
     /***
      * Global rotation value.
      */
     @Getter @Setter private float rotation;
-    @Getter @Setter private float originX;
-    @Getter @Setter private float originY;
+    /***
+     * Global origin value.
+     */
+    @Getter @Setter private float originX, originY;
+
+    /***
+     * Global shear value.
+     */
+    @Getter @Setter private float shearX, shearY;
 
     /**
      * Amount of points every curve generates.
@@ -77,6 +83,7 @@ public class TinyVG {
         backupBatchTransform.set(drawer.getBatch().getTransformMatrix());
 
         affine.set(emptyAffine);
+        affine.shear(shearX, shearY);
         affine.translate(positionX, positionY);
         affine.scale(scaleX, scaleY);
         affine.translate(originX, originY);
@@ -134,9 +141,20 @@ public class TinyVG {
         this.positionY = y;
     }
 
+    /**
+     * Sets the origin of the TVG based on the specified x and y values.
+     */
     public void setOrigin(float x, float y) {
         this.originX = x;
         this.originY = y;
+    }
+
+    /**
+     * Sets the shear of the TVG based on the specified x and y values.
+     */
+    public void setShear(float x, float y) {
+        this.shearX = x;
+        this.shearY = y;
     }
 
     /**
