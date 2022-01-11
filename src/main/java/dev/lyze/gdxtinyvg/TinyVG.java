@@ -77,21 +77,15 @@ public class TinyVG {
         backupBatchTransform.set(drawer.getBatch().getTransformMatrix());
 
         affine.set(emptyAffine);
-
         affine.translate(positionX, positionY);
-
         affine.scale(scaleX, scaleY);
-
         affine.translate(originX, originY);
-
         affine.rotate(rotation);
-
         affine.translate(-originX, -originY);
 
         computedTransform.set(affine);
         drawer.getBatch().setTransformMatrix(computedTransform);
 
-        drawer.setColor(Color.WHITE);
         drawer.beginShader();
 
         for (Command command : commands) {

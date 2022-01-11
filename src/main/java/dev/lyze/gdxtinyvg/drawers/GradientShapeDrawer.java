@@ -31,7 +31,7 @@ public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
         shader = new ShaderProgram(ShaderFile.vertex, ShaderFile.fragment);
 
         if (!shader.isCompiled())
-            Gdx.app.error("Gradient Shape Drawer", shader.getLog());
+            throw new IllegalArgumentException("Error compiling shader: " + shader.getLog());
     }
 
     public void setPositions(Vector2 start, Vector2 end) {
@@ -62,6 +62,8 @@ public class GradientShapeDrawer extends ShapeDrawer implements Disposable {
     public void applyShaderValues() {
         var width = endPosition.x - startPosition.x;
         var height = endPosition.y - startPosition.y;
+
+        shader.bind();
 
         shader.setUniformf("u_startColor", startColor);
         shader.setUniformf("u_endColor", endColor);
