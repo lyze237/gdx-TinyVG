@@ -34,7 +34,7 @@ public class TinyVGIO {
         fbo.begin();
 
         drawer.getBatch().begin();
-        tvg.draw(drawer, viewport);
+        tvg.draw(drawer);
         drawer.getBatch().end();
 
         fbo.end();
@@ -71,7 +71,6 @@ public class TinyVGIO {
 
         var initialScaleX = tvg.getScaleX();
         var initialScaleY = tvg.getScaleY();
-        var initialScaleLineWidth = tvg.getLineWidthScale();
 
         Texture resizedTexture = null;
 
@@ -80,7 +79,6 @@ public class TinyVGIO {
             if (resizedTexture == null) {
                 var scaleAmount = (float) Math.pow(2, supersamplingPasses);
                 tvg.setScale(initialScaleX * scaleAmount, initialScaleY * scaleAmount);
-                tvg.setLineWidthScale(initialScaleLineWidth * scaleAmount);
 
                 bigTexture = toTextureRegion(tvg, drawer).getTexture();
             } else {

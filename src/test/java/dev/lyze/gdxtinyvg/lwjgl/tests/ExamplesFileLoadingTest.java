@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.profiling.GLProfiler;
+import com.badlogic.gdx.math.Affine2;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
@@ -86,12 +88,9 @@ public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
             tvgScaled = new TinyVGAssetLoader().load(file);
             tvgScaled.setScale(2);
             tvgScaled.setPosition(tvg.getWidth(), 0);
-            tvgScaled.setLineWidthScale(2);
 
-            viewport.setWorldSize(tvg.getWidth() + tvgScaled.getWidth(), tvgScaled.getHeight());
-            viewport.getCamera().position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f,
-                    viewport.getCamera().position.z);
-            viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            viewport = new FitViewport(tvg.getWidth() + tvgScaled.getWidth(), tvgScaled.getHeight());
+            resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         });
     }
 
@@ -111,15 +110,15 @@ public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
         drawer.filledRectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight(), Color.TEAL);
 
         profiler.reset();
-        tvg.draw(drawer, viewport);
+        tvg.draw(drawer);
         System.out.println(profiler.getDrawCalls());
-        tvgScaled.draw(drawer, viewport);
+        tvgScaled.draw(drawer);
 
         drawer.getBatch().end();
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        viewport.update(width, height, true);
     }
 }

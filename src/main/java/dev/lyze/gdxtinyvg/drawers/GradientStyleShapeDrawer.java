@@ -14,12 +14,12 @@ public class GradientStyleShapeDrawer extends GradientShapeDrawer {
         super(batch, region);
     }
 
-    public void setStyle(Style style, Viewport viewport, boolean flushAnyway) {
+    public void setStyle(Style style, boolean flushAnyway) {
         shouldFlush = flushAnyway;
-        setStyle(style, viewport);
+        setStyle(style);
     }
 
-    public void setStyle(Style style, Viewport viewport) {
+    public void setStyle(Style style) {
         if (Objects.equals(this.style, style)) {
             if (shouldFlush)
                 getBatch().flush();
@@ -28,10 +28,10 @@ public class GradientStyleShapeDrawer extends GradientShapeDrawer {
         }
 
         if (this.style != null)
-            this.style.end(this, viewport);
+            this.style.end(this);
 
         this.style = style;
-        style.start(this, viewport);
+        style.start(this);
     }
 
     public void flushNextStyleSwitch() {

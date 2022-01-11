@@ -70,7 +70,7 @@ public class Example extends ApplicationAdapter {
     drawer.getBatch().setProjectionMatrix(viewport.getCamera().combined);
 
     drawer.getBatch().begin();
-    tvg.draw(drawer, viewport);
+    tvg.draw(drawer);
     drawer.getBatch().end();
   }
 
@@ -125,7 +125,8 @@ The TinyVG class comes with a couple setters to adjust render options:
 
 * `setPosition()` => Changes the origin (bottom left corner) of the sprite.
 * `setScale()` => Changes the scale.
-* `setLineWidthScale()` => Changes the scale for all line widths independent of `setScale()`.
+* `setRotation()` => Changes the rotation in degrees based on the origin point.
+* `setOrigin()` => Changes the origin point for rotations.
 * `.setCurvePoints()` => The amount of points per path curve (Bezier, Arc) is used to calculate the curve.
 
 # Specification implementation status

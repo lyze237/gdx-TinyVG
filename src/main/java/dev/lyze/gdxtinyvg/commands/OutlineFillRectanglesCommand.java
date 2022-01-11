@@ -1,7 +1,6 @@
 package dev.lyze.gdxtinyvg.commands;
 
 import com.badlogic.gdx.utils.LittleEndianInputStream;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.headers.OutlineFillHeader;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
@@ -27,12 +26,12 @@ public class OutlineFillRectanglesCommand extends Command {
     }
 
     @Override
-    public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
+    public void draw(TinyVGShapeDrawer drawer) {
         for (var rectangle : header.getData()) {
-            drawer.setStyle(header.getPrimaryStyle(), viewport);
+            drawer.setStyle(header.getPrimaryStyle());
             drawer.filledRectangle(rectangle, getTinyVG());
 
-            drawer.setStyle(header.getSecondaryStyle(), viewport);
+            drawer.setStyle(header.getSecondaryStyle());
             drawer.rectangle(rectangle, header.getLineWidth(), getTinyVG());
         }
     }

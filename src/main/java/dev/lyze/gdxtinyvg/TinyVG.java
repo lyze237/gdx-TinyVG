@@ -1,8 +1,9 @@
 package dev.lyze.gdxtinyvg;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Affine2;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.commands.Command;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import lombok.Getter;
@@ -31,17 +32,21 @@ public class TinyVG {
     /**
      * Global position offset value.
      */
-    @Getter private float positionX;
-    @Getter private float positionY;
+    @Getter @Setter private float positionX;
+    @Getter @Setter private float positionY;
+
     /**
      * Global scale value.
      */
-    @Getter private float scaleX = 1;
-    @Getter private float scaleY = 1;
-    /**
-     * Global scale value for all line widths. (Independent from scale)
+    @Getter @Setter private float scaleX = 1;
+    @Getter @Setter private float scaleY = 1;
+
+    /***
+     * Global rotation value.
      */
-    @Getter @Setter private float lineWidthScale = 1;
+    @Getter @Setter private float rotation;
+    @Getter @Setter private float originX;
+    @Getter @Setter private float originY;
 
     /**
      * Amount of points every curve generates.
@@ -54,6 +59,11 @@ public class TinyVG {
      */
     @Getter private boolean dirty;
 
+    private final Matrix4 backupBatchTransform = new Matrix4();
+    private final Matrix4 computedTransform = new Matrix4();
+    @Getter private final Affine2 affine = new Affine2();
+    private final Affine2 emptyAffine = new Affine2();
+
     public TinyVG(TinyVGHeader header, Color[] colorTable) {
         this.header = header;
         this.colorTable = colorTable;
@@ -63,16 +73,36 @@ public class TinyVG {
      * Draws the tvg to the screen based on the viewport (Used to calculate position
      * as tvg is y down instead of up.
      */
-    public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
+    public void draw(TinyVGShapeDrawer drawer) {
+        backupBatchTransform.set(drawer.getBatch().getTransformMatrix());
+
+        affine.set(emptyAffine);
+
+        affine.translate(positionX, positionY);
+
+        affine.scale(scaleX, scaleY);
+
+        affine.translate(originX, originY);
+
+        affine.rotate(rotation);
+
+        affine.translate(-originX, -originY);
+
+        computedTransform.set(affine);
+        drawer.getBatch().setTransformMatrix(computedTransform);
+
         drawer.setColor(Color.WHITE);
         drawer.beginShader();
+
         for (Command command : commands) {
             if (dirty)
                 command.onPropertiesChanged();
-            command.draw(drawer, viewport);
+            command.draw(drawer);
         }
         dirty = false;
         drawer.endShader();
+
+        drawer.getBatch().setTransformMatrix(backupBatchTransform);
     }
 
     public void addCommand(Command command) {
@@ -80,64 +110,39 @@ public class TinyVG {
     }
 
     /**
-     * Sets the size of the TVG based on a specified width and height and triggers
-     * an update to recalculate commands.
+     * Sets the size of the TVG based on a specified width and height.
      */
     public void setSize(float width, float height) {
         scaleX = width / header.getWidth();
         scaleY = height / header.getHeight();
-
-        dirty = true;
     }
 
     /**
-     * Sets the scale of the TVG based on the specified float value and triggers an
-     * update to recalculate commands.
+     * Sets the scale of the TVG based on the specified float value.
      */
     public void setScale(float scale) {
         setScale(scale, scale);
     }
 
     /**
-     * Sets the scale of the TVG based on the specified float value and triggers an
-     * update to recalculate commands.
+     * Sets the scale of the TVG based on the specified float value.
      */
     public void setScale(float scaleX, float scaleY) {
         this.scaleX = scaleX;
         this.scaleY = scaleY;
-
-        dirty = true;
     }
 
     /**
-     * Sets the position of the TVG based on the specified x and y value and
-     * triggers an update to recalculate commands.
+     * Sets the position of the TVG based on the specified x and y values.
      */
     public void setPosition(float x, float y) {
         this.positionX = x;
         this.positionY = y;
-
-        dirty = true;
     }
 
-    /**
-     * Sets the x position of the TVG based on the specified value and triggers an
-     * update to recalculate commands.
-     */
-    public void setX(float x) {
-        positionX = x;
-
-        dirty = true;
-    }
-
-    /**
-     * Sets the y position of the TVG based on the specified value and triggers an
-     * update to recalculate commands.
-     */
-    public void setY(float y) {
-        positionY = y;
-
-        dirty = true;
+    public void setOrigin(float x, float y) {
+        this.originX = x;
+        this.originY = y;
     }
 
     /**

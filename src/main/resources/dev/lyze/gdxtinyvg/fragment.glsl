@@ -18,6 +18,8 @@ uniform int u_style;
 
 uniform sampler2D u_texture;
 
+varying vec2 v_basePosition;
+
 vec4 linear2gamma(vec4 color) {
     return vec4(pow(color.rgb, vec3(1.0 / gamma)), color.a);
 }
@@ -54,12 +56,12 @@ vec4 flatColor() {
 
 vec4 linearGradient() {
     vec2 direction = u_endPosition - u_startPosition;
-    vec2 delta_pt = gl_FragCoord.xy - u_startPosition;
+    vec2 delta_pt = v_basePosition.xy - u_startPosition;
 
     if (dot(direction, delta_pt) <= 0.0)
         return u_startColor;
 
-    if (dot(direction, gl_FragCoord.xy - u_endPosition) >= 0.0)
+    if (dot(direction, v_basePosition.xy - u_endPosition) >= 0.0)
         return u_endColor;
 
     float len_grad = length(direction);
@@ -70,7 +72,7 @@ vec4 linearGradient() {
 
 vec4 radialGradient() {
     float len_total = length(u_startPosition - u_endPosition);
-    float len_arc = length(u_startPosition - gl_FragCoord.xy);
+    float len_arc = length(u_startPosition - v_basePosition.xy);
 
     float f = clamp(len_arc, 0.0, len_total) / len_total;
 

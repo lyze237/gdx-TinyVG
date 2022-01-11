@@ -3,7 +3,6 @@ package dev.lyze.gdxtinyvg.commands;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.commands.headers.OutlineFillPathHeader;
 import dev.lyze.gdxtinyvg.commands.paths.UnitPathCloseCommand;
@@ -28,8 +27,8 @@ public class OutlineFillPathCommand extends Command {
     }
 
     @Override
-    public void draw(TinyVGShapeDrawer drawer, Viewport viewport) {
-        drawer.setStyle(header.getPrimaryStyle(), viewport);
+    public void draw(TinyVGShapeDrawer drawer) {
+        drawer.setStyle(header.getPrimaryStyle());
 
         Gdx.gl.glEnable(GL20.GL_STENCIL_TEST);
         Gdx.gl.glClear(GL20.GL_STENCIL_BUFFER_BIT);
@@ -49,7 +48,7 @@ public class OutlineFillPathCommand extends Command {
         for (ParsedPathSegment segment : header.getSegments())
             segment.getCache().filledPolygon(drawer);
 
-        drawer.setStyle(header.getSecondaryStyle(), viewport, true);
+        drawer.setStyle(header.getSecondaryStyle(), true);
         Gdx.gl.glDisable(GL20.GL_STENCIL_TEST);
 
         for (var segment : header.getSegments())
