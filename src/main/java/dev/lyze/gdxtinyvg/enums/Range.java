@@ -48,9 +48,9 @@ public enum Range {
     public int read(LittleEndianInputStream stream) throws IOException {
         switch (this) {
             case DEFAULT:
-                return stream.readUnsignedShort();
+                return stream.readShort();
             case REDUCED:
-                return stream.readUnsignedByte();
+                return stream.readByte();
             case ENHANCED:
                 return stream.readInt();
             default:
