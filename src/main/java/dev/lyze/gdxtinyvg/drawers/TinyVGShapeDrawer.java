@@ -2,12 +2,8 @@ package dev.lyze.gdxtinyvg.drawers;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.EarClippingTriangulator;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.types.*;
-import lombok.var;
 import space.earlygrey.shapedrawer.JoinType;
 
 public class TinyVGShapeDrawer extends GradientStyleShapeDrawer {
