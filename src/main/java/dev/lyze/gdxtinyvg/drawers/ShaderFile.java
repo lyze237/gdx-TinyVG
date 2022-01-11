@@ -5,7 +5,7 @@ public class ShaderFile {
     public static String vertex = "attribute vec4 a_position;\n" + "attribute vec4 a_color;\n"
             + "attribute vec2 a_texCoord0;\n" + "\n" + "uniform mat4 u_projTrans;\n" + "\n" + "varying vec4 v_color;\n"
             + "varying vec2 v_texCoords;\n" + "varying vec2 v_basePosition;\n" + "\n" + "void main()\n" + "{\n"
-            + "    v_color = vec4(1, 1, 1, 1);\n" + "    v_texCoords = a_texCoord0;\n"
+            + "    v_color = a_color;\n" + "    v_texCoords = a_texCoord0;\n"
             + "    gl_Position =  u_projTrans * a_position;\n" + "    v_basePosition = a_position.xy;\n" + "}";
 
     public static String fragment = "#ifdef GL_ES\n" + "precision mediump float;\n" + "#endif\n" + "\n"
@@ -40,5 +40,5 @@ public class ShaderFile {
             + "    if (u_style == 0)\n" + "        gl_FragColor = flatColor();\n" + "    else if (u_style == 1)\n"
             + "        gl_FragColor = linearGradient();\n" + "    else if (u_style == 2)\n"
             + "        gl_FragColor = radialGradient();\n" + "    else\n" + "        gl_FragColor = vec4(1, 0, 1, 1);\n"
-            + "}\n";
+            + "\n" + "    gl_FragColor *= v_color * texture2D(u_texture, v_texCoords);\n" + "}\n";
 }

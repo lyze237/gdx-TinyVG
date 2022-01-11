@@ -88,4 +88,6 @@ void main() {
         gl_FragColor = radialGradient();
     else
         gl_FragColor = vec4(1, 0, 1, 1);
+
+    gl_FragColor *= v_color * texture2D(u_texture, v_texCoords);
 }
