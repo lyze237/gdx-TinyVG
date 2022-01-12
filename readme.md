@@ -5,6 +5,7 @@ A libgdx parser and renderer for TinyVG https://www.tinyvg.tech/
 [![Build, Test, Publish](https://github.com/lyze237/gdx-TinyVG/workflows/Test/badge.svg?branch=main)](https://github.com/lyze237/gdx-TinyVG/actions?query=workflow%3A%22Test%22)
 [![License](https://img.shields.io/github/license/lyze237/gdx-TinyVG)](https://github.com/lyze237/gdx-TinyVG/blob/main/LICENSE)
 [![Jitpack](https://jitpack.io/v/lyze237/gdx-TinyVG.svg)](https://jitpack.io/#lyze237/gdx-TinyVG)
+[![Donate](https://img.shields.io/badge/Donate-%3C3-red)](https://coffee.lyze.dev)
 
 # What is TinyVG?
 
