@@ -22,11 +22,11 @@ public class TinyVGIO {
         if (drawing)
             batch.end();
 
-        var fboWidth = MathUtils.roundPositive(Math.abs(tvg.getWidth()));
-        var fboHeight = MathUtils.roundPositive(Math.abs(tvg.getHeight()));
+        var fboWidth = MathUtils.roundPositive(Math.abs(tvg.getScaledWidth()));
+        var fboHeight = MathUtils.roundPositive(Math.abs(tvg.getScaledHeight()));
 
         var fbo = new FrameBuffer(Pixmap.Format.RGBA8888, fboWidth, fboHeight, false, true);
-        var viewport = new FitViewport(tvg.getWidth(), tvg.getHeight());
+        var viewport = new FitViewport(tvg.getScaledWidth(), tvg.getScaledHeight());
         viewport.update(fboWidth, fboHeight, true);
 
         batch.setProjectionMatrix(viewport.getCamera().combined);
@@ -40,8 +40,8 @@ public class TinyVGIO {
         fbo.end();
 
         var region = new TextureRegion(fbo.getColorBufferTexture());
-        boolean flipX = tvg.getWidth() < 0;
-        boolean flipY = tvg.getHeight() < 0;
+        boolean flipX = tvg.getScaledWidth() < 0;
+        boolean flipY = tvg.getScaledHeight() < 0;
 
         region.flip(flipX, !flipY);
 

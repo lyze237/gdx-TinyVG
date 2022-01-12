@@ -40,6 +40,6 @@ public class TinyVGShapeDrawer extends GradientStyleShapeDrawer {
     }
 
     public static float adjustY(float y, TinyVG tinyVG) {
-        return tinyVG.getHeight() - y;
+        return tinyVG.getScaledHeight() - y;
     }
 }
