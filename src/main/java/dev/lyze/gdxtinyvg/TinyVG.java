@@ -3,7 +3,6 @@ package dev.lyze.gdxtinyvg;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import dev.lyze.gdxtinyvg.commands.Command;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
@@ -168,16 +167,34 @@ public class TinyVG {
     }
 
     /**
-     * @return Returns the actual width of the tvg including scale.
+     * @return Returns the unscaled width of the tvg.
      */
-    public float getWidth() {
+    public float getUnscaledWidth() {
+        return header.getWidth();
+    }
+
+    /**
+     * @return Returns the unscaled width of the tvg.
+     */
+    public float getUnscaledHeight() {
+        return header.getHeight();
+    }
+
+    /**
+     * @return Returns the scaled width of the tvg.
+     */
+    public float getScaledWidth() {
         return header.getWidth() * scaleX;
     }
 
     /**
-     * @return Returns the actual height of the tvg including scale.
+     * @return Returns the scaled height of the tvg.
      */
-    public float getHeight() {
+    public float getScaledHeight() {
         return header.getHeight() * scaleY;
+    }
+
+    public void centerOrigin() {
+        setOrigin(getUnscaledWidth() / 2f, getUnscaledHeight() / 2f);
     }
 }

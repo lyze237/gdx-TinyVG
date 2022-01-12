@@ -3,12 +3,8 @@ package dev.lyze.gdxtinyvg.lwjgl.tests;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.profiling.GLProfiler;
-import com.badlogic.gdx.math.Affine2;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.lyze.gdxtinyvg.TinyVG;
@@ -87,9 +83,9 @@ public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
             tvg = new TinyVGAssetLoader().load(file);
             tvgScaled = new TinyVGAssetLoader().load(file);
             tvgScaled.setScale(2);
-            tvgScaled.setPosition(tvg.getWidth(), 0);
+            tvgScaled.setPosition(tvg.getScaledWidth(), 0);
 
-            viewport = new FitViewport(tvg.getWidth() + tvgScaled.getWidth(), tvgScaled.getHeight());
+            viewport = new FitViewport(tvg.getScaledWidth() + tvgScaled.getScaledWidth(), tvgScaled.getScaledHeight());
             resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         });
     }
@@ -108,6 +104,9 @@ public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
 
         drawer.getBatch().begin();
         drawer.filledRectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight(), Color.TEAL);
+
+        tvg.centerOrigin();
+        tvg.setRotation(tvg.getRotation() + 10 * Gdx.graphics.getDeltaTime());
 
         profiler.reset();
         tvg.draw(drawer);
