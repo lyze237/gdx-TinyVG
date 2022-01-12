@@ -42,7 +42,7 @@ public class OutlineFillPathCommand extends Command {
         drawer.getBatch().flush();
 
         Gdx.gl.glColorMask(true, true, true, true);
-        Gdx.gl.glStencilFunc(GL20.GL_EQUAL, 1, -1); // was GL_NOTEQUAL, 2, -1
+        Gdx.gl.glStencilFunc(GL20.GL_NOTEQUAL, 0, 1); // was GL_NOTEQUAL, 2, -1
         Gdx.gl.glStencilOp(GL20.GL_KEEP, GL20.GL_KEEP, GL20.GL_KEEP);
 
         for (ParsedPathSegment segment : header.getSegments())
