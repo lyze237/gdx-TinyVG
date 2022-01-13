@@ -2,12 +2,15 @@ package dev.lyze.gdxtinyvg;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Affine2;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import dev.lyze.gdxtinyvg.commands.Command;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.var;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class TinyVG {
     /**
@@ -32,26 +35,26 @@ public class TinyVG {
     /**
      * Global position offset value.
      */
-    @Getter @Setter private float positionX, positionY;
+    @Getter private float positionX, positionY;
 
     /**
      * Global scale value.
      */
-    @Getter @Setter private float scaleX = 1, scaleY = 1;
+    @Getter private float scaleX = 1, scaleY = 1;
 
     /***
      * Global rotation value.
      */
-    @Getter @Setter private float rotation;
+    @Getter private float rotation;
     /***
      * Global origin value.
      */
-    @Getter @Setter private float originX, originY;
+    @Getter private float originX, originY;
 
     /***
      * Global shear value.
      */
-    @Getter @Setter private float shearX, shearY;
+    @Getter private float shearX, shearY;
 
     /**
      * Amount of points every curve generates.
@@ -60,9 +63,14 @@ public class TinyVG {
 
     /**
      * Next time render gets called and the tvg is dirty, it recalculates all point
-     * positions in paths.
+     * positions in paths. (Slow)
      */
-    @Getter private boolean dirty;
+    @Getter private boolean dirtyCurves;
+    /**
+     * Next time render gets called and the tvg is dirty, it recalculates the
+     * transformation matrix. (Fast)
+     */
+    @Getter private boolean dirtyTransformationMatrix;
 
     private final Matrix4 backupBatchTransform = new Matrix4();
     private final Matrix4 computedTransform = new Matrix4();
@@ -75,12 +83,94 @@ public class TinyVG {
     }
 
     /**
-     * Draws the tvg to the screen based on the viewport (Used to calculate position
-     * as tvg is y down instead of up.
+     * Draws the tvg to the screen.
      */
     public void draw(TinyVGShapeDrawer drawer) {
         backupBatchTransform.set(drawer.getBatch().getTransformMatrix());
 
+        if (dirtyTransformationMatrix) {
+            updateTransformationMatrix();
+            dirtyTransformationMatrix = false;
+        }
+
+        drawer.getBatch().setTransformMatrix(computedTransform);
+
+        drawer.beginShader();
+
+        for (Command command : commands) {
+            if (dirtyCurves)
+                command.onPropertiesChanged();
+            command.draw(drawer);
+        }
+        dirtyCurves = false;
+        drawer.endShader();
+
+        drawer.getBatch().setTransformMatrix(backupBatchTransform);
+    }
+
+    /**
+     * Draws the bounding box of the shape drawer
+     */
+    public void drawBoundingBox(TinyVGShapeDrawer drawer, Color color) {
+        backupBatchTransform.set(drawer.getBatch().getTransformMatrix());
+
+        if (dirtyTransformationMatrix) {
+            updateTransformationMatrix();
+            dirtyTransformationMatrix = false;
+        }
+
+        drawer.getBatch().setTransformMatrix(computedTransform);
+
+        drawer.rectangle(0, 0, getUnscaledWidth(), getUnscaledHeight(), color);
+
+        drawer.getBatch().setTransformMatrix(backupBatchTransform);
+    }
+
+    /**
+     * Checks if the given point is inside the bounding box.
+     */
+    public boolean isInBoundingBox(Vector2 point) {
+        if (dirtyTransformationMatrix) {
+            updateTransformationMatrix();
+            dirtyTransformationMatrix = false;
+        }
+
+        var pointX = point.x;
+        var pointY = point.y;
+
+        point.set(0, 0);
+        affine.applyTo(point);
+
+        var topLeftX = point.x;
+        var topLeftY = point.y;
+
+        point.set(getUnscaledWidth(), 0);
+        affine.applyTo(point);
+
+        var topRightX = point.x;
+        var topRightY = point.y;
+
+        point.set(0, getUnscaledHeight());
+        affine.applyTo(point);
+
+        var bottomLeftX = point.x;
+        var bottomLeftY = point.y;
+
+        point.set(getUnscaledWidth(), getUnscaledHeight());
+        affine.applyTo(point);
+
+        var bottomRightX = point.x;
+        var bottomRightY = point.y;
+
+        point.set(pointX, pointY);
+
+        return Intersector.isPointInTriangle(pointX, pointY, topLeftX, topLeftY, topRightX, topRightY, bottomRightX,
+                bottomRightY)
+                || Intersector.isPointInTriangle(pointX, pointY, topLeftX, topLeftY, bottomLeftX, bottomLeftY,
+                        bottomRightX, bottomRightY);
+    }
+
+    private void updateTransformationMatrix() {
         affine.set(emptyAffine);
         affine.shear(shearX, shearY);
         affine.translate(positionX, positionY);
@@ -90,19 +180,6 @@ public class TinyVG {
         affine.translate(-originX, -originY);
 
         computedTransform.set(affine);
-        drawer.getBatch().setTransformMatrix(computedTransform);
-
-        drawer.beginShader();
-
-        for (Command command : commands) {
-            if (dirty)
-                command.onPropertiesChanged();
-            command.draw(drawer);
-        }
-        dirty = false;
-        drawer.endShader();
-
-        drawer.getBatch().setTransformMatrix(backupBatchTransform);
     }
 
     public void addCommand(Command command) {
@@ -115,6 +192,8 @@ public class TinyVG {
     public void setSize(float width, float height) {
         scaleX = width / header.getWidth();
         scaleY = height / header.getHeight();
+
+        dirtyTransformationMatrix = true;
     }
 
     /**
@@ -122,6 +201,8 @@ public class TinyVG {
      */
     public void setScale(float scale) {
         setScale(scale, scale);
+
+        dirtyTransformationMatrix = true;
     }
 
     /**
@@ -130,6 +211,8 @@ public class TinyVG {
     public void setScale(float scaleX, float scaleY) {
         this.scaleX = scaleX;
         this.scaleY = scaleY;
+
+        dirtyTransformationMatrix = true;
     }
 
     /**
@@ -138,6 +221,8 @@ public class TinyVG {
     public void setPosition(float x, float y) {
         this.positionX = x;
         this.positionY = y;
+
+        dirtyTransformationMatrix = true;
     }
 
     /**
@@ -146,6 +231,8 @@ public class TinyVG {
     public void setOrigin(float x, float y) {
         this.originX = x;
         this.originY = y;
+
+        dirtyTransformationMatrix = true;
     }
 
     /**
@@ -154,6 +241,8 @@ public class TinyVG {
     public void setShear(float x, float y) {
         this.shearX = x;
         this.shearY = y;
+
+        dirtyTransformationMatrix = true;
     }
 
     /**
@@ -163,7 +252,62 @@ public class TinyVG {
     public void setCurvePoints(int curvePoints) {
         this.curvePoints = curvePoints;
 
-        dirty = true;
+        dirtyCurves = true;
+        dirtyTransformationMatrix = true;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+
+        dirtyTransformationMatrix = true;
+    }
+
+    public void setShearY(float shearY) {
+        this.shearY = shearY;
+
+        dirtyTransformationMatrix = true;
+    }
+
+    public void setShearX(float shearX) {
+        this.shearX = shearX;
+
+        dirtyTransformationMatrix = true;
+    }
+
+    public void setScaleY(float scaleY) {
+        this.scaleY = scaleY;
+
+        dirtyTransformationMatrix = true;
+    }
+
+    public void setScaleX(float scaleX) {
+        this.scaleX = scaleX;
+
+        dirtyTransformationMatrix = true;
+    }
+
+    public void setPositionY(float positionY) {
+        this.positionY = positionY;
+
+        dirtyTransformationMatrix = true;
+    }
+
+    public void setPositionX(float positionX) {
+        this.positionX = positionX;
+
+        dirtyTransformationMatrix = true;
+    }
+
+    public void setOriginX(float originX) {
+        this.originX = originX;
+
+        dirtyTransformationMatrix = true;
+    }
+
+    public void setOriginY(float originY) {
+        this.originY = originY;
+
+        dirtyTransformationMatrix = true;
     }
 
     /**
