@@ -75,7 +75,6 @@ public class TinyVG {
     private final Matrix4 backupBatchTransform = new Matrix4();
     private final Matrix4 computedTransform = new Matrix4();
     @Getter private final Affine2 affine = new Affine2();
-    private final Affine2 emptyAffine = new Affine2();
 
     public TinyVG(TinyVGHeader header, Color[] colorTable) {
         this.header = header;
@@ -171,7 +170,7 @@ public class TinyVG {
     }
 
     private void updateTransformationMatrix() {
-        affine.set(emptyAffine);
+        affine.idt();
         affine.shear(shearX, shearY);
         affine.translate(positionX, positionY);
         affine.scale(scaleX, scaleY);
