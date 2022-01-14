@@ -256,7 +256,7 @@ public class TinyVG {
     }
 
     public void setRotation(float rotation) {
-        this.rotation = rotation;
+        this.rotation = rotation % 360;
 
         dirtyTransformationMatrix = true;
     }
