@@ -3,15 +3,16 @@ package dev.lyze.gdxtinyvg;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
+import dev.lyze.gdxtinyvg.utils.YieldingFrameBuffer;
 import lombok.var;
 
 public class TinyVGIO {
     /**
      * Converts a tvg to a texture region by drawing it onto a framebuffer.
+     * Ignores Shearing.
      *
      * Make sure that you're not inside a batch.begin() and framebuffer.begin()
      * Takes scale into account.
@@ -22,10 +23,14 @@ public class TinyVGIO {
         if (drawing)
             batch.end();
 
+        var shearX = tvg.getShearX();
+        var shearY = tvg.getShearY();
+        tvg.setShear(0, 0);
+
         var fboWidth = MathUtils.roundPositive(Math.abs(tvg.getScaledWidth()));
         var fboHeight = MathUtils.roundPositive(Math.abs(tvg.getScaledHeight()));
 
-        var fbo = new FrameBuffer(Pixmap.Format.RGBA8888, fboWidth, fboHeight, false, true);
+        var fbo = new YieldingFrameBuffer(Pixmap.Format.RGBA8888, fboWidth, fboHeight, false, true);
         var viewport = new FitViewport(tvg.getScaledWidth(), tvg.getScaledHeight());
         viewport.update(fboWidth, fboHeight, true);
 
@@ -39,7 +44,7 @@ public class TinyVGIO {
 
         fbo.end();
 
-        var region = new TextureRegion(fbo.getColorBufferTexture());
+        var region = new TextureRegion(fbo.disposeAndTakeColorTexture());
         boolean flipX = tvg.getScaledWidth() < 0;
         boolean flipY = tvg.getScaledHeight() < 0;
 
@@ -48,12 +53,14 @@ public class TinyVGIO {
         if (drawing)
             batch.begin();
 
+        tvg.setShear(shearX, shearY);
+
         return region;
     }
 
     /**
      * Converts a tvg to a supersampled texture region by drawing it onto a
-     * framebuffer multiple times.
+     * framebuffer multiple times. Ignores Shearing.
      *
      * Make sure that you're not inside a batch.begin() and framebuffer.begin()
      * Takes scale into account. Be cautious of your device's VRAM and maximum
@@ -72,6 +79,10 @@ public class TinyVGIO {
         var initialScaleX = tvg.getScaleX();
         var initialScaleY = tvg.getScaleY();
 
+        var shearX = tvg.getShearX();
+        var shearY = tvg.getShearY();
+        tvg.setShear(0, 0);
+
         Texture resizedTexture = null;
 
         for (int i = 0; i < supersamplingPasses; i++) {
@@ -87,7 +98,7 @@ public class TinyVGIO {
             var width = bigTexture.getWidth();
             var height = bigTexture.getHeight();
 
-            var fbo = new FrameBuffer(Pixmap.Format.RGBA8888, width / 2, height / 2, false);
+            var fbo = new YieldingFrameBuffer(Pixmap.Format.RGBA8888, width / 2, height / 2, false, true);
 
             var viewport = new FitViewport(fbo.getWidth(), fbo.getHeight());
             viewport.update(fbo.getWidth(), fbo.getHeight(), true);
@@ -101,7 +112,7 @@ public class TinyVGIO {
 
             fbo.end();
 
-            resizedTexture = fbo.getColorBufferTexture();
+            resizedTexture = fbo.disposeAndTakeColorTexture();
         }
 
         if (drawing)
@@ -109,6 +120,8 @@ public class TinyVGIO {
 
         var resizedRegion = new TextureRegion(resizedTexture);
         resizedRegion.flip(false, supersamplingPasses % 2 == 0);
+
+        tvg.setShear(shearX, shearY);
 
         return resizedRegion;
     }
