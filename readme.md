@@ -17,9 +17,13 @@ TinyVG tries to be simpler. Fewer features, but powerful enough to cover 90% of 
 
 # Convert SVG into TVG
 
-Convert your SVG into a TVG here: https://svgtotvg.herokuapp.com/
+Make sure to set the following export settings:
+* "inline style" (and not for example "internal css")
+* Convert text to path
 
-Some things are not supported.
+Then simply convert your SVG into a TVG here: https://svgtotvg.herokuapp.com/
+
+Only linear and radial gradients with two points are supported. Everything else should convert decently enough.
 
 # Example
 
