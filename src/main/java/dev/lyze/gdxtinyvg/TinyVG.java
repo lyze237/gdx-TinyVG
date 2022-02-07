@@ -173,8 +173,8 @@ public class TinyVG {
         affine.idt();
         affine.shear(shearX, shearY);
         affine.translate(positionX, positionY);
-        affine.scale(scaleX, scaleY);
         affine.translate(originX, originY);
+        affine.scale(scaleX, scaleY);
         affine.rotate(rotation);
         affine.translate(-originX, -originY);
 
@@ -222,6 +222,14 @@ public class TinyVG {
         this.positionY = y;
 
         dirtyTransformationMatrix = true;
+    }
+
+    /**
+     * Sets the position where the TVG will be drawn, relative to tits current
+     * origin.
+     */
+    public void setOriginBasedPosition(float x, float y) {
+        setPosition(x - this.originX, y - this.originY);
     }
 
     /**
