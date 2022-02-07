@@ -7,22 +7,26 @@ import dev.lyze.gdxtinyvg.TinyVG;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 
 /**
- * Allows TinyVG to be implemented in Scene2D.UI Stages via the Drawable interface. The Batch used by the provided the
+ * Allows TinyVG to be implemented in Scene2D.UI Stages via the Drawable
+ * interface. The Batch used by the provided the
  * TinyVGShapeDrawer must be the same Batch used by the Scene2D Stage.
  */
 public class TinyVGDrawable extends BaseDrawable implements TransformDrawable {
     public TinyVG tvg;
     public transient TinyVGShapeDrawer shapeDrawer;
-    
+
     /**
-     * A no-argument constructor necessary for serialization. {@link TinyVGDrawable#shapeDrawer} must be defined before
+     * A no-argument constructor necessary for serialization.
+     * {@link TinyVGDrawable#shapeDrawer} must be defined before
      * this Drawable is drawn.
      */
     public TinyVGDrawable() {
     }
-    
+
     /**
-     * Constructs a TinyVGDrawable. The Batch of the provided TinyVGShapeDrawer must be the same Batch at rendering time.
+     * Constructs a TinyVGDrawable. The Batch of the provided TinyVGShapeDrawer must
+     * be the same Batch at rendering time.
+     * 
      * @param tvg
      * @param shapeDrawer
      */
@@ -30,9 +34,10 @@ public class TinyVGDrawable extends BaseDrawable implements TransformDrawable {
         this.tvg = tvg;
         this.shapeDrawer = shapeDrawer;
     }
-    
+
     /**
-     * Creates a new TinyVGDrawable with the same sizing information and tvg values as the specified drawable.
+     * Creates a new TinyVGDrawable with the same sizing information and tvg values
+     * as the specified drawable.
      *
      * @param drawable
      */
@@ -41,10 +46,13 @@ public class TinyVGDrawable extends BaseDrawable implements TransformDrawable {
         tvg = drawable.tvg;
         shapeDrawer = drawable.shapeDrawer;
     }
-    
+
     /**
-     * Draws the user defined TinyVG to the specified position and dimensions. May throw an
-     * {@link IllegalArgumentException} if the argument batch and shapeDrawer.batch are not the same.
+     * Draws the user defined TinyVG to the specified position and dimensions. May
+     * throw an
+     * {@link IllegalArgumentException} if the argument batch and shapeDrawer.batch
+     * are not the same.
+     * 
      * @param batch
      * @param x
      * @param y
@@ -63,10 +71,12 @@ public class TinyVGDrawable extends BaseDrawable implements TransformDrawable {
         tvg.setSize(width, height);
         tvg.draw(shapeDrawer);
     }
-    
+
     /**
      * Draws the user defined TinyVG to the specified transform. May throw an
-     * {@link IllegalArgumentException} if the argument batch and shapeDrawer.batch are not the same.
+     * {@link IllegalArgumentException} if the argument batch and shapeDrawer.batch
+     * are not the same.
+     * 
      * @param batch
      * @param x
      * @param y
@@ -80,7 +90,7 @@ public class TinyVGDrawable extends BaseDrawable implements TransformDrawable {
      */
     @Override
     public void draw(Batch batch, float x, float y, float originX, float originY, float width, float height,
-                     float scaleX, float scaleY, float rotation) {
+            float scaleX, float scaleY, float rotation) {
         tvg.setPosition(x, y);
         tvg.setOrigin(originX, originY);
         tvg.setSize(width, height);
@@ -88,19 +98,19 @@ public class TinyVGDrawable extends BaseDrawable implements TransformDrawable {
         tvg.setRotation(rotation);
         tvg.draw(shapeDrawer);
     }
-    
+
     public TinyVG getTvg() {
         return tvg;
     }
-    
+
     public void setTvg(TinyVG tvg) {
         this.tvg = tvg;
     }
-    
+
     public TinyVGShapeDrawer getShapeDrawer() {
         return shapeDrawer;
     }
-    
+
     public void setShapeDrawer(TinyVGShapeDrawer shapeDrawer) {
         this.shapeDrawer = shapeDrawer;
     }
