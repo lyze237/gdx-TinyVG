@@ -49,7 +49,7 @@ public class BoundingBoxTests extends LibgdxLwjglUnitTest {
     @Override
     public void render() {
         Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_STENCIL_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (tvg == null)
             return;

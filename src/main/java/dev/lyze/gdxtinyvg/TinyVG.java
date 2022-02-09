@@ -1,6 +1,8 @@
 package dev.lyze.gdxtinyvg;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Matrix4;
@@ -9,8 +11,8 @@ import com.badlogic.gdx.utils.Array;
 import dev.lyze.gdxtinyvg.commands.Command;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.var;
-import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class TinyVG {
     /**
@@ -62,6 +64,11 @@ public class TinyVG {
     @Getter private int curvePoints = 24;
 
     /**
+     * Clips the TVG based on the provided image size. Requires depth buffer.
+     */
+    @Getter @Setter private boolean clipBasedOnTVGSize = true;
+
+    /**
      * Next time render gets called and the tvg is dirty, it recalculates all point
      * positions in paths. (Slow)
      */
@@ -74,6 +81,7 @@ public class TinyVG {
 
     private final Matrix4 backupBatchTransform = new Matrix4();
     private final Matrix4 computedTransform = new Matrix4();
+    private final Matrix4 bufferTransform = new Matrix4();
     @Getter private final Affine2 affine = new Affine2();
 
     public TinyVG(TinyVGHeader header, Color[] colorTable) {
@@ -94,7 +102,26 @@ public class TinyVG {
 
         drawer.getBatch().setTransformMatrix(computedTransform);
 
+        if (clipBasedOnTVGSize) {
+            Gdx.gl.glDepthMask(true);
+            Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
+
+            Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+            Gdx.gl.glDepthFunc(GL20.GL_ALWAYS);
+
+            Gdx.gl.glColorMask(false, false, false, false);
+
+            drawer.filledRectangle(0, 0, getUnscaledWidth(), getUnscaledHeight());
+            drawer.getBatch().flush();
+        }
+
         drawer.beginShader();
+
+        if (clipBasedOnTVGSize) {
+            Gdx.gl.glColorMask(true, true, true, true);
+            Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+            Gdx.gl.glDepthFunc(GL20.GL_EQUAL);
+        }
 
         for (Command command : commands) {
             if (dirtyCurves)
@@ -102,9 +129,16 @@ public class TinyVG {
             command.draw(drawer);
         }
         dirtyCurves = false;
+
+        drawer.getBatch().flush();
+        drawer.getBatch().setTransformMatrix(backupBatchTransform);
+
         drawer.endShader();
 
-        drawer.getBatch().setTransformMatrix(backupBatchTransform);
+        if (clipBasedOnTVGSize) {
+            Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
+            Gdx.gl.glDepthMask(false);
+        }
     }
 
     /**

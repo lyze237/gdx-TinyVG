@@ -71,7 +71,7 @@ public class Example extends ApplicationAdapter {
 
   public void render() {
     Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_STENCIL_BUFFER_BIT); // GL20.GL_STENCIL_BUFFER_BIT is very important
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     viewport.apply();
 
@@ -202,9 +202,9 @@ implementation "com.github.lyze237:gdx-TinyVG:$gdxTinyVGVersion:sources"
 
 ## Help
 
-* Fill paths are displayed garbled
-  * Make sure to set `| GL20.GL_STENCIL_BUFFER_BIT` in your clear method. See [example](#example).
-  * Make sure to have `config.stencil` enabled and set to >= 2 in your launcher configuration.
+* Paths require `config.stencil` enabled and set to at least 2 in your launcher configuration.
+  * In lwjgl3 modules this is done via `configuration.setBackBufferConfig(8, 8, 8, 8, 16, 2, 0);` (The 2)
+* Cropping the TVG file to the appropriate size requires a depth buffer.
 
 ## How to test
 

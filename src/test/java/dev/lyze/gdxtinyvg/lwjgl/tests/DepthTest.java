@@ -14,8 +14,8 @@ import dev.lyze.gdxtinyvg.lwjgl.LibgdxLwjglUnitTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
-    private TinyVG tvg, tvgScaled;
+public class DepthTest extends LibgdxLwjglUnitTest {
+    private TinyVG tvg;
     private TinyVGShapeDrawer drawer;
     private Viewport viewport;
 
@@ -32,60 +32,17 @@ public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
 
     @Test
     @Tag("lwjgl")
-    public void everything32() {
-        setupTvg("everything-32.tvg");
-    }
-
-    @Test
-    @Tag("lwjgl")
     public void pirate() {
-        setupTvg("pirate.tvg");
-    }
-
-    @Test
-    @Tag("lwjgl")
-    public void shield() {
-        setupTvg("shield.tvg");
-    }
-
-    @Test
-    @Tag("lwjgl")
-    public void flowchart() {
-        setupTvg("flowchart.tvg");
-    }
-
-    @Test
-    @Tag("lwjgl")
-    public void tiger() {
-        setupTvg("tiger.tvg");
-    }
-
-    @Test
-    @Tag("lwjgl")
-    public void comic() {
-        setupTvg("comic.tvg");
-    }
-
-    @Test
-    @Tag("lwjgl")
-    public void chart() {
-        setupTvg("chart.tvg");
-    }
-
-    @Test
-    @Tag("lwjgl")
-    public void appIcon() {
-        setupTvg("app-icon.tvg");
+        setupTvg("button-nw.tvg");
     }
 
     private void setupTvg(String file) {
         Gdx.app.postRunnable(() -> {
             tvg = new TinyVGAssetLoader().load(file);
-            tvgScaled = new TinyVGAssetLoader().load(file);
-            tvgScaled.setScale(2);
-            tvgScaled.setPosition(tvg.getScaledWidth(), 0);
 
-            viewport = new FitViewport(tvg.getScaledWidth() + tvgScaled.getScaledWidth(), tvgScaled.getScaledHeight());
+            viewport = new FitViewport(tvg.getScaledWidth() * 5, tvg.getScaledHeight() * 5);
+            tvg.centerOrigin();
+            tvg.setOriginBasedPosition(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f);
             resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         });
     }
@@ -105,13 +62,9 @@ public class ExamplesFileLoadingTest extends LibgdxLwjglUnitTest {
         drawer.getBatch().begin();
         drawer.filledRectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight(), Color.TEAL);
 
-        tvg.centerOrigin();
-        tvg.setRotation(tvg.getRotation() + 10 * Gdx.graphics.getDeltaTime());
-
         profiler.reset();
         tvg.draw(drawer);
         System.out.println(profiler.getDrawCalls());
-        tvgScaled.draw(drawer);
 
         drawer.getBatch().end();
     }
