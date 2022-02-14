@@ -33,7 +33,7 @@ public class TinyVGDrawable extends BaseDrawable implements TransformDrawable {
     public TinyVGDrawable(TinyVG tvg, TinyVGShapeDrawer shapeDrawer) {
         this.tvg = tvg;
         this.shapeDrawer = shapeDrawer;
-        setMinSize(tvg.getUnscaledWidth(), tvg.getScaledHeight());
+        setMinSize(tvg.getUnscaledWidth(), tvg.getUnscaledHeight());
     }
 
     /**
@@ -106,7 +106,7 @@ public class TinyVGDrawable extends BaseDrawable implements TransformDrawable {
 
     public void setTvg(TinyVG tvg) {
         this.tvg = tvg;
-        setMinSize(tvg.getUnscaledWidth(), tvg.getScaledHeight());
+        setMinSize(tvg.getUnscaledWidth(), tvg.getUnscaledHeight());
     }
 
     public TinyVGShapeDrawer getShapeDrawer() {
