@@ -81,6 +81,7 @@ public class TinyVG {
 
     private final Matrix4 backupBatchTransform = new Matrix4();
     private final Matrix4 computedTransform = new Matrix4();
+    private final Matrix4 compositeTransform = new Matrix4();
     private final Matrix4 bufferTransform = new Matrix4();
     @Getter private final Affine2 affine = new Affine2();
 
@@ -99,8 +100,11 @@ public class TinyVG {
             updateTransformationMatrix();
             dirtyTransformationMatrix = false;
         }
+        
+        compositeTransform.set(backupBatchTransform);
+        compositeTransform.mul(computedTransform);
 
-        drawer.getBatch().setTransformMatrix(computedTransform);
+        drawer.getBatch().setTransformMatrix(compositeTransform);
 
         if (clipBasedOnTVGSize) {
             Gdx.gl.glDepthMask(true);
