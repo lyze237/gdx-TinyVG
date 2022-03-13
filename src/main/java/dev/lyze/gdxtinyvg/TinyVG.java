@@ -100,7 +100,7 @@ public class TinyVG {
             updateTransformationMatrix();
             dirtyTransformationMatrix = false;
         }
-        
+
         compositeTransform.set(backupBatchTransform);
         compositeTransform.mul(computedTransform);
 
