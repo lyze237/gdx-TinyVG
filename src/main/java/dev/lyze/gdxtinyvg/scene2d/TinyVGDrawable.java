@@ -70,7 +70,10 @@ public class TinyVGDrawable extends BaseDrawable implements TransformDrawable {
         }
         tvg.setPosition(x, y);
         tvg.setSize(width, height);
+        float previousColor = shapeDrawer.getPackedColor();
+        shapeDrawer.setColor(batch.getColor());
         tvg.draw(shapeDrawer);
+        shapeDrawer.setColor(previousColor);
     }
 
     /**
@@ -97,7 +100,10 @@ public class TinyVGDrawable extends BaseDrawable implements TransformDrawable {
         tvg.setSize(width, height);
         tvg.setScale(scaleX, scaleY);
         tvg.setRotation(rotation);
+        float previousColor = shapeDrawer.getPackedColor();
+        shapeDrawer.setColor(batch.getColor());
         tvg.draw(shapeDrawer);
+        shapeDrawer.setColor(previousColor);
     }
 
     public TinyVG getTvg() {
