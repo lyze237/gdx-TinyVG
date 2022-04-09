@@ -1,9 +1,11 @@
 package dev.lyze.gdxtinyvg;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import dev.lyze.gdxtinyvg.utils.YieldingFrameBuffer;
@@ -37,6 +39,7 @@ public class TinyVGIO {
         batch.setProjectionMatrix(viewport.getCamera().combined);
 
         fbo.begin();
+        ScreenUtils.clear(Color.CLEAR);
 
         drawer.getBatch().begin();
         tvg.draw(drawer);
@@ -105,6 +108,7 @@ public class TinyVGIO {
             batch.setProjectionMatrix(viewport.getCamera().combined);
 
             fbo.begin();
+            ScreenUtils.clear(Color.CLEAR);
 
             batch.begin();
             batch.draw(bigTexture, 0, 0, fbo.getWidth(), fbo.getHeight());
