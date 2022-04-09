@@ -20,8 +20,6 @@ group 'lyze.dev'
 version '1.0.' + getGitHash()
 apply from: 'publishing.gradle'
 
-sourceCompatibility = 8
-
 repositories {
     mavenLocal()
     mavenCentral()
@@ -70,6 +68,16 @@ spotless {
         target '*.gradle'
         greclipse().configFile('eclipse-formatter.xml')
     }
+}
+
+java {
+    sourceCompatibility = 7
+    targetCompatibility = 7
+}
+
+compileTestJava {
+    sourceCompatibility = 8
+    targetCompatibility = 8
 }
 
 test {
