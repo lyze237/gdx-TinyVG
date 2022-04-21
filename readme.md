@@ -25,6 +25,12 @@ Then simply convert your SVG into a TVG here: https://svgtotvg.herokuapp.com/
 
 Only linear and radial gradients with two points are supported. Everything else should convert decently enough.
 
+# Video
+
+Here's a youtube video showcasing the library:
+
+[![Youtube video tutorial](http://img.youtube.com/vi/9bDaH6SaUwg/0.jpg)](http://www.youtube.com/watch?v=9bDaH6SaUwg)
+
 # Example
 
 ```java
