@@ -21,7 +21,7 @@ Make sure to set the following export settings:
 * "inline style" (and not for example "internal css")
 * Convert text to path
 
-Then simply convert your SVG into a TVG here: https://svgtotvg.herokuapp.com/
+Then simply convert your SVG into a TVG here: https://svg-to-tvg-server.fly.dev/
 
 Only linear and radial gradients with two points are supported. Everything else should convert decently enough.
 
