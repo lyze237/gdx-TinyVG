@@ -46,9 +46,11 @@ public class UnitPathSegment {
         }
 
         // When last command is unit path command shape drawer closes the path.
-        // It bugs out when it needs to close a path, and the start point is the same as the end point.
+        // It bugs out when it needs to close a path, and the start point is the same as
+        // the end point.
         // Therefore, let's make sure that this isn't the case.
-        if (commands[commands.length - 1] instanceof UnitPathCloseCommand && path.get(0).getPoint().equals(path.get(path.size - 1).getPoint()))
+        if (commands[commands.length - 1] instanceof UnitPathCloseCommand
+                && path.get(0).getPoint().equals(path.get(path.size - 1).getPoint()))
             path.removeIndex(path.size - 1);
 
         return path;
